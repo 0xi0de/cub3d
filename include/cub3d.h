@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:52 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/03/02 00:43:55 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/03/03 17:32:48 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@
 # define PLAYER_W 20
 # define PLAYER_H 20
 # define KEYPRESS 2
+# define RL_KEY 123
+# define RR_KEY 124
 # define KEYPRESSMASK (1L<<0)
+# define FOV 3.14159265 / 2
 
 typedef struct s_coord
 {
@@ -37,7 +40,6 @@ typedef struct s_raycast
 	t_coord	end_point;
 }	t_raycast;
 
-
 typedef struct s_player
 {
 	t_element	element;
@@ -46,12 +48,17 @@ typedef struct s_player
 	int			down;
 	int			left;
 	int			right;
+	double		rotation;
+	int			l_rotation;
+	int			r_rotation;
 }	t_player;
 
 typedef struct s_info
 {
 	int			map_w;
 	int			map_h;
+	int			block_w;
+	int			block_h;
 	t_info_mlx	mlx_info;
 	t_texture	wall_texture;
 	t_texture	player_texture;
@@ -64,5 +71,9 @@ t_info	*init_info(int map_w, int map_h);
 void	print_map(t_info *info);
 int		dealkey(int key, t_info *info);
 int		key_release(int key, t_info *info);
+int		get_position(t_info *info, int x, int y);
+int		check_wall(t_info *info, int x, int y);
+void	raycasting(t_info *info, double angle);
+void	raycastings(t_info *info, double angle);
 
 #endif

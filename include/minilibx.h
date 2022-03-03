@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minilibx.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:45 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/03/01 17:16:26 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/03/03 17:10:57 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,9 @@ typedef struct s_element
 
 void	init_texture(t_info_mlx	*info_mlx, t_texture *texture, int w, int h);
 void	init_mlx(t_info_mlx	*info_mlx, int w, int h);
-void    fill_rect(t_texture *texture, t_color color);
-void    render_map(t_info_mlx *info_mlx, t_element *elements, int w, int h);
+void	fill_rect(t_texture *texture, t_color color);
+void	render_map(t_info_mlx *info_mlx, t_element *elements, int w, int h);
 void	render_player(t_info_mlx *info_mlx, t_element *element);
+void	draw_line(void *mlx, void *win, int beginX, int beginY, int endX, int endY);
 
 #endif

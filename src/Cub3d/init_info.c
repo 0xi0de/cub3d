@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_info.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:21:40 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/03/01 20:13:18 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/03/03 16:48:59 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,16 @@ t_info	*init_info(int map_w, int map_h)
 	t_color	color;
 	int		i;
 	int		j;
+	int		map[8][8] = {
+		{1, 1, 1, 1, 1, 1, 1, 1},
+		{1, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 1, 0, 0, 1},
+		{1, 0, 0, 0, 1, 0, 0, 1},
+		{1, 0, 0, 1, 1, 1, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 1},
+		{1, 1, 1, 1, 1, 1, 1, 1}
+ 	};
 
 	info = malloc(sizeof(t_info) + sizeof(t_element) * map_w * map_h);
 	if (!info)
@@ -29,6 +39,9 @@ t_info	*init_info(int map_w, int map_h)
 	info->player.right = 0;
 	info->player.hitbox.w = 18;
 	info->player.hitbox.h = 18;
+	info->player.rotation = 0;
+	info->player.l_rotation = 0;
+	info->player.r_rotation = 0;
 	info->map_w = map_w;
 	info->map_h = map_h;
 	init_mlx(&info->mlx_info, SCREEN_W, SCREEN_H);
@@ -48,12 +61,14 @@ t_info	*init_info(int map_w, int map_h)
 	fill_rect(&info->player_texture, color);
 	info->player.element.texture = &info->player_texture;
 	i = 0;
+	info->block_h = map_h;
+	info->block_w = map_w;
 	while (i < map_h)
 	{
 		j = 0;
 		while (j < map_w)
 		{
-			if (i == 0 || i == map_h - 1 || j == 0 || j == map_w - 1)
+			if (map[i][j])
 			{
 				info->map[i * map_w + j].is_wall = 1;
 				info->map[i * map_w + j].texture = &info->wall_texture;
