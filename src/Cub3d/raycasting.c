@@ -6,7 +6,7 @@
 /*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 12:18:40 by tallal--          #+#    #+#             */
-/*   Updated: 2022/03/03 22:15:30 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/03/03 23:15:55 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	raycasting(t_info *info, double angle)
 	}
 	if (pos != -1)
 	{
-		//draw_line(info->mlx_info.mlx_ptr, info->mlx_info.win_ptr, x, y, info->raycast.start_point.x, info->raycast.start_point.y);
+		draw_line(info->mlx_info.mlx_ptr, info->mlx_info.win_ptr, x, y, info->raycast.start_point.x, info->raycast.start_point.y);
 		//printf("%d %d\n", x, y);
 	}
 }
@@ -132,7 +132,7 @@ void	raycastings(t_info *info, double angle)
 	double	end_angle;
 	double	angle_step;
 
-	angle_step = FOV / (double)100;
+	angle_step = FOV / (double)200;
 	start_angle = angle - (FOV / 2);
 	end_angle = angle + (FOV / 2);
 	while (start_angle < end_angle)

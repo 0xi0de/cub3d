@@ -4,6 +4,7 @@ SRC += src/Cub3d/print_map.c
 SRC += src/Cub3d/dealkey.c
 SRC += src/Cub3d/position.c
 SRC += src/Cub3d/raycasting.c
+SRC += src/Cub3d/parser.c
 SRC += src/Minilibx/init.c
 SRC += src/Minilibx/fill_rect.c
 SRC += src/Minilibx/render.c
