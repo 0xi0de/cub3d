@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   init_info.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:21:40 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/03/03 16:48:59 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/03/04 14:05:12 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include <stdlib.h>
 
-t_info	*init_info(int map_w, int map_h)
+t_info	*init_info(int map_w, int map_h, char **argv)
 {
 	t_info	*info;
 	t_color	color;

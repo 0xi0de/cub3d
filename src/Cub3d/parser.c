@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 00:47:00 by tallal--          #+#    #+#             */
-/*   Updated: 2022/03/04 01:11:22 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/03/04 14:04:14 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,7 @@ int	get_next_line(int fd, char **line)
 	int			index;
 	char		*tmp;
 	static char	buff[4097];
-	int	i;
-	int	j;
+	int			i;
 
 	if (!line)
 		return (-1);
@@ -120,7 +119,6 @@ int	get_next_line(int fd, char **line)
 		free(tmp);
 	if (*line == NULL)
 		exit(EXIT_FAILURE);
-
 	i = 0;
 	index++;
 	while (buff[index])
@@ -133,27 +131,14 @@ int	get_next_line(int fd, char **line)
 	return (ret);
 }
 
-// int	parser(t_info *info, char *file)
-// {
-// 	int		fd;
-// 	char	*line;
-// 	int		i;
-
-// 	i = 0;
-// 	fd = open(file, O_RDONLY));
-// 	if (fd == -1)
-// 		return (0);
-// }
-
-int	main(void)
+int	parser(t_info *info, char *file)
 {
-	int	fd;
-	char *line;
+	int		fd;
+	char	*line;
+	int		i;
 
-	fd = open("./test.txt", O_RDONLY);
-	while(get_next_line(fd, &line) != 0)
-	{
-		printf("%s\n", line);
-		printf("NEWLINE\n");
-	}
+	i = 0;
+	fd = open(file, O_RDONLY));
+	if (fd == -1)
+		return (0);
 }

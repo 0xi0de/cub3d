@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:52 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/03/03 17:32:48 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/03/04 14:05:43 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_info
 	int			map_h;
 	int			block_w;
 	int			block_h;
+	char		*path;
 	t_info_mlx	mlx_info;
 	t_texture	wall_texture;
 	t_texture	player_texture;
@@ -67,7 +68,7 @@ typedef struct s_info
 	t_element	map[];
 }	t_info;
 
-t_info	*init_info(int map_w, int map_h);
+t_info	*init_info(int map_w, int map_h, char **argv);
 void	print_map(t_info *info);
 int		dealkey(int key, t_info *info);
 int		key_release(int key, t_info *info);
