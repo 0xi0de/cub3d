@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:19 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/03/01 01:05:07 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/03/05 21:31:36 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	init_mlx(t_info_mlx	*info_mlx, int w, int h)
 void	init_texture(t_info_mlx	*info_mlx, t_texture *texture, int w, int h)
 {
 	texture->img = mlx_new_image(info_mlx->mlx_ptr, w, h);
-	texture->addr = mlx_get_data_addr(texture->img, &texture->bits_per_pixel,
+	texture->addr = (unsigned char *)mlx_get_data_addr(texture->img, &texture->bits_per_pixel,
 			&texture->line_length, &texture->endian);
 	texture->rect.x = 0;
 	texture->rect.y = 0;

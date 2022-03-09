@@ -6,7 +6,7 @@
 /*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 12:18:40 by tallal--          #+#    #+#             */
-/*   Updated: 2022/03/03 23:15:55 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/03/05 21:47:47 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,45 +99,54 @@ int	next_wall(t_info *info, int i, int *x_col, int *y_col)
 	return (-1);
 }
 
-void	raycasting(t_info *info, double angle)
+int	raycasting(t_info *info, double angle, int *x, int *y)
 {
-	int	pos;
-	int	x;
-	int	y;
+	int		pos;
+	t_coord	end;
 
-	(void)angle;
-	info->raycast.start_point.x = info->player.element.rect.x + 7;
-	info->raycast.start_point.y = info->player.element.rect.y + 7;
-	x = info->raycast.start_point.x;
-	y = info->raycast.start_point.y;
-	pos = get_position(info, x, y);
-	info->raycast.end_point.x = info->raycast.start_point.x + cos(angle) * SCREEN_W;
-	info->raycast.end_point.y = info->raycast.start_point.y + sin(angle) * SCREEN_H;
+	info->raycast.start_point.x = info->player.pos.x;
+	info->raycast.start_point.y = info->player.pos.y;
+	*x = info->raycast.start_point.x;
+	*y = info->raycast.start_point.y;
+	pos = get_position(info, *x, *y);
+	info->raycast.end_point.x = info->raycast.start_point.x
+		+ cos(angle) * SCREEN_W * RAY_DISTANCE;
+	info->raycast.end_point.y = info->raycast.start_point.y
+		+ sin(angle) * SCREEN_H * RAY_DISTANCE;
 	while (!info->map[pos].is_wall)
 	{
-		pos = next_wall(info, pos, &x, &y);
+		pos = next_wall(info, pos, x, y);
 		if (pos == -1)
-			break ;
+			return (0);
 	}
-	if (pos != -1)
-	{
-		draw_line(info->mlx_info.mlx_ptr, info->mlx_info.win_ptr, x, y, info->raycast.start_point.x, info->raycast.start_point.y);
-		//printf("%d %d\n", x, y);
-	}
+	end.x = *x;
+	end.y = *y;
+	draw_line(info->raycast.start_point, end, info);
+	return (1);
 }
 
 void	raycastings(t_info *info, double angle)
 {
+	t_color	wall_color;
 	double	start_angle;
-	double	end_angle;
 	double	angle_step;
+	int		i;
+	int		x;
+	int		y;
 
-	angle_step = FOV / (double)200;
+	wall_color.r = 0x0;
+	wall_color.g = 0x0;
+	wall_color.b = 0x0;
+	fill_rect(&info->map2D, wall_color);
+	angle_step = FOV / (double)SCREEN_W;
 	start_angle = angle - (FOV / 2);
-	end_angle = angle + (FOV / 2);
-	while (start_angle < end_angle)
+	i = 0;
+	while (i < SCREEN_W)
 	{
-		raycasting(info, start_angle);
-		start_angle += angle_step;
+		if (raycasting(info, start_angle + i * angle_step, &x, &y))
+		{
+			render_wall(info, x, y, i, start_angle + (i * angle_step));
+		}
+		i++;
 	}
 }

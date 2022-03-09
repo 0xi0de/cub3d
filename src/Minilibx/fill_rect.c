@@ -2,9 +2,9 @@
 
 void    fill_rect(t_texture *texture, t_color color)
 {
-    int     i;
-    int     j;
-    char    *pixel;
+    int     		i;
+    int     		j;
+    unsigned char	*pixel;
 
     i = 0;
     while (i < texture->rect.h)

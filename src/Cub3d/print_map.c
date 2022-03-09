@@ -7,6 +7,7 @@ void	print_map(t_info *info)
 	int	j;
 
 	i = 0;
+	printf("-------\n");
 	while (i < info->map_h)
 	{
 		j = 0;

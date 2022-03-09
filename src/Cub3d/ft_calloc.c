@@ -1,18 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   color.c                                            :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/04 14:22:57 by lbetmall          #+#    #+#             */
-/*   Updated: 2021/10/04 14:22:59 by lbetmall         ###   ########.fr       */
+/*   Created: 2022/02/17 16:38:03 by tallal--          #+#    #+#             */
+/*   Updated: 2022/03/04 17:31:11 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "cub3d.h"
+#include "cub3d.h"
+#include <stdlib.h>
 
-int	ft_color(unsigned int iter, t_info *info)
+void	*ft_calloc(unsigned long n)
 {
-	return (info->color_r * iter * 0xFFFFFF / 50.0);
+	void			*ptr;
+	unsigned long	i;
+
+	i = 0;
+	ptr = malloc(n);
+	if (!ptr)
+		return (NULL);
+	while (i < n)
+	{
+		((char *)ptr)[i] = 0;
+		i++;
+	}
+	return (ptr);
 }
