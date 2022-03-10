@@ -6,7 +6,7 @@
 /*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 01:10:54 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/03/05 21:47:55 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/03/10 18:22:03 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,10 @@ void	render_wall(t_info *info, int x, int y, int i, double angle)
 	(void)y;
 	dx = pow(info->player.pos.x - x, 2);
 	dy = pow(info->player.pos.y - y, 2);
+	printf("%f %f\n", cos(angle), sin(angle));
+	//d = sqrt(dx + dy) * fabs(cos(angle));
 	d = sqrt(dx + dy) * fabs(cos(angle)) / RAY_DISTANCE;
-	// d = abs(info->player.pos.y - y);
+	//d = abs(info->player.pos.y - y);
 	if (d >= SCREEN_W)
 	{
 		printf("%d\n", d);
@@ -104,7 +106,7 @@ void	render_2D_map(t_info *info)
 			if (info->map[y * info->map_w + x].is_wall)
 			{
 				mlx_put_image_to_window(info->mlx_info.mlx_ptr, info->mlx_info.win_ptr,
-				info->wall_texture2D.img, SCREEN_W + x * WALL_W, y * WALL_H);
+					info->wall_texture2D.img, SCREEN_W + x * WALL_W, y * WALL_H);
 			}
 			x++;
 		}
