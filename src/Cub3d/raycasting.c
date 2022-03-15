@@ -6,7 +6,7 @@
 /*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 12:18:40 by tallal--          #+#    #+#             */
-/*   Updated: 2022/03/10 18:04:32 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/03/14 19:21:45 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,10 @@ void	raycastings(t_info *info, double angle)
 	while (i < SCREEN_W)
 	{
 		if (raycasting(info, start_angle + i * angle_step, &x, &y))
-			render_wall(info, x, y, i, (i * angle_step) - FOV / 2);
+		{
+			render_wall(info, x, y, i, ((i * angle_step) - FOV) / 2);
+		}
+			//render_wall(info, x, y, i, (i * angle_step) - FOV / 2);
 		i++;
 	}
 }

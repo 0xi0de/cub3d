@@ -6,7 +6,7 @@
 /*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:52 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/03/10 18:17:26 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/03/14 18:58:29 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define RR_KEY 124
 # define KEYPRESSMASK (1L<<0)
 # define PI 3.14159265
-# define FOV 1
+# define FOV 0.66
 # define RAY_DISTANCE 1
 
 typedef struct s_coord

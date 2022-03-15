@@ -6,7 +6,7 @@
 /*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 01:10:54 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/03/10 18:22:03 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/03/14 19:20:35 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,12 @@ void	render_wall(t_info *info, int x, int y, int i, double angle)
 	(void)dy;
 	(void)x;
 	(void)y;
-	dx = pow(info->player.pos.x - x, 2);
-	dy = pow(info->player.pos.y - y, 2);
-	printf("%f %f\n", cos(angle), sin(angle));
-	//d = sqrt(dx + dy) * fabs(cos(angle));
-	d = sqrt(dx + dy) * fabs(cos(angle)) / RAY_DISTANCE;
-	//d = abs(info->player.pos.y - y);
+	(void)angle;
+	dx = info->player.pos.x - x;
+	dy = info->player.pos.y - y;
+	d = sqrt(dx * dx + dy * dy);
+	//d = cos(angle) * d;
+	d = cos(angle) * d ;
 	if (d >= SCREEN_W)
 	{
 		printf("%d\n", d);
