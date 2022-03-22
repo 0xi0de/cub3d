@@ -6,7 +6,7 @@
 /*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 12:18:40 by tallal--          #+#    #+#             */
-/*   Updated: 2022/03/14 19:21:45 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/03/22 19:19:21 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ void	raycastings(t_info *info, double angle)
 	angle_step = FOV / (double)SCREEN_W;
 	start_angle = angle - (FOV / 2);
 	i = 0;
+	clear_img(&info->map3D);
 	while (i < SCREEN_W)
 	{
 		if (raycasting(info, start_angle + i * angle_step, &x, &y))
@@ -150,4 +151,6 @@ void	raycastings(t_info *info, double angle)
 			//render_wall(info, x, y, i, (i * angle_step) - FOV / 2);
 		i++;
 	}
+	mlx_put_image_to_window(info->mlx_info.mlx_ptr, info->mlx_info.win_ptr,
+		info->map3D.img, 0, 0);
 }

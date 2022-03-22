@@ -6,7 +6,7 @@
 /*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:52 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/03/14 18:58:29 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/03/22 20:02:04 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 
 # include "minilibx.h"
 # define MALLOC_FAIL -1
-# define SCREEN_W 400
-# define SCREEN_H 400
-# define WALL_W 50
-# define WALL_H 50
+# define SCREEN_W 800
+# define SCREEN_H 800
+# define WALL_W 100
+# define WALL_H 100
 # define PLAYER_W 20
 # define PLAYER_H 20
 # define KEYPRESS 2
@@ -27,7 +27,7 @@
 # define RR_KEY 124
 # define KEYPRESSMASK (1L<<0)
 # define PI 3.14159265
-# define FOV 0.66
+# define FOV PI/2
 # define RAY_DISTANCE 1
 
 typedef struct s_coord
@@ -67,6 +67,7 @@ typedef struct s_info
 	t_texture	wall_texture[SCREEN_W];
 	t_player	player;
 	t_texture	wall_texture2D;
+	t_texture	map3D;
 	t_raycast	raycast;
 	t_texture	map2D;
 	t_element	floor;
@@ -75,6 +76,7 @@ typedef struct s_info
 }	t_info;
 
 t_info	*init_info(int map_w, int map_h);
+void	clear_img(t_texture *texture);
 t_info	*parser(char *file);
 void	fatal_error(void);
 void	print_map(t_info *info);

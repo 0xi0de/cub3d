@@ -6,7 +6,7 @@
 /*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:45 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/03/05 21:31:04 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/03/22 18:56:15 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 # define MINILIBX_H
 # include "mlx.h"
+# include "stdint.h"
 
 # define W_KEY 13
 # define S_KEY 1
@@ -25,6 +26,7 @@ typedef struct s_color
 	unsigned char	r;
 	unsigned char	g;
 	unsigned char	b;
+	int				endian;
 }	t_color;
 
 typedef struct s_info_mlx
@@ -46,6 +48,7 @@ typedef struct s_texture
 	void			*img;
 	unsigned char	*addr;
 	int				bits_per_pixel;
+	int				bytes_per_pixel;
 	int				line_length;
 	int				endian;
 	t_rect			rect;

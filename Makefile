@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -g -fsanitize=address -Wall -Wextra -Werror -Iinclude -Ilib/
+CFLAGS = -g -fsanitize=address -Wall -Wextra -Werror -Iinclude -g -fsanitize=address -Ilib/
 LFLAGS = -framework OpenGL -framework AppKit -L./lib -lmlx
 
 BUILD_DIR = build

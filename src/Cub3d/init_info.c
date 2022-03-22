@@ -6,7 +6,7 @@
 /*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:21:40 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/03/15 14:46:17 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/03/22 18:15:33 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	init_walls(t_info *info)
 	wall_color.b = 0x4B;
 	while (i < SCREEN_W)
 	{
-		init_texture(&info->mlx_info, info->wall_texture + i, 1, SCREEN_W - i);
+		init_texture(&info->mlx_info, info->wall_texture + i, 1, SCREEN_H - i);
 		fill_rect(info->wall_texture + i, wall_color);
 		i++;
 	}
@@ -79,7 +79,7 @@ void	init_floor_ceiling(t_info *info)
 
 t_info	*init_info(int map_w, int map_h)
 {
-	t_info	*info;
+	t_info		*info;
 
 	info = ft_calloc(sizeof(t_info) + sizeof(t_element) * map_w * map_h);
 	if (!info)
@@ -92,6 +92,7 @@ t_info	*init_info(int map_w, int map_h)
 	info->block_w = map_w;
 	init_floor_ceiling(info);
 	init_walls(info);
+	init_texture(&info->mlx_info, &info->map3D, SCREEN_W, SCREEN_H);
 	return (info);
 }
 

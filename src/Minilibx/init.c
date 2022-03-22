@@ -6,7 +6,7 @@
 /*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:19 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/03/05 21:31:36 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/03/22 18:25:25 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	init_texture(t_info_mlx	*info_mlx, t_texture *texture, int w, int h)
 	texture->img = mlx_new_image(info_mlx->mlx_ptr, w, h);
 	texture->addr = (unsigned char *)mlx_get_data_addr(texture->img, &texture->bits_per_pixel,
 			&texture->line_length, &texture->endian);
+	texture->bytes_per_pixel = texture->bits_per_pixel / 8;
 	texture->rect.x = 0;
 	texture->rect.y = 0;
 	texture->rect.w = w;

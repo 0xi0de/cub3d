@@ -6,7 +6,7 @@
 /*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 01:10:54 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/03/14 19:20:35 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/03/15 158:03:03 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,74 @@ void	render_map(t_info *info)
 		info->ceiling.texture.img, info->ceiling.rect.x, info->ceiling.rect.y);
 }
 
+void color_pixel(uint8_t *pixel, t_color color)
+{
+	if (color.endian)
+	{
+		pixel[0] = color.r;
+		pixel[1] = color.g;
+		pixel[2] = color.b;
+		pixel[3] = 0;
+	}
+	else
+	{
+		//pixel[0] = 255;
+		pixel[0] = color.b;
+		pixel[1] = color.g;
+		pixel[2] = color.r;
+		pixel[3] = 0;
+
+	}
+}
+
+void	clear_img(t_texture *texture)
+{
+	int		i;
+	int		nb_pixel;
+	t_color	color;
+
+	i = 0;
+	//remplacer par le BG
+	color.r = 0x00;
+	color.g = 0x00;
+	color.b = 0x00;
+	color.endian = texture->endian;
+	nb_pixel = texture->bytes_per_pixel * texture->rect.h * texture->rect.w;
+	while (i < nb_pixel)
+	{
+		color_pixel(texture->addr + i, color);
+		i += 4;
+	}
+}
+
+void	put_in_img(t_info *info, int d, int pos_x)
+{
+	int		i;
+	uint8_t	*pixel;
+	int		dy;
+	t_color	color;
+
+	i = 0;
+	dy = (SCREEN_H - d) / 2;
+	pixel = info->map3D.addr;
+	color.r = 0xFF;
+	color.g = 0xFF;
+	color.b = 0xFF;
+	color.endian = info->map3D.endian;
+	while (i < d)
+	{
+		color_pixel(pixel + pos_x * info->map3D.bytes_per_pixel + info->map3D.line_length * (i + dy), color);
+		i++;
+	}
+	//-->ifo.pixel[i] = ...
+}
+
 void	render_wall(t_info *info, int x, int y, int i, double angle)
 {
 	int			dx;
 	int			dy;
 	int			d;
-	t_texture	texture;
+	float		r;
 
 	(void)dx;
 	(void)dy;
@@ -78,16 +140,18 @@ void	render_wall(t_info *info, int x, int y, int i, double angle)
 	dx = info->player.pos.x - x;
 	dy = info->player.pos.y - y;
 	d = sqrt(dx * dx + dy * dy);
-	//d = cos(angle) * d;
-	d = cos(angle) * d ;
+	d = cos(angle) * d;
+	r = 50 / (float)d;
+	if (r > 1)
+		r = 1;
 	if (d >= SCREEN_W)
 	{
-		printf("%d\n", d);
+		//printf("%d\n", d);
 		return ;
 	}
-	texture = info->wall_texture[d];
-	mlx_put_image_to_window(info->mlx_info.mlx_ptr, info->mlx_info.win_ptr,
-		texture.img, i, d / 2);
+	put_in_img(info, SCREEN_H * r, i);
+	// mlx_put_image_to_window(info->mlx_info.mlx_ptr, info->mlx_info.win_ptr,
+	// 	texture.img, i, d / 2);
 }
 
 void	render_2D_map(t_info *info)
