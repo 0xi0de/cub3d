@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 00:47:00 by tallal--          #+#    #+#             */
-/*   Updated: 2022/03/05 18:31:16 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/03/24 16:38:02 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ int	get_next_line(int fd, char **line)
 	static char	buff[4097];
 	int			i;
 
+	ret = 1;
 	if (!line)
 		return (-1);
 	*line = NULL;
@@ -376,7 +377,10 @@ t_info	*parser(char *file)
 		return (NULL);
 	}
 	while (get_next_line(fd, &line) > 0)
+	{
+		printf("line = %s\n", line);
 		map_txt = tabjoin(map_txt, line);
+	}
 	info = create_info(map_txt);
 	player_spawn(info, map_txt);
 	if (parse_map(info, map_txt) < 0)

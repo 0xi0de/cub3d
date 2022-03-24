@@ -36,10 +36,10 @@ void	draw_line(t_coord p1, t_coord p2, t_info *info)
 		// printf("%d %d\n", p1.x, p1.y);
 		// printf("%d\n", info->map2D.line_length / 4);
 		// printf("%d\n", p1.y * info->map2D.line_length / 4 + p1.x);
-		info->map2D.addr[(p1.y * info->map2D.line_length / 4 + p1.x) * 4] = 255;
-		info->map2D.addr[(p1.y * info->map2D.line_length / 4 + p1.x) * 4 + 1] = 255;
-		info->map2D.addr[(p1.y * info->map2D.line_length / 4 + p1.x) * 4 + 2] = 255;
-		info->map2D.addr[(p1.y * info->map2D.line_length / 4 + p1.x) * 4 + 3] = 255;
+		info->map2D.addr[(p1.y * info->map2D.line_length / 4 + p1.x) * 4] = 127;
+		info->map2D.addr[(p1.y * info->map2D.line_length / 4 + p1.x) * 4 + 1] = 127;
+		info->map2D.addr[(p1.y * info->map2D.line_length / 4 + p1.x) * 4 + 2] = 127;
+		info->map2D.addr[(p1.y * info->map2D.line_length / 4 + p1.x) * 4 + 3] = 127;
 		e2 = err;
 		if (e2 >-dx)
 		{
@@ -74,12 +74,10 @@ void color_pixel(uint8_t *pixel, t_color color)
 	}
 	else
 	{
-		//pixel[0] = 255;
 		pixel[0] = color.b;
 		pixel[1] = color.g;
 		pixel[2] = color.r;
 		pixel[3] = 0;
-
 	}
 }
 

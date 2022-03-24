@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 12:18:40 by tallal--          #+#    #+#             */
-/*   Updated: 2022/03/22 19:19:21 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/03/24 17:08:35 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	next_wall(t_info *info, int i, int *x_col, int *y_col)
 			}
 		}
 	}
-	t = find_ty(info->raycast,  info->map[i].rect.y + WALL_H);
+	t = find_ty(info->raycast, info->map[i].rect.y + WALL_H);
 	if (t >= 0 && t <= 1)
 	{
 		x = info->raycast.start_point.x + t * (info->raycast.end_point.x - \
@@ -94,6 +94,8 @@ int	next_wall(t_info *info, int i, int *x_col, int *y_col)
 				*y_col = info->map[i].rect.y;
 				return (i - info->block_w);
 			}
+			else
+				printf("dans le else 4\n");
 		}
 	}
 	return (-1);
@@ -110,9 +112,9 @@ int	raycasting(t_info *info, double angle, int *x, int *y)
 	*y = info->raycast.start_point.y;
 	pos = get_position(info, *x, *y);
 	info->raycast.end_point.x = info->raycast.start_point.x
-		+ cos(angle) * SCREEN_W * RAY_DISTANCE;
+		+ cos(angle) * RAY_DISTANCE;
 	info->raycast.end_point.y = info->raycast.start_point.y
-		+ sin(angle) * SCREEN_H * RAY_DISTANCE;
+		+ sin(angle) * RAY_DISTANCE;
 	while (!info->map[pos].is_wall)
 	{
 		pos = next_wall(info, pos, x, y);

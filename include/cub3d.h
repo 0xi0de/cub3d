@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:52 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/03/22 20:02:04 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/03/24 17:03:46 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define KEYPRESSMASK (1L<<0)
 # define PI 3.14159265
 # define FOV PI/2
-# define RAY_DISTANCE 1
+# define RAY_DISTANCE 256000
 
 typedef struct s_coord
 {
