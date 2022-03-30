@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 12:18:40 by tallal--          #+#    #+#             */
-/*   Updated: 2022/03/24 17:08:35 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/03/26 22:08:37 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@ int	next_wall(t_info *info, int i, int *x_col, int *y_col)
 	{
 		x = info->raycast.start_point.x + t * (info->raycast.end_point.x - \
 			info->raycast.start_point.x);
+		//printf("x1 = %d\n", x);
+		//printf("rect.x = %d\n", info->map[i].rect.x);
+		//printf("rect.x + WW = %d\n", info->map[i].rect.x + WALL_W);
 		if (x >= info->map[i].rect.x && x <= info->map[i].rect.x + WALL_W)
 		{
 			if (info->raycast.start_point.y < info->raycast.end_point.y)
@@ -118,6 +121,7 @@ int	raycasting(t_info *info, double angle, int *x, int *y)
 	while (!info->map[pos].is_wall)
 	{
 		pos = next_wall(info, pos, x, y);
+		//printf("pos = %d\n", pos);
 		if (pos == -1)
 			return (0);
 	}

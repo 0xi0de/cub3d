@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 00:47:00 by tallal--          #+#    #+#             */
-/*   Updated: 2022/03/24 16:38:02 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/03/26 22:08:02 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -378,7 +378,7 @@ t_info	*parser(char *file)
 	}
 	while (get_next_line(fd, &line) > 0)
 	{
-		printf("line = %s\n", line);
+		//printf("line = %s\n", line);
 		map_txt = tabjoin(map_txt, line);
 	}
 	info = create_info(map_txt);
