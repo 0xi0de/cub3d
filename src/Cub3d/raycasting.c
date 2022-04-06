@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 12:18:40 by tallal--          #+#    #+#             */
-/*   Updated: 2022/03/26 22:08:37 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/03/30 18:29:56 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,15 @@ int	next_wall(t_info *info, int i, int *x_col, int *y_col)
 	int		x;
 	int		y;
 
+	// t = L'emplacement du mur le plus proche dans la direction recherche, on va ensuite calculer l'endroit exact avec le x ou le y restant qui sera la seul valeur modulable en fonction de l'angle
 	t = find_tx(info->raycast, info->map[i].rect.x + WALL_W);
+	//printf("%d\n",  info->map[i].rect.x );
+	//CHECK A DROITE
 	if (t >= 0 && t <= 1)
 	{
 		y = info->raycast.start_point.y + t * (info->raycast.end_point.y - \
 			info->raycast.start_point.y);
-		if (y >= info->map[i].rect.y && y <= info->map[i].rect.y + WALL_H)
+		if (y >= info->map[i].rect.y && y < info->map[i].rect.y + WALL_H)
 		{
 			if (info->raycast.start_point.x < info->raycast.end_point.x)
 			{
@@ -52,6 +55,7 @@ int	next_wall(t_info *info, int i, int *x_col, int *y_col)
 		}
 	}
 	t = find_ty(info->raycast, info->map[i].rect.y + WALL_H);
+	//CHECK EN BAS
 	if (t >= 0 && t <= 1)
 	{
 		x = info->raycast.start_point.x + t * (info->raycast.end_point.x - \
@@ -59,7 +63,7 @@ int	next_wall(t_info *info, int i, int *x_col, int *y_col)
 		//printf("x1 = %d\n", x);
 		//printf("rect.x = %d\n", info->map[i].rect.x);
 		//printf("rect.x + WW = %d\n", info->map[i].rect.x + WALL_W);
-		if (x >= info->map[i].rect.x && x <= info->map[i].rect.x + WALL_W)
+		if (x >= info->map[i].rect.x && x < info->map[i].rect.x + WALL_W)
 		{
 			if (info->raycast.start_point.y < info->raycast.end_point.y)
 			{
@@ -70,6 +74,7 @@ int	next_wall(t_info *info, int i, int *x_col, int *y_col)
 		}
 	}
 	t = find_tx(info->raycast, info->map[i].rect.x);
+	//CHECK A GAUCHE
 	if (t >= 0 && t <= 1)
 	{
 		y = info->raycast.start_point.y + t * (info->raycast.end_point.y - \
@@ -85,6 +90,7 @@ int	next_wall(t_info *info, int i, int *x_col, int *y_col)
 		}
 	}
 	t = find_ty(info->raycast, info->map[i].rect.y);
+	//CHECK EN HAUT
 	if (t >= 0 && t <= 1)
 	{
 		x = info->raycast.start_point.x + t * (info->raycast.end_point.x - \
@@ -99,6 +105,28 @@ int	next_wall(t_info *info, int i, int *x_col, int *y_col)
 			}
 			else
 				printf("dans le else 4\n");
+		}
+		else
+			printf(" info->map[i].rect.x= %d et x = %d \n",  info->map[i].rect.x, x);
+	}
+	t = find_ty(info->raycast, info->map[i].rect.y + WALL_H);
+	//CHECK EN BAS
+	if (t >= 0 && t <= 1)
+	{
+
+		x = info->raycast.start_point.x + t * (info->raycast.end_point.x - \
+			info->raycast.start_point.x);
+		//printf("x1 = %d\n", x);
+		//printf("rect.x = %d\n", info->map[i].rect.x);
+		//printf("rect.x + WW = %d\n", info->map[i].rect.x + WALL_W);
+		if (x >= info->map[i].rect.x && x <= info->map[i].rect.x + WALL_W)
+		{
+			if (info->raycast.start_point.y < info->raycast.end_point.y)
+			{
+				*x_col = x;
+				*y_col = info->map[i].rect.y + WALL_H;
+				return (i + info->block_w);
+			}
 		}
 	}
 	return (-1);
@@ -124,6 +152,7 @@ int	raycasting(t_info *info, double angle, int *x, int *y)
 		//printf("pos = %d\n", pos);
 		if (pos == -1)
 			return (0);
+
 	}
 	end.x = *x;
 	end.y = *y;
@@ -154,6 +183,9 @@ void	raycastings(t_info *info, double angle)
 		{
 			render_wall(info, x, y, i, ((i * angle_step) - FOV) / 2);
 		}
+		//else
+		//	render_wall(info, x, y, i, ((i * angle_step) - FOV) / 2);
+			//printf("angle %d\n", info->raycast.end_point.x);
 			//render_wall(info, x, y, i, (i * angle_step) - FOV / 2);
 		i++;
 	}

@@ -142,11 +142,11 @@ void	render_wall(t_info *info, int x, int y, int i, double angle)
 	r = 50 / (float)d;
 	if (r > 1)
 		r = 1;
-	if (d >= SCREEN_W)
-	{
-		//printf("%d\n", d);
-		return ;
-	}
+	// if (d >= SCREEN_W)
+	// {
+	// 	//printf("%d\n", d);
+	// 	return ;
+	// }
 	put_in_img(info, SCREEN_H * r, i);
 	// mlx_put_image_to_window(info->mlx_info.mlx_ptr, info->mlx_info.win_ptr,
 	// 	texture.img, i, d / 2);
