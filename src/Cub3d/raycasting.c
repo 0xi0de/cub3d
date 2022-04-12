@@ -6,7 +6,7 @@
 /*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 12:18:40 by tallal--          #+#    #+#             */
-/*   Updated: 2022/03/30 18:29:56 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/04/06 16:22:33 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,7 @@ int	next_wall(t_info *info, int i, int *x_col, int *y_col)
 				*y_col = info->map[i].rect.y;
 				return (i - info->block_w);
 			}
-			else
-				printf("dans le else 4\n");
 		}
-		else
-			printf(" info->map[i].rect.x= %d et x = %d \n",  info->map[i].rect.x, x);
 	}
 	t = find_ty(info->raycast, info->map[i].rect.y + WALL_H);
 	//CHECK EN BAS
@@ -160,6 +156,33 @@ int	raycasting(t_info *info, double angle, int *x, int *y)
 	return (1);
 }
 
+char	get_wall_pos(t_info *info, int x, int y)
+{
+	int	block_id;
+
+	block_id = get_position(info, x - 1, y - 1);
+	if (x % 100 == 0 && y % 100 != 0)
+	{
+		if (x > info->player.pos.x)
+			return ('W');
+		else
+			return ('E');
+
+	}
+	else if (y % 100 == 0 && x % 100 != 0)
+	{
+		if (y > info->player.pos.y)
+			return ('N');
+		else
+			return ('S');
+	}
+	else
+	{
+		return ('C');//COIN COIN
+	}
+
+}
+
 void	raycastings(t_info *info, double angle)
 {
 	t_color	wall_color;
@@ -177,10 +200,13 @@ void	raycastings(t_info *info, double angle)
 	start_angle = angle - (FOV / 2);
 	i = 0;
 	clear_img(&info->map3D);
-	while (i < SCREEN_W)
+	while (i < 2)
 	{
 		if (raycasting(info, start_angle + i * angle_step, &x, &y))
 		{
+			//printf("res = %d\n", get_position(info, x - 1, y - 1));
+			//printf("x = %d, y = %d\n", x, y);
+			printf("Face du mur = %c\n",get_wall_pos(info, x, y));
 			render_wall(info, x, y, i, ((i * angle_step) - FOV) / 2);
 		}
 		//else
@@ -192,3 +218,4 @@ void	raycastings(t_info *info, double angle)
 	mlx_put_image_to_window(info->mlx_info.mlx_ptr, info->mlx_info.win_ptr,
 		info->map3D.img, 0, 0);
 }
+
