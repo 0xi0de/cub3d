@@ -6,7 +6,7 @@
 /*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 12:18:40 by tallal--          #+#    #+#             */
-/*   Updated: 2022/04/06 16:22:33 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/04/21 17:06:14 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ int	raycasting(t_info *info, double angle, int *x, int *y)
 	}
 	end.x = *x;
 	end.y = *y;
-	draw_line(info->raycast.start_point, end, info);
+	//draw_line(info->raycast.start_point, end, info);
 	return (1);
 }
 
@@ -199,14 +199,18 @@ void	raycastings(t_info *info, double angle)
 	angle_step = FOV / (double)SCREEN_W;
 	start_angle = angle - (FOV / 2);
 	i = 0;
-	clear_img(&info->map3D);
-	while (i < 2)
+	clear_img(info);
+	while (i < SCREEN_W)
 	{
 		if (raycasting(info, start_angle + i * angle_step, &x, &y))
 		{
 			//printf("res = %d\n", get_position(info, x - 1, y - 1));
 			//printf("x = %d, y = %d\n", x, y);
-			printf("Face du mur = %c\n",get_wall_pos(info, x, y));
+			//printf("Face du mur = %c\n",get_wall_pos(info, x, y));
+			info->line.pos_x = i;
+			info->line.raypoint.x = x;
+			info->line.raypoint.y = y;
+			info->line.orientation = get_wall_pos(info, x, y);
 			render_wall(info, x, y, i, ((i * angle_step) - FOV) / 2);
 		}
 		//else
@@ -216,6 +220,6 @@ void	raycastings(t_info *info, double angle)
 		i++;
 	}
 	mlx_put_image_to_window(info->mlx_info.mlx_ptr, info->mlx_info.win_ptr,
-		info->map3D.img, 0, 0);
+		info->img, 0, 0);
 }
 

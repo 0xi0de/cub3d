@@ -6,7 +6,7 @@
 /*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:52 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/03/30 18:32:42 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/04/21 15:28:52 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,26 @@ typedef struct s_player
 	t_coord		pos;
 }	t_player;
 
+typedef struct s_line //line to draw...
+{
+	int		lenght; //taille de la ligne calcul du raycast
+	t_coord	raypoint;
+	int		pos_x; // raycast number
+	char	orientation;
+	int		endian; ///endian bpp size_line de l'image
+	int		bpp;
+	int		size_line;
+	int		img_h;
+	int		img_w;
+}	t_line;
+
+
 typedef struct s_info
 {
+	void		*img;
+	char		*data_img;
+	uint8_t		*pixel_img;
+	t_line		line;
 	int			map_w;
 	int			map_h;
 	int			block_w;
@@ -76,7 +94,7 @@ typedef struct s_info
 }	t_info;
 
 t_info	*init_info(int map_w, int map_h);
-void	clear_img(t_texture *texture);
+void	clear_img(t_info *info);
 t_info	*parser(char *file);
 void	fatal_error(void);
 void	print_map(t_info *info);
@@ -94,6 +112,6 @@ void	ft_exit(t_info *info, int value, int **tab_int, char **tab_char);
 void	render_map(t_info *info);
 void	render_wall(t_info *info, int x, int y, int i, double angle);
 void	render_2D_map(t_info *info);
-void	draw_line(t_coord p1, t_coord p2, t_info *info);
+//void	draw_line(t_coord p1, t_coord p2, t_info *info);
 
 #endif

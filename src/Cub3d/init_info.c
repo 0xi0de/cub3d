@@ -6,7 +6,7 @@
 /*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:21:40 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/03/22 18:15:33 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/04/21 15:02:22 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,16 @@ t_info	*init_info(int map_w, int map_h)
 		fatal_error();
 	info->map_w = map_w;
 	info->map_h = map_h;
-	init_mlx(&info->mlx_info, SCREEN_W * 2, SCREEN_H);
+	init_mlx(&info->mlx_info, SCREEN_W, SCREEN_H);
 	init_player(info);
 	info->block_h = map_h;
 	info->block_w = map_w;
 	init_floor_ceiling(info);
 	init_walls(info);
 	init_texture(&info->mlx_info, &info->map3D, SCREEN_W, SCREEN_H);
+	info->img = mlx_new_image(info->mlx_info.mlx_ptr, SCREEN_W, SCREEN_W);
+	info->data_img = mlx_get_data_addr(info->img, &info->line.bpp, &info->line.size_line, &info->line.endian);
+	info->pixel_img = (uint8_t *)info->data_img;
 	return (info);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:45 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/03/22 18:56:15 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/04/21 15:08:09 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,23 @@ typedef struct s_rect
 	int	h;
 }	t_rect;
 
+
 typedef struct s_texture
 {
-	void			*img;
-	unsigned char	*addr;
-	int				bits_per_pixel;
-	int				bytes_per_pixel;
-	int				line_length;
-	int				endian;
-	t_rect			rect;
+	char 	*sprite;
+	int		width;
+	int		height;
+	void	*img;
+	char	*data_img;
+	uint8_t	*pixel_img;
+	int		endian;
+	int		bpp;
+	int		size_line;
+	int		bits_per_pixel;
+	int		bytes_per_pixel;
+	 t_rect            rect;
 }	t_texture;
+
 
 typedef struct s_element
 {

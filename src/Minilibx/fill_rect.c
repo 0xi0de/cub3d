@@ -12,7 +12,7 @@ void    fill_rect(t_texture *texture, t_color color)
         j = 0;
         while (j < texture->rect.w)
         {
-            pixel = texture->addr + (i * texture->line_length
+            pixel = (unsigned char *)texture->data_img + (i * texture->size_line
                 + j * (texture->bits_per_pixel / 8));
             if (texture->endian)
             {

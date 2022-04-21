@@ -6,7 +6,7 @@
 /*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:05:37 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/03/22 20:01:20 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/04/21 14:18:43 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	render_next_frame(t_info *info)
 	//clear window
 	mlx_clear_window(info->mlx_info.mlx_ptr, info->mlx_info.win_ptr);
 	render_map(info);
-	render_2D_map(info);
+	//render_2D_map(info);
 	raycastings(info, info->player.rotation);
 
 	return (0);
