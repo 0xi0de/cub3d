@@ -85,18 +85,28 @@ void	clear_img(t_info *info)
 {
 	int		i;
 	int		nb_pixel;
-	t_color	color;
+	t_color	 sky;
+	t_color	floor;
 
 	i = 0;
-	//remplacer par le BG
-	color.r = 0x00;
-	color.g = 0x00;
-	color.b = 0x00;
-	color.endian = info->line.endian;
-	nb_pixel = info->line.bpp * SCREEN_H * SCREEN_W;
+	//TODO: remplacer par le BG
+	sky.r = 0x1A;
+	sky.g = 0xA1;
+	sky.b = 0xEA;
+	sky.endian = info->line.endian;
+	floor.r = 0x59;
+	floor.g = 0x43;
+	floor.b = 0x2A;
+	floor.endian = info->line.endian;
+	//nb_pixel = info->line.bpp * SCREEN_H * SCREEN_W;
+	nb_pixel = 4 * SCREEN_H * SCREEN_W;
+	//TODO: Voir si bpp ou 4
 	while (i < nb_pixel)
 	{
-		color_pixel(info->pixel_img + i, color);
+		if (i < nb_pixel / 2)
+			color_pixel(info->pixel_img + i, sky);
+		else
+			color_pixel(info->pixel_img + i, floor);
 		i += 4;
 	}
 }
@@ -155,6 +165,7 @@ void	draw_texture_line(t_texture texture, uint8_t *pixel_img, t_line line)
 	int		dy;
 	float	ratio_x;
 	float	ratio_y;
+	int		index;
 	//printf("raycast:%d  x:%d = y:%d avec lenght: %d;\n", line.pos_x, line.raypoint.x, line.raypoint.y, line.lenght);
 
 	// line.raypoint.x = line.raypoint.x % line.lenght;
@@ -176,7 +187,9 @@ void	draw_texture_line(t_texture texture, uint8_t *pixel_img, t_line line)
 		while (i < line.lenght)
 		{
 			color = get_pxl(line.raypoint.x * ratio_x, i * ratio_y, texture.img);
-			color_pixel(&pixel_img[line.pos_x * 4 + (i + dy) * line.size_line], color);
+			index = line.pos_x * 4 + (i + dy) * line.size_line;
+			if (index > 0 && index < SCREEN_H * SCREEN_W * 4)
+				color_pixel(&pixel_img[index], color);
 			i++;
 		}
 	}
@@ -187,7 +200,11 @@ void	draw_texture_line(t_texture texture, uint8_t *pixel_img, t_line line)
 		while (i < line.lenght)
 		{
 			color = get_pxl(line.raypoint.y * ratio_x, i * ratio_y, texture.img);
-			color_pixel(&pixel_img[line.pos_x * 4 + (i + dy) * line.size_line], color);
+			index = line.pos_x * 4 + (i + dy) * line.size_line;
+			//TODO: voir si condition est assez general (le screen_H...)
+			if (index > 0 && index < SCREEN_H * SCREEN_W * 4)
+				color_pixel(&pixel_img[index], color);
+			// printf("%d\n", line.pos_x * 4 + (i + dy) * line.size_line);
 			i++;
 		}
 	}
@@ -212,8 +229,8 @@ void	render_wall(t_info *info, int x, int y, int i, double angle)
 	r = 50 / (float)d;
 	// if (r > 1.62)
 	// 	r = 1.62;
-	if (r > 1)
-		r = 1;
+	//if (r > 1)
+	//	r = 1;
 	//printf("r=%f\n",r);
 	// if (d >= SCREEN_W)
 	// {
