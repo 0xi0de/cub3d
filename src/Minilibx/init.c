@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:19 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/10 12:41:02 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:57:17 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	init_texture(t_info_mlx	*info_mlx, t_texture *texture, int w, int h)
 {
 	(void)w;
 	(void)h;
-	texture->sprite = "./textures/textures/colorstone.xpm";
+	texture->sprite = "./texture/colorstone.xpm";
 	texture->img = mlx_xpm_file_to_image(info_mlx->mlx_ptr, texture->sprite,
 			&texture->width, &texture->height);
 	texture->data_img = mlx_get_data_addr(texture->img, &texture->bpp,
