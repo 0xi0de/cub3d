@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minilibx.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:45 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/04/21 15:08:09 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/05/16 17:34:16 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 # include "mlx.h"
 # include "stdint.h"
 
-# define W_KEY 13
-# define S_KEY 1
-# define A_KEY 0
-# define D_KEY 2
+# define W_KEY 119
+# define S_KEY 115
+# define A_KEY 97
+# define D_KEY 100
 
 typedef struct s_color
 {
@@ -43,10 +43,9 @@ typedef struct s_rect
 	int	h;
 }	t_rect;
 
-
 typedef struct s_texture
 {
-	char 	*sprite;
+	char	*sprite;
 	int		width;
 	int		height;
 	void	*img;
@@ -57,15 +56,15 @@ typedef struct s_texture
 	int		size_line;
 	int		bits_per_pixel;
 	int		bytes_per_pixel;
-	 t_rect            rect;
+	t_rect	rect;
 }	t_texture;
-
 
 typedef struct s_element
 {
 	t_texture	texture;
 	t_rect		rect;
 	int			is_wall;
+	int			is_void;
 }	t_element;
 
 void	init_texture(t_info_mlx	*info_mlx, t_texture *texture, int w, int h);

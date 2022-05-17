@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dealkey.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:13:20 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/03/04 18:30:28 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/05/16 18:57:23 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 
 int	dealkey(int key, t_info *info)
 {
-	if (key == 53)
-		exit(0);
+	if (key == 65307)
+		final_free(info);
 	if (key == W_KEY)
 		info->player.up = 1;
 	if (key == S_KEY)

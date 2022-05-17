@@ -1,6 +1,6 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Iinclude -Ilib/ -O3 -Ofast -g -fsanitize=address
-LFLAGS = -framework OpenGL -framework AppKit -L./lib -lmlx
+CFLAGS = -Wall -Wextra -Werror -Iinclude -Ilib/# -O3 -Ofast -g -fsanitize=address
+LFLAGS = -lm -L./lib -lmlx -lX11 -lXext
 
 BUILD_DIR = build
 OBJS_DIR = $(BUILD_DIR)/objs
@@ -28,7 +28,7 @@ all: cub3d
 
 $(OBJS_DIR)/%.o: src/%.c Makefile
 	@$(PRECOMPILE)
-	make -C ./lib/
+	make -s -C ./lib/
 	$(CC) $(CFLAGS) -c -o $@ $<
 	@$(POSTCOMPILE)
 

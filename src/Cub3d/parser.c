@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 00:47:00 by tallal--          #+#    #+#             */
-/*   Updated: 2022/03/26 22:08:02 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/16 19:11:55 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,22 +68,6 @@ int	ft_strchr(char *str, char c)
 	return (-1);
 }
 
-// char	*str_overwrite(char *str, int index)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	i = 0;
-// 	j = index + 1;
-// 	while (str && str[j])
-// 	{
-// 		str[i] = str[j];
-// 		j++;
-// 		i++;
-// 	}
-// 	str[i] = '\0';
-// }
-
 void	put_player(t_info *info, int i, int j, char c)
 {
 	info->player.spawn_x = j;
@@ -116,19 +100,17 @@ int	player_spawn(t_info *info, char **map_txt)
 			if (map_txt[i][j] == 'N' || map_txt[i][j] == 'S'
 				|| map_txt[i][j] == 'E' || map_txt[i][j] == 'W')
 			{
-				if (check_double)
-					return (-1);
 				put_player(info, i, j, map_txt[i][j]);
-				check_double = 1;
+				check_double++;
 				map_txt[i][j] = '0';
 			}
 			j++;
 		}
 		i++;
 	}
-	if (!check_double)
-		return (-1);
-	return (0);
+	if (!check_double || check_double > 1)
+		return (0);
+	return (1);
 }
 
 int	get_next_line(int fd, char **line)
@@ -224,7 +206,7 @@ int	map_char_to_int(char c)
 		return (-1);
 }
 
-int **fill_map_int(char **map_txt, int line_len, int nb_line)
+int	**fill_map_int(char **map_txt, int line_len, int nb_line)
 {
 	int	**map_int;
 	int	i;
@@ -308,9 +290,17 @@ void	fill_map(t_info *info, int **map_int, int line_len, int nb_line)
 		while (j < line_len)
 		{
 			if (map_int[i][j] == 1)
+			{
 				info->map[i * line_len + j].is_wall = 1;
-			else
+				info->map[i * line_len + j].is_void = 1;
+			}
+			else if (map_int[i][j] == 0)
+			{
+				info->map[i * line_len + j].is_void = 0;
 				info->map[i * line_len + j].is_wall = 0;
+			}
+			else
+				info->map[i * line_len + j].is_wall = 1;
 			info->map[i * line_len + j].rect.w = WALL_W;
 			info->map[i * line_len + j].rect.h = WALL_H;
 			info->map[i * line_len + j].rect.x = j * WALL_W;
@@ -319,6 +309,7 @@ void	fill_map(t_info *info, int **map_int, int line_len, int nb_line)
 		}
 		i++;
 	}
+	deltab((char **)map_int);
 }
 
 int		parse_map(t_info *info, char **map_txt)
@@ -337,14 +328,15 @@ int		parse_map(t_info *info, char **map_txt)
 	}
 	map_int = fill_map_int(map_txt, line_len, i);
 	if (check_map(map_int, line_len) == -1)
-			ft_exit(info, 1, map_int, map_txt);
+		ft_exit(info, 1, map_int, map_txt);
 	fill_map(info, map_int, line_len, i);
+	deltab(map_txt);
 	return (0);
 }
 
 t_info	*create_info(char **map_txt)
 {
-	int i;
+	int	i;
 	int	w;
 	int	h;
 
@@ -377,10 +369,8 @@ t_info	*parser(char *file)
 		return (NULL);
 	}
 	while (get_next_line(fd, &line) > 0)
-	{
-		//printf("line = %s\n", line);
 		map_txt = tabjoin(map_txt, line);
-	}
+	free(line);
 	info = create_info(map_txt);
 	player_spawn(info, map_txt);
 	if (parse_map(info, map_txt) < 0)

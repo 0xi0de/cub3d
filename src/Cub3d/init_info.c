@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_info.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:21:40 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/04/21 15:02:22 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/05/16 19:31:33 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	init_player(t_info *info)
 
 void	init_walls(t_info *info)
 {
-	int	i;
+	int		i;
 	t_color	wall_color;
 
 	i = 0;
@@ -42,13 +42,13 @@ void	init_walls(t_info *info)
 	wall_color.r = 0xFF;
 	wall_color.g = 0xFF;
 	wall_color.b = 0xFF;
-	init_texture(&info->mlx_info, &info->wall_texture2D, WALL_W, WALL_H);
-	fill_rect(&info->wall_texture2D, wall_color);
+	init_texture(&info->mlx_info, &info->wall_texture2d, WALL_W, WALL_H);
+	fill_rect(&info->wall_texture2d, wall_color);
 	wall_color.r = 0x0;
 	wall_color.g = 0x0;
 	wall_color.b = 0x0;
-	init_texture(&info->mlx_info, &info->map2D, SCREEN_W, SCREEN_H);
-	fill_rect(&info->map2D, wall_color);
+	init_texture(&info->mlx_info, &info->map2d, SCREEN_W, SCREEN_H);
+	fill_rect(&info->map2d, wall_color);
 }
 
 void	init_floor_ceiling(t_info *info)
@@ -77,6 +77,8 @@ void	init_floor_ceiling(t_info *info)
 	fill_rect(&info->ceiling.texture, color_ceil);
 }
 
+#include <stdio.h>
+
 t_info	*init_info(int map_w, int map_h)
 {
 	t_info		*info;
@@ -91,10 +93,11 @@ t_info	*init_info(int map_w, int map_h)
 	info->block_h = map_h;
 	info->block_w = map_w;
 	init_floor_ceiling(info);
-	init_walls(info);
-	init_texture(&info->mlx_info, &info->map3D, SCREEN_W, SCREEN_H);
+	//init_walls(info);
+	init_texture(&info->mlx_info, &info->map3d, SCREEN_W, SCREEN_H);
 	info->img = mlx_new_image(info->mlx_info.mlx_ptr, SCREEN_W, SCREEN_W);
-	info->data_img = mlx_get_data_addr(info->img, &info->line.bpp, &info->line.size_line, &info->line.endian);
+	info->data_img = mlx_get_data_addr(info->img,
+			&info->line.bpp, &info->line.size_line, &info->line.endian);
 	info->pixel_img = (uint8_t *)info->data_img;
 	return (info);
 }
