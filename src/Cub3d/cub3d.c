@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:05:37 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/17 14:19:49 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:45:16 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void	movement(t_info *info, double speed_x, double speed_y)
 	rot = 0;
 	angle = 0;
 	if (info->player.r_rotation)
-		rot += 0.02;
+		rot += 0.05;
 	if (info->player.l_rotation)
-		rot -= 0.02;
+		rot -= 0.05;
 	info->player.rotation += rot;
 	speed_y += info->player.up;
 	speed_y -= info->player.down;
@@ -61,6 +61,7 @@ int	main(int argc, char **argv)
 	if (!info)
 		return (1);
 	print_map(info);
+	//mlx_hook(info->mlx_info.win_ptr, 2, 1L << 0, button_press, info);
 	mlx_hook(info->mlx_info.win_ptr, 2, 1L << 0, dealkey, info);
 	mlx_hook(info->mlx_info.win_ptr, 3, 1L << 1, key_release, info);
 	mlx_loop_hook(info->mlx_info.mlx_ptr, render_next_frame, info);

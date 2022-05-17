@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 01:10:54 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/16 19:22:54 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/17 15:57:12 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,37 +125,35 @@ void	draw_texture_line(t_texture texture, uint8_t *pixel_img, t_line line)
 	int		index;
 	t_color	color;
 
-	i = 0;
+	i = -1;
 	dy = (SCREEN_H - line.lenght) / 2;
 	ratio_x = (float)texture.width / (float)100.0;
 	ratio_y = (float)texture.height / (float)line.lenght;
 	if (line.orientation == 'N' || line.orientation == 'S')
 	{
-		line.raypoint.x = line.raypoint.x % 100;
-		line.raypoint.y = line.raypoint.y % line.lenght;
+		line.raypoint.x = (int)line.raypoint.x % 100;
+		line.raypoint.y = (int)line.raypoint.y % line.lenght;
 
-		while (i < line.lenght)
+		while (++i < line.lenght)
 		{
 			color = get_pxl(line.raypoint.x * ratio_x, i * ratio_y,
 					texture.img);
 			index = line.pos_x * 4 + (i + dy) * line.size_line;
 			if (index > 0 && index < SCREEN_H * SCREEN_W * 4)
 				color_pixel(&pixel_img[index], color);
-			i++;
 		}
 	}
 	else
 	{
-		line.raypoint.x = line.raypoint.x % line.lenght;
-		line.raypoint.y = line.raypoint.y % 100;
-		while (i < line.lenght)
+		line.raypoint.x = (int)line.raypoint.x % line.lenght;
+		line.raypoint.y = (int)line.raypoint.y % 100;
+		while (++i < line.lenght)
 		{
 			color = get_pxl(line.raypoint.y * ratio_x, i * ratio_y,
 					texture.img);
 			index = line.pos_x * 4 + (i + dy) * line.size_line;
 			if (index > 0 && index < SCREEN_H * SCREEN_W * 4)
 				color_pixel(&pixel_img[index], color);
-			i++;
 		}
 	}
 }
@@ -180,30 +178,4 @@ void	render_wall(t_info *info, int x, int y, int i, double angle)
 	(void) i;
 	info->line.lenght = SCREEN_H * r;
 	draw_texture_line(info->map3d, info->pixel_img, info->line);
-}
-
-void	render_2d_map(t_info *info)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	mlx_put_image_to_window(info->mlx_info.mlx_ptr, info->mlx_info.win_ptr,
-		info->map2d.img, SCREEN_W, 0);
-	while (y < info->map_h)
-	{
-		x = 0;
-		while (x < info->map_w)
-		{
-			if (info->map[y * info->map_w + x].is_wall)
-			{
-				mlx_put_image_to_window(info->mlx_info.mlx_ptr,
-					info->mlx_info.win_ptr,
-					info->wall_texture2d.img, SCREEN_W + x * WALL_W,
-					y * WALL_H);
-			}
-			x++;
-		}
-		y++;
-	}
 }

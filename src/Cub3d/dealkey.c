@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:13:20 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/16 18:57:23 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:38:39 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 #include "minilibx.h"
 #include <stdio.h>
 #include <stdlib.h>
+
+// int	button_press(int button, int x, int y, t_info *info)
+// {
+	
+// }
 
 int	dealkey(int key, t_info *info)
 {

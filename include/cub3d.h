@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:52 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/16 18:57:01 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:45:06 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 # include "minilibx.h"
 # define MALLOC_FAIL -1
-# define SCREEN_W 1000
-# define SCREEN_H 1000
+# define SCREEN_W 800
+# define SCREEN_H 800
 # define WALL_W 100
 # define WALL_H 100
 # define PLAYER_W 20
@@ -31,8 +31,8 @@
 
 typedef struct s_coord
 {
-	int	x;
-	int	y;
+	double	x;
+	double	y;
 }	t_coord;
 
 typedef struct s_raycast
@@ -111,6 +111,5 @@ void	put_player(t_info *info, int i, int j, char c);
 void	ft_exit(t_info *info, int value, int **tab_int, char **tab_char);
 void	render_map(t_info *info);
 void	render_wall(t_info *info, int x, int y, int i, double angle);
-void	render_2d_map(t_info *info);
 
 #endif

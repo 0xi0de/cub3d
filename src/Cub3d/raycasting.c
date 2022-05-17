@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 12:18:40 by tallal--          #+#    #+#             */
-/*   Updated: 2022/05/16 18:35:28 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/17 15:58:18 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,21 +117,16 @@ int	next_wall(t_info *info, int i, int *x_col, int *y_col)
 int	raycasting(t_info *info, double angle, int *x, int *y)
 {
 	int		pos;
-	
+
 	info->raycast.start_point.x = info->player.pos.x;
 	info->raycast.start_point.y = info->player.pos.y;
 	*x = info->raycast.start_point.x;
 	*y = info->raycast.start_point.y;
 	pos = get_position(info, *x, *y);
 	if (pos == -1 || pos >= info->map_h * info->map_w)
-	{
-		return (0);	
-	}
-	if (info->map[pos].is_void)
-	{
-		//printf("---IS VOID MAGGLE\n");
 		return (0);
-	}
+	if (info->map[pos].is_void)
+		return (0);
 	info->raycast.end_point.x = info->raycast.start_point.x
 		+ cos(angle) * RAY_DISTANCE;
 	info->raycast.end_point.y = info->raycast.start_point.y
@@ -139,13 +134,8 @@ int	raycasting(t_info *info, double angle, int *x, int *y)
 	while (!info->map[pos].is_wall)
 	{
 		pos = next_wall(info, pos, x, y);
-		//printf("pos = %d\n", pos);
-		if (pos == -1 || pos >= info->map_h * info->map_w)
-			{
-				put_player(info, info->player.spawn_x, info->player.spawn_y, 'N');
-				printf("---ICI\n");
-				return (0);
-			}
+		if (pos == -1)
+			return (0);
 	}
 	return (1);
 }
