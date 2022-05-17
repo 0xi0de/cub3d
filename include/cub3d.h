@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:52 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/17 16:45:06 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/17 18:21:04 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void	fatal_error(void);
 void	print_map(t_info *info);
 int		dealkey(int key, t_info *info);
 int		key_release(int key, t_info *info);
+int		button_press(t_info *info);
 int		get_position(t_info *info, int x, int y);
 int		check_wall(t_info *info, int x, int y);
 void	raycastings(t_info *info, double angle);
