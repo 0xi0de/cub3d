@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 12:18:40 by tallal--          #+#    #+#             */
-/*   Updated: 2022/05/17 15:58:18 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/18 17:51:19 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,21 +96,6 @@ int	next_wall(t_info *info, int i, int *x_col, int *y_col)
 			}
 		}
 	}
-	t = find_ty(info->raycast, info->map[i].rect.y + WALL_H);
-	if (t >= 0 && t <= 1)
-	{
-		x = info->raycast.start_point.x + t * (info->raycast.end_point.x - \
-			info->raycast.start_point.x);
-		if (x >= info->map[i].rect.x && x <= info->map[i].rect.x + WALL_W)
-		{
-			if (info->raycast.start_point.y < info->raycast.end_point.y)
-			{
-				*x_col = x;
-				*y_col = info->map[i].rect.y + WALL_H;
-				return (i + info->block_w);
-			}
-		}
-	}
 	return (-1);
 }
 
@@ -162,17 +147,12 @@ char	get_wall_pos(t_info *info, int x, int y)
 
 void	raycastings(t_info *info, double angle)
 {
-	t_color	wall_color;
 	double	start_angle;
 	double	angle_step;
 	int		i;
 	int		x;
 	int		y;
 
-	wall_color.r = 0x0;
-	wall_color.g = 0x0;
-	wall_color.b = 0x0;
-	fill_rect(&info->map2d, wall_color);
 	angle_step = FOV / (double)SCREEN_W;
 	start_angle = angle - (FOV / 2);
 	i = 0;

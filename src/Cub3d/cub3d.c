@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:05:37 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/17 18:04:15 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/18 17:44:51 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+
 
 void	movement(t_info *info, double speed_x, double speed_y)
 {
@@ -45,8 +46,7 @@ void	movement(t_info *info, double speed_x, double speed_y)
 int	render_next_frame(t_info *info)
 {
 	movement(info, 0.0, 0.0);
-	mlx_clear_window(info->mlx_info.mlx_ptr, info->mlx_info.win_ptr);
-	//render_map(info);
+	//mlx_clear_window(info->mlx_info.mlx_ptr, info->mlx_info.win_ptr); // Fait clignoter l'ecran wtf ??
 	raycastings(info, info->player.rotation);
 	return (0);
 }
@@ -61,9 +61,9 @@ int	main(int argc, char **argv)
 	if (!info)
 		return (1);
 	print_map(info);
-	mlx_hook(info->mlx_info.win_ptr, 33, 0L, button_press, info);
 	mlx_hook(info->mlx_info.win_ptr, 2, 1L << 0, dealkey, info);
 	mlx_hook(info->mlx_info.win_ptr, 3, 1L << 1, key_release, info);
+	mlx_hook(info->mlx_info.win_ptr, 33, 0L, button_press, info);
 	mlx_loop_hook(info->mlx_info.mlx_ptr, render_next_frame, info);
 	mlx_loop(info->mlx_info.mlx_ptr);
 	return (0);
