@@ -6,7 +6,7 @@
 /*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 01:10:54 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/19 19:49:38 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/05/19 19:54:44 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,8 +164,8 @@ void	render_wall(t_info *info, int x, int y, double angle)
 	dx = (int)info->player.pos.x - x;
 	dy = (int)info->player.pos.y - y;
 	d = sqrt(dx * dx + dy * dy);
-	d = angle * d;
-	r = (180/PI) / (float)d;
+	d = cos(angle) * d;
+	r =  50 / (float)d;
 	info->line.lenght = SCREEN_H * r;
 	draw_texture_line(info->map3d, info->pixel_img, info->line);
 }
