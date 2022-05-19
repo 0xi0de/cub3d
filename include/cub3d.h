@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:52 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/19 12:00:07 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/19 15:11:27 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 # include "minilibx.h"
 # define MALLOC_FAIL -1
-# define SCREEN_W 1000
-# define SCREEN_H 1000
+# define SCREEN_W 1200
+# define SCREEN_H 1200
 # define WALL_W 100
 # define WALL_H 100
 # define PLAYER_W 20
@@ -102,7 +102,10 @@ int		dealkey(int key, t_info *info);
 int		key_release(int key, t_info *info);
 int		button_press(t_info *info);
 int		get_position(t_info *info, int x, int y);
+double	find_tx(t_raycast ray, int x);
+double	find_ty(t_raycast ray, int y);
 int		check_wall(t_info *info, int x, int y);
+int		next_wall(t_info *info, int i, int *x_col, int *y_col);
 void	raycastings(t_info *info, double angle);
 void	*ft_calloc(unsigned long n);
 char	**deltab(char **str);
@@ -112,6 +115,6 @@ void	free_str(char *str);
 void	put_player(t_info *info, int i, int j, char c);
 void	ft_exit(t_info *info, int value, int **tab_int, char **tab_char);
 void	render_map(t_info *info);
-void	render_wall(t_info *info, int x, int y, int i, double angle);
+void	render_wall(t_info *info, int x, int y, double angle);
 
 #endif

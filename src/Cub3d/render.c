@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 01:10:54 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/19 12:40:59 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/19 15:14:08 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ void	clear_img(t_info *info)
 	t_color	floor;
 
 	i = 0;
-	sky.r = 0x1A;
-	sky.g = 0xA1;
-	sky.b = 0xEA;
+	sky.r = 0xFF;
+	sky.g = 0xFF;
+	sky.b = 0xFF;
 	sky.endian = info->line.endian;
-	floor.r = 0x59;
-	floor.g = 0x43;
-	floor.b = 0x2A;
+	floor.r = 0x16;
+	floor.g = 0x16;
+	floor.b = 0x16;
 	floor.endian = info->line.endian;
 	nb_pixel = 4 * SCREEN_H * SCREEN_W;
 	while (i < nb_pixel)
@@ -84,50 +84,15 @@ void	put_in_img(t_info *info, int d, int pos_x)
 	}
 }
 
-
 void	get_pxl(uint8_t *pixel, int x, int y, t_texture texture)
 {
 	int		aa;
 
 	aa = x * 4 + y * texture.size_line;
 	pixel[0] = texture.data_img[aa];
-	pixel[1]= texture.data_img[aa + 1];
+	pixel[1] = texture.data_img[aa + 1];
 	pixel[2] = texture.data_img[aa + 2];
 	pixel[3] = 0;
-}
-
-void	north_south_face(t_line line, uint8_t *pixel_img,
-		t_texture texture, int dy)
-{
-	float	ratio_x;
-	float	ratio_y;
-	float	aa;
-	float	cc;
-	int		bb;
-	int		index;
-
-	line.i = -1;
-	ratio_x = (float)texture.width / (float)100.0;
-	ratio_y = (float)texture.height / (float)line.lenght;
-	if (line.lenght > SCREEN_H)
-	line.lenght = SCREEN_H;
-	line.raypoint.x = (int)line.raypoint.x % 100;
-	aa = 0;
-	bb = line.raypoint.x * ratio_x;
-	if (dy < 0)
-	{
-		aa = ratio_y * -dy;
-		dy = 0;
-	}
-	cc = line.pos_x * 4 + dy * line.size_line;
-	while (++line.i < line.lenght)
-	{
-		index = cc;
-		if (index > 0 && index < SCREEN_H * SCREEN_W * 4)
-			get_pxl(&pixel_img[index], bb, aa, texture);
-		aa += ratio_y;
-		cc += line.size_line;
-	}
 }
 
 void	draw_texture_line(t_texture texture, uint8_t *pixel_img, t_line line)
@@ -148,7 +113,6 @@ void	draw_texture_line(t_texture texture, uint8_t *pixel_img, t_line line)
 	if (line.lenght > SCREEN_H)
 		line.lenght = SCREEN_H;
 	if (line.orientation == 'N' || line.orientation == 'S')
-		//north_south_face(line, pixel_img, texture, dy);
 	{
 		line.raypoint.x = (int)line.raypoint.x % 100;
 		aa = 0;
@@ -190,7 +154,7 @@ void	draw_texture_line(t_texture texture, uint8_t *pixel_img, t_line line)
 	}
 }
 
-void	render_wall(t_info *info, int x, int y, int i, double angle)
+void	render_wall(t_info *info, int x, int y, double angle)
 {
 	int			dx;
 	int			dy;
@@ -202,8 +166,6 @@ void	render_wall(t_info *info, int x, int y, int i, double angle)
 	d = sqrt(dx * dx + dy * dy);
 	d = cos(angle) * d;
 	r = 50.0 / (float)d;
-
-	(void) i;
 	info->line.lenght = SCREEN_H * r;
 	draw_texture_line(info->map3d, info->pixel_img, info->line);
 }

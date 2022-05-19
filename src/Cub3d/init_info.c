@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:21:40 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/19 12:00:29 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/19 13:46:23 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@ void	init_floor_ceiling(t_info *info)
 	fill_rect(&info->ceiling.texture, color_ceil);
 }
 
-#include <stdio.h>
-
 t_info	*init_info(int map_w, int map_h)
 {
 	t_info		*info;
@@ -93,7 +91,6 @@ t_info	*init_info(int map_w, int map_h)
 	info->block_h = map_h;
 	info->block_w = map_w;
 	init_floor_ceiling(info);
-	//init_walls(info);
 	init_texture(&info->mlx_info, &info->map3d, SCREEN_W, SCREEN_H);
 	info->img = mlx_new_image(info->mlx_info.mlx_ptr, SCREEN_W, SCREEN_W);
 	info->data_img = mlx_get_data_addr(info->img,

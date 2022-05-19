@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:05:37 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/18 17:44:51 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/19 14:54:16 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #include <math.h>
 #include <stdlib.h>
 
-
 void	movement(t_info *info, double speed_x, double speed_y)
 {
 	double	rot;
@@ -25,9 +24,9 @@ void	movement(t_info *info, double speed_x, double speed_y)
 	rot = 0;
 	angle = 0;
 	if (info->player.r_rotation)
-		rot += 0.05;
+		rot += 0.07;
 	if (info->player.l_rotation)
-		rot -= 0.05;
+		rot -= 0.07;
 	info->player.rotation += rot;
 	speed_y += info->player.up;
 	speed_y -= info->player.down;
@@ -36,8 +35,8 @@ void	movement(t_info *info, double speed_x, double speed_y)
 	angle = atan2(speed_x, speed_y) + info->player.rotation;
 	if (speed_x || speed_y)
 	{
-		speed_y = 3 * sin(angle);
-		speed_x = 3 * cos(angle);
+		speed_y = 4 * sin(angle);
+		speed_x = 4 * cos(angle);
 		info->player.pos.y += speed_y;
 		info->player.pos.x += speed_x;
 	}
@@ -46,7 +45,6 @@ void	movement(t_info *info, double speed_x, double speed_y)
 int	render_next_frame(t_info *info)
 {
 	movement(info, 0.0, 0.0);
-	//mlx_clear_window(info->mlx_info.mlx_ptr, info->mlx_info.win_ptr); // Fait clignoter l'ecran wtf ??
 	raycastings(info, info->player.rotation);
 	return (0);
 }

@@ -10,5 +10,6 @@ SRC += src/Cub3d/print_map.c
 SRC += src/Cub3d/raycasting.c
 SRC += src/Cub3d/render.c
 SRC += src/Cub3d/final_free.c
+SRC += src/Cub3d/next_wall.c
 SRC += src/Minilibx/fill_rect.c
 SRC += src/Minilibx/init.c

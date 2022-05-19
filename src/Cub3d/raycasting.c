@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 12:18:40 by tallal--          #+#    #+#             */
-/*   Updated: 2022/05/18 19:40:55 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/19 14:24:36 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,74 +30,74 @@ double	find_ty(t_raycast ray, int y)
 		/ (ray.end_point.y - ray.start_point.y));
 }
 
-int	next_wall(t_info *info, int i, int *x_col, int *y_col)
-{
-	double	t;
-	int		x;
-	int		y;
+// int	next_wall(t_info *info, int i, int *x_col, int *y_col)
+// {
+// 	double	t;
+// 	int		x;
+// 	int		y;
 
-	t = find_tx(info->raycast, info->map[i].rect.x + WALL_W);
-	if (t >= 0 && t <= 1)
-	{
-		y = info->raycast.start_point.y + t * (info->raycast.end_point.y - \
-			info->raycast.start_point.y);
-		if (y >= info->map[i].rect.y && y < info->map[i].rect.y + WALL_H)
-		{
-			if (info->raycast.start_point.x < info->raycast.end_point.x)
-			{
-				*x_col = info->map[i].rect.x + WALL_W;
-				*y_col = y;
-				return (i + 1);
-			}
-		}
-	}
-	t = find_ty(info->raycast, info->map[i].rect.y + WALL_H);
-	if (t >= 0 && t <= 1)
-	{
-		x = info->raycast.start_point.x + t * (info->raycast.end_point.x - \
-			info->raycast.start_point.x);
-		if (x >= info->map[i].rect.x && x < info->map[i].rect.x + WALL_W)
-		{
-			if (info->raycast.start_point.y < info->raycast.end_point.y)
-			{
-				*x_col = x;
-				*y_col = info->map[i].rect.y + WALL_H;
-				return (i + info->block_w);
-			}
-		}
-	}
-	t = find_tx(info->raycast, info->map[i].rect.x);
-	if (t >= 0 && t <= 1)
-	{
-		y = info->raycast.start_point.y + t * (info->raycast.end_point.y - \
-			info->raycast.start_point.y);
-		if (y >= info->map[i].rect.y && y <= info->map[i].rect.y + WALL_H)
-		{
-			if (info->raycast.start_point.x > info->raycast.end_point.x)
-			{
-				*x_col = info->map[i].rect.x;
-				*y_col = y;
-				return (i - 1);
-			}
-		}
-	}
-	t = find_ty(info->raycast, info->map[i].rect.y);
-	if (t >= 0 && t <= 1)
-	{
-		x = info->raycast.start_point.x + t * (info->raycast.end_point.x - \
-			info->raycast.start_point.x);
-		if (x >= info->map[i].rect.x && x <= info->map[i].rect.x + WALL_W)
-		{
-			if (info->raycast.start_point.y > info->raycast.end_point.y)
-			{
-				*x_col = x;
-				*y_col = info->map[i].rect.y;
-				return (i - info->block_w);
-			}
-		}
-	}
-	return (-1);
-}
+// 	t = find_tx(info->raycast, info->map[i].rect.x + WALL_W);
+// 	if (t >= 0 && t <= 1)
+// 	{
+// 		y = info->raycast.start_point.y + t * (info->raycast.end_point.y - 
+// 			info->raycast.start_point.y);
+// 		if (y >= info->map[i].rect.y && y < info->map[i].rect.y + WALL_H)
+// 		{
+// 			if (info->raycast.start_point.x < info->raycast.end_point.x)
+// 			{
+// 				*x_col = info->map[i].rect.x + WALL_W;
+// 				*y_col = y;
+// 				return (i + 1);
+// 			}
+// 		}
+// 	}
+// 	t = find_ty(info->raycast, info->map[i].rect.y + WALL_H);
+// 	if (t >= 0 && t <= 1)
+// 	{
+// 		x = info->raycast.start_point.x + t * (info->raycast.end_point.x - 
+// 			info->raycast.start_point.x);
+// 		if (x >= info->map[i].rect.x && x < info->map[i].rect.x + WALL_W)
+// 		{
+// 			if (info->raycast.start_point.y < info->raycast.end_point.y)
+// 			{
+// 				*x_col = x;
+// 				*y_col = info->map[i].rect.y + WALL_H;
+// 				return (i + info->block_w);
+// 			}
+// 		}
+// 	}
+// 	t = find_tx(info->raycast, info->map[i].rect.x);
+// 	if (t >= 0 && t <= 1)
+// 	{
+// 		y = info->raycast.start_point.y + t * (info->raycast.end_point.y - 
+// 			info->raycast.start_point.y);
+// 		if (y >= info->map[i].rect.y && y <= info->map[i].rect.y + WALL_H)
+// 		{
+// 			if (info->raycast.start_point.x > info->raycast.end_point.x)
+// 			{
+// 				*x_col = info->map[i].rect.x;
+// 				*y_col = y;
+// 				return (i - 1);
+// 			}
+// 		}
+// 	}
+// 	t = find_ty(info->raycast, info->map[i].rect.y);
+// 	if (t >= 0 && t <= 1)
+// 	{
+// 		x = info->raycast.start_point.x + t * (info->raycast.end_point.x - 
+// 			info->raycast.start_point.x);
+// 		if (x >= info->map[i].rect.x && x <= info->map[i].rect.x + WALL_W)
+// 		{
+// 			if (info->raycast.start_point.y > info->raycast.end_point.y)
+// 			{
+// 				*x_col = x;
+// 				*y_col = info->map[i].rect.y;
+// 				return (i - info->block_w);
+// 			}
+// 		}
+// 	}
+// 	return (-1);
+// }
 
 int	raycasting(t_info *info, double angle, int *x, int *y)
 {
@@ -165,7 +165,7 @@ void	raycastings(t_info *info, double angle)
 			info->line.raypoint.x = x;
 			info->line.raypoint.y = y;
 			info->line.orientation = get_wall_pos(info, x, y);
-			render_wall(info, x, y, i, ((i * angle_step) - FOV) / 2);
+			render_wall(info, x, y, ((i * angle_step) - FOV) / 2);
 		}
 		i++;
 	}
