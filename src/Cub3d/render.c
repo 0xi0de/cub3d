@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 01:10:54 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/18 18:12:43 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/19 12:40:59 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,6 @@
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <sys/time.h>
-
-typedef struct timeval	t_timeval;
-
-long	get_time_ms(void)
-{
-	t_timeval		time;
-	unsigned long	t;
-
-	gettimeofday(&time, NULL);
-	t = time.tv_usec / 1000 + time.tv_sec * 1000;
-	return (t);
-}
 
 void	color_pixel(uint8_t *pixel, t_color color)
 {
@@ -75,11 +62,11 @@ void	clear_img(t_info *info)
 
 void	put_in_img(t_info *info, int d, int pos_x)
 {
-	int		i;
-	uint8_t	*pixel;
-	int		dy;
+	int				i;
+	uint8_t			*pixel;
+	int				dy;
 	unsigned char	*aa;
-	t_color	color;
+	t_color			color;
 
 	i = 0;
 	dy = (SCREEN_H - d) / 2;
@@ -98,74 +85,50 @@ void	put_in_img(t_info *info, int d, int pos_x)
 }
 
 
-t_color	get_pxl(int x, int y, void *img)
+void	get_pxl(uint8_t *pixel, int x, int y, t_texture texture)
 {
-	int		endian;
-	int		bpp;
-	int		size_line;
 	int		aa;
-	char	*data;
-	t_color	color;
 
-	data = mlx_get_data_addr(img, &bpp, &size_line, &endian);
-	aa = x * 4 + y * size_line;
-	color.endian = endian;
-	if (color.endian)
-	{
-		color.r = data[aa];
-		color.g = data[aa + 1];
-		color.b = data[aa + 2];
-	}
-	else
-	{
-		color.b = data[aa];
-		color.g = data[aa + 1];
-		color.r = data[aa + 2];
-	}
-	return (color);
+	aa = x * 4 + y * texture.size_line;
+	pixel[0] = texture.data_img[aa];
+	pixel[1]= texture.data_img[aa + 1];
+	pixel[2] = texture.data_img[aa + 2];
+	pixel[3] = 0;
 }
 
-// void	draw_texture_line(t_texture texture, uint8_t *pixel_img, t_line line)
-// {
-// 	int		i;
-// 	int		dy;
-// 	float	ratio_x;
-// 	float	ratio_y;
-// 	int		index;
-// 	t_color	color;
+void	north_south_face(t_line line, uint8_t *pixel_img,
+		t_texture texture, int dy)
+{
+	float	ratio_x;
+	float	ratio_y;
+	float	aa;
+	float	cc;
+	int		bb;
+	int		index;
 
-// 	i = -1;
-// 	dy = (SCREEN_H - line.lenght) / 2;
-// 	ratio_x = (float)texture.width / (float)100.0;
-// 	ratio_y = (float)texture.height / (float)line.lenght;
-// 	if (line.orientation == 'N' || line.orientation == 'S')
-// 	{
-// 		line.raypoint.x = (int)line.raypoint.x % 100;
-// 		line.raypoint.y = (int)line.raypoint.y % line.lenght;
-
-// 		while (++i < line.lenght)
-// 		{
-// 			color = get_pxl((int)line.raypoint.x * ratio_x, i * ratio_y,
-// 					texture.img);
-// 			index = (int)line.pos_x * 4 + (i + dy) * line.size_line;
-// 			if (index > 0 && index < SCREEN_H * SCREEN_W * 4)
-// 				color_pixel(&pixel_img[index], color);
-// 		}
-// 	}
-// 	else
-// 	{
-// 		line.raypoint.x = (int)line.raypoint.x % line.lenght;
-// 		line.raypoint.y = (int)line.raypoint.y % 100;
-// 		while (++i < line.lenght)
-// 		{
-// 			color = get_pxl((int)line.raypoint.y * ratio_x, i * ratio_y,
-// 					texture.img);
-// 			index = (int)line.pos_x * 4 + (i + dy) * line.size_line;
-// 			if (index > 0 && index < SCREEN_H * SCREEN_W * 4)
-// 				color_pixel(&pixel_img[index], color);
-// 		}
-// 	}
-// }
+	line.i = -1;
+	ratio_x = (float)texture.width / (float)100.0;
+	ratio_y = (float)texture.height / (float)line.lenght;
+	if (line.lenght > SCREEN_H)
+	line.lenght = SCREEN_H;
+	line.raypoint.x = (int)line.raypoint.x % 100;
+	aa = 0;
+	bb = line.raypoint.x * ratio_x;
+	if (dy < 0)
+	{
+		aa = ratio_y * -dy;
+		dy = 0;
+	}
+	cc = line.pos_x * 4 + dy * line.size_line;
+	while (++line.i < line.lenght)
+	{
+		index = cc;
+		if (index > 0 && index < SCREEN_H * SCREEN_W * 4)
+			get_pxl(&pixel_img[index], bb, aa, texture);
+		aa += ratio_y;
+		cc += line.size_line;
+	}
+}
 
 void	draw_texture_line(t_texture texture, uint8_t *pixel_img, t_line line)
 {
@@ -173,77 +136,73 @@ void	draw_texture_line(t_texture texture, uint8_t *pixel_img, t_line line)
 	int		dy;
 	float	ratio_x;
 	float	ratio_y;
+	float	aa;
+	float	cc;
+	int		bb;
 	int		index;
-	t_color	color;
-	long	time = 0;
-	static long	 time_tot = 0;
-	long	time2 = 0;
-	static long	time_fct = 0;
-
-
-	time = get_time_ms();
-	if (time_tot > 1000)
-	{
-		printf("tot =%ld, fct_time = %ld\n", time_tot, time_fct);
-		time_tot = 0;
-		time_fct = 0;
-	}
 
 	i = -1;
 	dy = (SCREEN_H - line.lenght) / 2;
 	ratio_x = (float)texture.width / (float)100.0;
 	ratio_y = (float)texture.height / (float)line.lenght;
+	if (line.lenght > SCREEN_H)
+		line.lenght = SCREEN_H;
 	if (line.orientation == 'N' || line.orientation == 'S')
+		//north_south_face(line, pixel_img, texture, dy);
 	{
 		line.raypoint.x = (int)line.raypoint.x % 100;
-		line.raypoint.y = (int)line.raypoint.y % line.lenght;
-		float	aa = 0;
-		int		bb = line.raypoint.x * ratio_x;
-		float	cc = line.pos_x * 4 + dy * line.size_line;
+		aa = 0;
+		bb = line.raypoint.x * ratio_x;
+		if (dy < 0)
+		{
+			aa = ratio_y * -dy;
+			dy = 0;
+		}
+		cc = line.pos_x * 4 + dy * line.size_line;
 		while (++i < line.lenght)
 		{
-			time2 = get_time_ms();
-			color = get_pxl(bb, aa, texture.img);
-			time_fct += get_time_ms() - time2;
 			index = cc;
 			if (index > 0 && index < SCREEN_H * SCREEN_W * 4)
-				color_pixel(&pixel_img[index], color);
+				get_pxl(&pixel_img[index], bb, aa, texture);
 			aa += ratio_y;
 			cc += line.size_line;
 		}
 	}
 	else
 	{
-		line.raypoint.x = (int)line.raypoint.x % line.lenght;
 		line.raypoint.y = (int)line.raypoint.y % 100;
-		float	aa = 0;
-		int		bb = line.raypoint.y * ratio_x;
-		float	cc = line.pos_x * 4 + dy * line.size_line;
+		aa = 0;
+		bb = line.raypoint.y * ratio_x;
+		if (dy < 0)
+		{
+			aa = ratio_y * -dy;
+			dy = 0;
+		}
+		cc = line.pos_x * 4 + dy * line.size_line;
 		while (++i < line.lenght)
 		{
-			color = get_pxl(bb, aa, texture.img);
 			index = cc;
 			if (index > 0 && index < SCREEN_H * SCREEN_W * 4)
-				color_pixel(&pixel_img[index], color);
+				get_pxl(&pixel_img[index], bb, aa, texture);
 			aa += ratio_y;
 			cc += line.size_line;
 		}
 	}
-	time_tot += get_time_ms() - time;
 }
 
 void	render_wall(t_info *info, int x, int y, int i, double angle)
 {
 	int			dx;
 	int			dy;
-	int			d;
+	float		d;
 	float		r;
 
 	dx = (int)info->player.pos.x - x;
 	dy = (int)info->player.pos.y - y;
 	d = sqrt(dx * dx + dy * dy);
 	d = cos(angle) * d;
-	r = 50 / (float)d;
+	r = 50.0 / (float)d;
+
 	(void) i;
 	info->line.lenght = SCREEN_H * r;
 	draw_texture_line(info->map3d, info->pixel_img, info->line);

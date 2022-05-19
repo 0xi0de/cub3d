@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Iinclude -Ilib/ #-O3 -Ofast #-g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -Iinclude -Ilib/ -O3 -Ofast
 LFLAGS = -lm -L./lib -lmlx -lX11 -lXext
 
 BUILD_DIR = build

@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:52 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/18 12:05:57 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/19 12:00:07 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 # include "minilibx.h"
 # define MALLOC_FAIL -1
-# define SCREEN_W 800
-# define SCREEN_H 800
+# define SCREEN_W 1000
+# define SCREEN_H 1000
 # define WALL_W 100
 # define WALL_H 100
 # define PLAYER_W 20
@@ -66,6 +66,7 @@ typedef struct s_line
 	int		size_line;
 	int		img_h;
 	int		img_w;
+	int		i;
 }	t_line;
 
 typedef struct s_info

@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:21:40 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/16 19:31:33 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/19 12:00:29 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,27 +101,3 @@ t_info	*init_info(int map_w, int map_h)
 	info->pixel_img = (uint8_t *)info->data_img;
 	return (info);
 }
-
-	// while (i < map_h)
-	// {
-	// 	j = 0;
-	// 	while (j < map_w)
-	// 	{
-	// 		if (map[i][j])
-	// 		{
-	// 			info->map[i * map_w + j].is_wall = 1;
-	// 			info->map[i * map_w + j].texture = &info->wall_texture;
-	// 		}
-	// 		else
-	// 		{
-	// 			info->map[i * map_w + j].is_wall = 0;
-	// 			info->map[i * map_w + j].texture = NULL;
-	// 		}
-	// 		info->map[i * map_w + j].rect.w = WALL_W;
-	// 		info->map[i * map_w + j].rect.h = WALL_H;
-	// 		info->map[i * map_w + j].rect.x = j * WALL_W;
-	// 		info->map[i * map_w + j].rect.y = i * WALL_H;
-	// 		j++;
-	// 	}
-	// 	i++;
-	// }
