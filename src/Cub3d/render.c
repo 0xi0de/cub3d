@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 01:10:54 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/19 15:14:08 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/19 19:49:38 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,8 +164,8 @@ void	render_wall(t_info *info, int x, int y, double angle)
 	dx = (int)info->player.pos.x - x;
 	dy = (int)info->player.pos.y - y;
 	d = sqrt(dx * dx + dy * dy);
-	d = cos(angle) * d;
-	r = 50.0 / (float)d;
+	d = angle * d;
+	r = (180/PI) / (float)d;
 	info->line.lenght = SCREEN_H * r;
 	draw_texture_line(info->map3d, info->pixel_img, info->line);
 }
