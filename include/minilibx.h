@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:45 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/16 17:34:16 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/26 13:30:54 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ typedef struct s_rect
 
 typedef struct s_texture
 {
-	char	*sprite;
+	char	*north_sprite;
+	char	*south_sprite;
+	char	*east_sprite;
+	char	*west_sprite;
 	int		width;
 	int		height;
 	void	*img;
