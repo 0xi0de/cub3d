@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 12:18:40 by tallal--          #+#    #+#             */
-/*   Updated: 2022/05/26 13:06:05 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/26 18:40:15 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,15 @@ void	raycastings(t_info *info, double angle)
 			info->line.raypoint.x = x;
 			info->line.raypoint.y = y;
 			info->line.orientation = get_wall_pos(info, x, y);
-			render_wall(info, x, y, ((i * angle_step) - FOV) / 2);
+			// render_wall(info, x, y, ((i * angle_step) - FOV) / 2);
+			// if ((i * angle_step) < FOV/2 )
+			// 	render_wall(info, x, y, (i * angle_step) - (FOV/2));
+			// else
+			// 	render_wall(info, x, y, (FOV - (i * angle_step)) - (FOV/2));
+			if ((i * angle_step) < FOV/2 )
+				render_wall(info, x, y, (FOV /2 - (i * angle_step )));
+			else
+				render_wall(info, x, y, ((i * angle_step) ) - FOV / 2);
 		}
 		i++;
 	}

@@ -386,6 +386,12 @@ void	fill_textures(char *str, int *count, t_texture texture)
 	if (c == 'N')
 	{
 		texture.north_sprite = ft_strdup(str + i);
+		*count++;
+	}
+	else if (c = 'S')
+	{
+		texture.south_sprite = ft_strdup(str + i);
+		*count++;
 	}
 }
 
