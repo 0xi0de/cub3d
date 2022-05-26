@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 12:18:40 by tallal--          #+#    #+#             */
-/*   Updated: 2022/05/19 14:24:36 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/26 13:06:05 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ void	raycastings(t_info *info, double angle)
 	int		y;
 
 	angle_step = FOV / (double)SCREEN_W;
+	//printf("---%f\n", angle_step);
 	start_angle = angle - (FOV / 2);
 	i = 0;
 	clear_img(info);

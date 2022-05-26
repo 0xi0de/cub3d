@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 01:10:54 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/19 15:14:08 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/19 15:23:26 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,16 +97,15 @@ void	get_pxl(uint8_t *pixel, int x, int y, t_texture texture)
 
 void	draw_texture_line(t_texture texture, uint8_t *pixel_img, t_line line)
 {
-	int		i;
 	int		dy;
+	int		index;
 	float	ratio_x;
 	float	ratio_y;
 	float	aa;
 	float	cc;
 	int		bb;
-	int		index;
 
-	i = -1;
+	line.i = -1;
 	dy = (SCREEN_H - line.lenght) / 2;
 	ratio_x = (float)texture.width / (float)100.0;
 	ratio_y = (float)texture.height / (float)line.lenght;
@@ -123,7 +122,7 @@ void	draw_texture_line(t_texture texture, uint8_t *pixel_img, t_line line)
 			dy = 0;
 		}
 		cc = line.pos_x * 4 + dy * line.size_line;
-		while (++i < line.lenght)
+		while (++line.i < line.lenght)
 		{
 			index = cc;
 			if (index > 0 && index < SCREEN_H * SCREEN_W * 4)
@@ -143,7 +142,7 @@ void	draw_texture_line(t_texture texture, uint8_t *pixel_img, t_line line)
 			dy = 0;
 		}
 		cc = line.pos_x * 4 + dy * line.size_line;
-		while (++i < line.lenght)
+		while (++line.i < line.lenght)
 		{
 			index = cc;
 			if (index > 0 && index < SCREEN_H * SCREEN_W * 4)
@@ -156,16 +155,16 @@ void	draw_texture_line(t_texture texture, uint8_t *pixel_img, t_line line)
 
 void	render_wall(t_info *info, int x, int y, double angle)
 {
-	int			dx;
-	int			dy;
-	float		d;
+	double		dx;
+	double		dy;
+	double		d;
 	float		r;
 
-	dx = (int)info->player.pos.x - x;
-	dy = (int)info->player.pos.y - y;
+	dx = info->player.pos.x - x;
+	dy = info->player.pos.y - y;
 	d = sqrt(dx * dx + dy * dy);
 	d = cos(angle) * d;
-	r = 50.0 / (float)d;
+	r = 50.0 / d;
 	info->line.lenght = SCREEN_H * r;
 	draw_texture_line(info->map3d, info->pixel_img, info->line);
 }

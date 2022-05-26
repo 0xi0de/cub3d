@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 00:47:00 by tallal--          #+#    #+#             */
-/*   Updated: 2022/05/16 19:11:55 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/26 14:35:23 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -354,9 +354,45 @@ t_info	*create_info(char **map_txt)
 	return (init_info(w, h));
 }
 
+char	check_char(char *str, int *i)
+{
+	while (str[*i] && str[*i] == ' ')
+		i++;
+	if (str[*i] && str[*i + 1])
+	{
+		if (str[*i] == 'N' && str[*i + 1] == 'O')
+			return ('N');
+		else if (str[*i] == 'S' && str[*i + 1] == 'O')
+			return ('S');
+		else if (str[*i] == 'W' && str[*i + 1] == 'E')
+			return ('W');
+		else if (str[*i] == 'E' && str[*i + 1] == 'A')
+			return ('E');
+		else if (str[*i] == 'C')
+			return ('C');
+		else if (str[*i] == 'F')
+			return ('F');
+	}
+	return ('X');
+}
+
+void	fill_textures(char *str, int *count, t_texture texture)
+{
+	char	c;
+	int		i;
+
+	i = 0;
+	c = check_char(str, &i);
+	if (c == 'N')
+	{
+		texture.north_sprite = ft_strdup(str + i);
+	}
+}
+
 t_info	*parser(char *file)
 {
 	int		fd;
+	int		count;
 	char	*line;
 	char	**map_txt;
 	t_info	*info;
@@ -368,6 +404,8 @@ t_info	*parser(char *file)
 		perror("");
 		return (NULL);
 	}
+	while (get_next_line(fd, &line) > 0 && count < 6)
+		fill_textures(line, &count, info->map3d);
 	while (get_next_line(fd, &line) > 0)
 		map_txt = tabjoin(map_txt, line);
 	free(line);
