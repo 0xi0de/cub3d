@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:52 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/19 15:11:27 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/26 17:08:56 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define RL_KEY 65361
 # define RR_KEY 65363
 # define PI 3.14159265
-# define FOV 1.57079632
+# define FOV PI / 4
 # define RAY_DISTANCE 256000
 
 typedef struct s_coord

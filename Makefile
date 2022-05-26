@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Iinclude -Ilib
+CFLAGS = -Iinclude -Ilib
 LFLAGS = -lm -L./lib -lmlx -lX11 -lXext
 
 BUILD_DIR = build

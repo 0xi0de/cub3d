@@ -6,7 +6,7 @@
 /*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 01:10:54 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/19 19:54:44 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/05/26 17:37:51 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,13 +108,13 @@ void	draw_texture_line(t_texture texture, uint8_t *pixel_img, t_line line)
 
 	i = -1;
 	dy = (SCREEN_H - line.lenght) / 2;
-	ratio_x = (float)texture.width / (float)100.0;
+	ratio_x = (float)texture.width / (float)WALL_H;
 	ratio_y = (float)texture.height / (float)line.lenght;
 	if (line.lenght > SCREEN_H)
 		line.lenght = SCREEN_H;
 	if (line.orientation == 'N' || line.orientation == 'S')
 	{
-		line.raypoint.x = (int)line.raypoint.x % 100;
+		line.raypoint.x = (int)line.raypoint.x % WALL_W;
 		aa = 0;
 		bb = line.raypoint.x * ratio_x;
 		if (dy < 0)
@@ -134,7 +134,7 @@ void	draw_texture_line(t_texture texture, uint8_t *pixel_img, t_line line)
 	}
 	else
 	{
-		line.raypoint.y = (int)line.raypoint.y % 100;
+		line.raypoint.y = (int)line.raypoint.y % WALL_H;
 		aa = 0;
 		bb = line.raypoint.y * ratio_x;
 		if (dy < 0)
@@ -164,8 +164,9 @@ void	render_wall(t_info *info, int x, int y, double angle)
 	dx = (int)info->player.pos.x - x;
 	dy = (int)info->player.pos.y - y;
 	d = sqrt(dx * dx + dy * dy);
+	// printf("FOV = %f, angle = %f\n", FOV, angle);
 	d = cos(angle) * d;
-	r =  50 / (float)d;
+	r =  (WALL_H / 0.41421356237 / 2.0) / (float)d;
 	info->line.lenght = SCREEN_H * r;
 	draw_texture_line(info->map3d, info->pixel_img, info->line);
 }
