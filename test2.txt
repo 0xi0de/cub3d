@@ -1,3 +1,7 @@
+EA ./texture/redbrick.xpm
+SO ./texture/redbrick.xpm
+SO ./texture/colorstone.xpm
+NO ./texture/greystone.xpm
 
 
 
@@ -8,6 +12,29 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+WE ./texture/purplestone.xpm
+
+
+
+
+
+
+
+F 220,100,0
+C 225,30,0
 
 
 

@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 00:47:00 by tallal--          #+#    #+#             */
-/*   Updated: 2022/05/26 14:35:23 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/27 18:39:16 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -334,7 +334,7 @@ int		parse_map(t_info *info, char **map_txt)
 	return (0);
 }
 
-t_info	*create_info(char **map_txt)
+t_info	*create_info(char **map_txt, char **sprites)
 {
 	int	i;
 	int	w;
@@ -351,22 +351,42 @@ t_info	*create_info(char **map_txt)
 	}
 	if (w == 0 || h == 0)
 		return (NULL);
-	return (init_info(w, h));
+	return (init_info(w, h, sprites));
+}
+
+char	*ft_strdup(char *str)
+{
+	int		i;
+	int		size;
+	char	*dup;
+
+	i = 0;
+	size = ft_strlen(str);
+	dup = malloc(sizeof(char) * (size + 1));
+	if (!dup)
+		return (NULL);
+	while (str[i])
+	{
+		dup[i] = str[i];
+		i++;
+	}
+	dup[i] = '\0';
+	return (dup);
 }
 
 char	check_char(char *str, int *i)
 {
 	while (str[*i] && str[*i] == ' ')
-		i++;
-	if (str[*i] && str[*i + 1])
+		(*i)++;
+	if (str[*i] && str[(*i) + 1])
 	{
-		if (str[*i] == 'N' && str[*i + 1] == 'O')
+		if (str[*i] == 'N' && str[(*i) + 1] == 'O')
 			return ('N');
-		else if (str[*i] == 'S' && str[*i + 1] == 'O')
+		else if (str[*i] == 'S' && str[(*i) + 1] == 'O')
 			return ('S');
-		else if (str[*i] == 'W' && str[*i + 1] == 'E')
+		else if (str[*i] == 'W' && str[(*i) + 1] == 'E')
 			return ('W');
-		else if (str[*i] == 'E' && str[*i + 1] == 'A')
+		else if (str[*i] == 'E' && str[(*i) + 1] == 'A')
 			return ('E');
 		else if (str[*i] == 'C')
 			return ('C');
@@ -376,7 +396,7 @@ char	check_char(char *str, int *i)
 	return ('X');
 }
 
-void	fill_textures(char *str, int *count, t_texture texture)
+void	fill_textures(char *str, int *count, char **sprites)
 {
 	char	c;
 	int		i;
@@ -385,13 +405,34 @@ void	fill_textures(char *str, int *count, t_texture texture)
 	c = check_char(str, &i);
 	if (c == 'N')
 	{
-		texture.north_sprite = ft_strdup(str + i);
-		*count++;
+		sprites[0] = ft_strdup(str + i + 3);
+		(*count)++;
 	}
-	else if (c = 'S')
+	else if (c == 'S')
 	{
-		texture.south_sprite = ft_strdup(str + i);
-		*count++;
+		if (sprites[1] == NULL)
+			(*count)++;
+		sprites[1] = ft_strdup(str + i + 3);
+	}
+	else if (c == 'E')
+	{
+		sprites[2] = ft_strdup(str + i + 3);
+		(*count)++;
+	}
+	else if (c == 'W')
+	{
+		sprites[3] = ft_strdup(str + i + 3);
+		(*count)++;
+	}
+	else if (c == 'F')
+	{
+		sprites[4] = ft_strdup(str + i + 2);
+		(*count)++;
+	}
+	else if (c == 'C')
+	{
+		sprites[5] = ft_strdup(str + i + 2);
+		(*count)++;
 	}
 }
 
@@ -401,21 +442,29 @@ t_info	*parser(char *file)
 	int		count;
 	char	*line;
 	char	**map_txt;
+	char	**sprites;
 	t_info	*info;
 
 	map_txt = NULL;
+	sprites = malloc(sizeof(char *) * 6);
+	// proteCC
 	fd = open(file, O_RDONLY);
+	count = 0;
 	if (fd == -1)
 	{
 		perror("");
 		return (NULL);
 	}
 	while (get_next_line(fd, &line) > 0 && count < 6)
-		fill_textures(line, &count, info->map3d);
+	{
+		fill_textures(line, &count, sprites);
+		printf("count = %d\n", count);
+		printf("sprite = %s\n", sprites[count - 1]);
+	}
 	while (get_next_line(fd, &line) > 0)
 		map_txt = tabjoin(map_txt, line);
 	free(line);
-	info = create_info(map_txt);
+	info = create_info(map_txt, sprites);
 	player_spawn(info, map_txt);
 	if (parse_map(info, map_txt) < 0)
 		return (NULL);

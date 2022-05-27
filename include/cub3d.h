@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:52 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/26 18:46:25 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/05/27 18:11:08 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,11 @@ typedef struct s_info
 	int			block_w;
 	int			block_h;
 	char		*path;
+	char		**sprites;
 	t_info_mlx	mlx_info;
-	t_texture	wall_texture[SCREEN_W];
 	t_player	player;
 	t_texture	wall_texture2d;
-	t_texture	map3d;
+	t_texture	map3d[4];
 	t_raycast	raycast;
 	t_texture	map2d;
 	t_element	floor;
@@ -92,7 +92,8 @@ typedef struct s_info
 	t_element	map[];
 }	t_info;
 
-t_info	*init_info(int map_w, int map_h);
+t_info	*init_info(int map_w, int map_h, char **sprites);
+char	*ft_strdup(char *str);
 void	final_free(t_info *info);
 void	clear_img(t_info *info);
 t_info	*parser(char *file);

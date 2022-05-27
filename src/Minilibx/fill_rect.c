@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 12:46:40 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/10 12:46:43 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/27 18:28:02 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	fill_rect(t_texture *texture, t_color color)
 	j = 0;
 		while (j < texture->rect.w)
 		{
-			pixel = (unsigned char *)texture->data_img + (i * texture->size_line
-					+ j * (texture->bits_per_pixel / 8));
+			pixel = (unsigned char *)texture->data_img
+				+ (i * texture->size_line + j * (texture->bits_per_pixel / 8));
 			if (texture->endian)
 				one_way(pixel, color);
 			else

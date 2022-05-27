@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:21:40 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/19 13:46:23 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/27 18:27:10 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,13 @@ void	init_walls(t_info *info)
 	wall_color.r = 0xC0;
 	wall_color.g = 0x7A;
 	wall_color.b = 0x4B;
-	while (i < SCREEN_W)
-	{
-		init_texture(&info->mlx_info, info->wall_texture + i, 1, SCREEN_H - i);
-		fill_rect(info->wall_texture + i, wall_color);
-		i++;
-	}
 	wall_color.r = 0xFF;
 	wall_color.g = 0xFF;
 	wall_color.b = 0xFF;
-	init_texture(&info->mlx_info, &info->wall_texture2d, WALL_W, WALL_H);
 	fill_rect(&info->wall_texture2d, wall_color);
 	wall_color.r = 0x0;
 	wall_color.g = 0x0;
 	wall_color.b = 0x0;
-	init_texture(&info->mlx_info, &info->map2d, SCREEN_W, SCREEN_H);
 	fill_rect(&info->map2d, wall_color);
 }
 
@@ -70,16 +62,17 @@ void	init_floor_ceiling(t_info *info)
 	info->ceiling.rect.y = 0;
 	info->ceiling.rect.w = SCREEN_W;
 	info->ceiling.rect.h = SCREEN_H / 2;
-	init_texture(&info->mlx_info, &info->ceiling.texture,
-		SCREEN_W, SCREEN_H / 2);
-	init_texture(&info->mlx_info, &info->floor.texture, SCREEN_W, SCREEN_H / 2);
+	// init_texture(&info->mlx_info, &info->map3d,
+	// 	SCREEN_W, SCREEN_H / 2);
+	//init_texture(&info->mlx_info, &info->floor.texture, SCREEN_W, SCREEN_H / 2);
 	fill_rect(&info->floor.texture, color_floor);
 	fill_rect(&info->ceiling.texture, color_ceil);
 }
 
-t_info	*init_info(int map_w, int map_h)
+t_info	*init_info(int map_w, int map_h, char **sprites)
 {
-	t_info		*info;
+	int		i;
+	t_info 	*info;
 
 	info = ft_calloc(sizeof(t_info) + sizeof(t_element) * map_w * map_h);
 	if (!info)
@@ -91,7 +84,12 @@ t_info	*init_info(int map_w, int map_h)
 	info->block_h = map_h;
 	info->block_w = map_w;
 	init_floor_ceiling(info);
-	init_texture(&info->mlx_info, &info->map3d, SCREEN_W, SCREEN_H);
+	i = 0;
+	while (i < 4)
+	{
+		init_texture(&info->mlx_info, &info->map3d[i], sprites[i]);
+		i++;
+	}
 	info->img = mlx_new_image(info->mlx_info.mlx_ptr, SCREEN_W, SCREEN_W);
 	info->data_img = mlx_get_data_addr(info->img,
 			&info->line.bpp, &info->line.size_line, &info->line.endian);

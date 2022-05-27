@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:45 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/26 13:30:54 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/27 18:27:46 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 # define MINILIBX_H
 # include "mlx.h"
-# include "stdint.h"
+# include <stdint.h>
 
 # define W_KEY 119
 # define S_KEY 115
@@ -45,10 +45,6 @@ typedef struct s_rect
 
 typedef struct s_texture
 {
-	char	*north_sprite;
-	char	*south_sprite;
-	char	*east_sprite;
-	char	*west_sprite;
 	int		width;
 	int		height;
 	void	*img;
@@ -70,7 +66,7 @@ typedef struct s_element
 	int			is_void;
 }	t_element;
 
-void	init_texture(t_info_mlx	*info_mlx, t_texture *texture, int w, int h);
+void	init_texture(t_info_mlx	*info_mlx, t_texture *texture, char *file);
 void	init_mlx(t_info_mlx	*info_mlx, int w, int h);
 void	fill_rect(t_texture *texture, t_color color);
 
