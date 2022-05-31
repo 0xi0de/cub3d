@@ -4,9 +4,11 @@ NO ./textures/eagle.xpm
 SO ./textures/greystone.xpm
 EA ./textures/red.xpm
 WE ./textures/purplestone.xpm
+C 255,20 ,30
 
 S ./textures/tonneau.xpm
 F 1, 1, 100
+
 
 
 11111111111111111111111111

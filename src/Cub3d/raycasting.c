@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 12:18:40 by tallal--          #+#    #+#             */
-/*   Updated: 2022/05/31 15:17:09 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/31 18:24:29 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ void	raycastings(t_info *info, double angle)
 	int		i;
 	int		x;
 	int		y;
+	int tmp;
 
 	angle_step = FOV / (double)SCREEN_W;
 	start_angle = angle - (FOV / 2);
@@ -163,9 +164,16 @@ void	raycastings(t_info *info, double angle)
 		if (raycasting(info, start_angle + i * angle_step, &x, &y))
 		{
 			info->line.pos_x = i;
+			info->line.orientation = get_wall_pos(info, x, y);
+			tmp = i;
+			while (info->line.orientation == 'C' && tmp > 0)
+			{
+				tmp--;
+				raycasting(info, start_angle + tmp * angle_step, &x, &y);
+				info->line.orientation = get_wall_pos(info, x, y);
+			}
 			info->line.raypoint.x = x;
 			info->line.raypoint.y = y;
-			info->line.orientation = get_wall_pos(info, x, y);
 			render_wall(info, x, y, FOV / 2 - i * angle_step);
 		}
 		i++;
