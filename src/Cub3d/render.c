@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 01:10:54 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/31 18:25:37 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/31 18:27:33 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,6 @@ void	render_wall(t_info *info, int x, int y, double angle)
 		draw_texture_line(info->map3d[1], info->pixel_img, info->line);
 	else if (info->line.orientation == 'E')
 		draw_texture_line(info->map3d[2], info->pixel_img, info->line);
-	else
+	else if (info->line.orientation == 'W')
 		draw_texture_line(info->map3d[3], info->pixel_img, info->line);
 }
