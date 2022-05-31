@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:05:37 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/31 17:17:28 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/31 18:31:11 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void	movement(t_info *info, double speed_x, double speed_y)
 	angle = atan2(speed_x, speed_y) + info->player.rotation;
 	if (speed_x || speed_y)
 	{
-		speed_y = 4 * sin(angle);
-		speed_x = 4 * cos(angle);
+		speed_y = 7 * sin(angle);
+		speed_x = 7 * cos(angle);
 		info->player.pos.y += speed_y;
 		info->player.pos.x += speed_x;
 	}
