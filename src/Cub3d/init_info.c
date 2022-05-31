@@ -6,12 +6,13 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:21:40 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/27 18:27:10 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/31 17:12:20 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 void	init_player(t_info *info)
 {
@@ -43,17 +44,60 @@ void	init_walls(t_info *info)
 	fill_rect(&info->map2d, wall_color);
 }
 
-void	init_floor_ceiling(t_info *info)
+int	ft_atoi(char *str, t_info *info)
+{
+	long	i;
+	int		neg;
+	long	res;
+
+	i = 0;
+	neg = 1;
+	res = 0;
+	while (str[i] && (str[i] == '\t' || str[i] == '\n' || str[i] == '\f'
+			|| str[i] == '\v' || str[i] == '\r' || str[i] == ' '))
+			i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			neg = -neg;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		res = res * 10 + str[i] - '0';
+		i++;
+	}
+	if (str[i] == ',')
+		info->coma_count++;
+	info->index = i + 1;
+	if (res * neg < 0 || res * neg > 255 || str[0] == '\0' || info->coma_count > 2)
+	{
+		printf("Wrong value for C or F colors\n");
+		final_free(info);
+	}
+	return (res * neg);
+}
+
+void	init_floor_ceiling(t_info *info, char **sprites)
 {
 	t_color	color_floor;
 	t_color	color_ceil;
+	char	*tmp;
 
-	color_ceil.r = 0x3F;
-	color_ceil.g = 0x30;
-	color_ceil.b = 0x17;
-	color_floor.r = 0x70;
-	color_floor.g = 0x70;
-	color_floor.b = 0x70;
+	tmp = sprites[5];
+	info->color_ceil.r = (unsigned char)ft_atoi(sprites[5] += info->index, info);
+	info->color_ceil.g = (unsigned char)ft_atoi(sprites[5] += info->index, info);
+	info->color_ceil.b = (unsigned char)ft_atoi(sprites[5] += info->index, info);
+	info->index = 0;
+	info->coma_count = 0;
+	free(tmp);
+	tmp = sprites[4];
+	info->color_floor.r = (unsigned char)ft_atoi(sprites[4] += info->index, info);
+	info->color_floor.g = (unsigned char)ft_atoi(sprites[4] += info->index, info);
+	info->color_floor.b = (unsigned char)ft_atoi(sprites[4] += info->index, info);
+	free(tmp);
+	sprites[4] = NULL;
+	sprites[5] = NULL;
 	info->floor.rect.x = 0;
 	info->floor.rect.y = SCREEN_H / 2;
 	info->floor.rect.w = SCREEN_W;
@@ -62,9 +106,6 @@ void	init_floor_ceiling(t_info *info)
 	info->ceiling.rect.y = 0;
 	info->ceiling.rect.w = SCREEN_W;
 	info->ceiling.rect.h = SCREEN_H / 2;
-	// init_texture(&info->mlx_info, &info->map3d,
-	// 	SCREEN_W, SCREEN_H / 2);
-	//init_texture(&info->mlx_info, &info->floor.texture, SCREEN_W, SCREEN_H / 2);
 	fill_rect(&info->floor.texture, color_floor);
 	fill_rect(&info->ceiling.texture, color_ceil);
 }
@@ -72,7 +113,7 @@ void	init_floor_ceiling(t_info *info)
 t_info	*init_info(int map_w, int map_h, char **sprites)
 {
 	int		i;
-	t_info 	*info;
+	t_info	*info;
 
 	info = ft_calloc(sizeof(t_info) + sizeof(t_element) * map_w * map_h);
 	if (!info)
@@ -83,13 +124,31 @@ t_info	*init_info(int map_w, int map_h, char **sprites)
 	init_player(info);
 	info->block_h = map_h;
 	info->block_w = map_w;
-	init_floor_ceiling(info);
+	info->index = 0;
+	init_floor_ceiling(info, sprites);
 	i = 0;
 	while (i < 4)
 	{
 		init_texture(&info->mlx_info, &info->map3d[i], sprites[i]);
+		free(sprites[i]);
+		sprites[i] = NULL;
+		if (!info->map3d[i].img)
+		{
+			printf("Error loading textures\n");
+			i = 0;
+			while (i < 6)
+			{
+				printf("line = %s\n", sprites[i]);
+				if (sprites[i])
+					free(sprites[i]);
+				i++;
+			}
+			free(sprites);
+			final_free(info);
+		}
 		i++;
 	}
+	free(sprites);
 	info->img = mlx_new_image(info->mlx_info.mlx_ptr, SCREEN_W, SCREEN_W);
 	info->data_img = mlx_get_data_addr(info->img,
 			&info->line.bpp, &info->line.size_line, &info->line.endian);

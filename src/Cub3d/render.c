@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 01:10:54 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/27 18:33:50 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/31 12:47:38 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,25 +37,17 @@ void	clear_img(t_info *info)
 {
 	int		i;
 	int		nb_pixel;
-	t_color	sky;
-	t_color	floor;
 
 	i = 0;
-	sky.r = 0xFF;
-	sky.g = 0xFF;
-	sky.b = 0xFF;
-	sky.endian = info->line.endian;
-	floor.r = 0x16;
-	floor.g = 0x16;
-	floor.b = 0x16;
-	floor.endian = info->line.endian;
+	info->color_ceil.endian = info->line.endian;
+	info->color_floor.endian = info->line.endian;
 	nb_pixel = 4 * SCREEN_H * SCREEN_W;
 	while (i < nb_pixel)
 	{
 		if (i < nb_pixel / 2)
-			color_pixel(info->pixel_img + i, sky);
+			color_pixel(info->pixel_img + i, info->color_ceil);
 		else
-			color_pixel(info->pixel_img + i, floor);
+			color_pixel(info->pixel_img + i, info->color_floor);
 		i += 4;
 	}
 }

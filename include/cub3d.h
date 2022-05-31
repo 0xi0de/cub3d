@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:52 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/27 18:11:08 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/31 17:03:54 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ typedef struct s_info
 	int			map_h;
 	int			block_w;
 	int			block_h;
+	int			index;
+	int			coma_count;
 	char		*path;
 	char		**sprites;
 	t_info_mlx	mlx_info;
@@ -89,6 +91,8 @@ typedef struct s_info
 	t_texture	map2d;
 	t_element	floor;
 	t_element	ceiling;
+	t_color		color_ceil;
+	t_color		color_floor;
 	t_element	map[];
 }	t_info;
 

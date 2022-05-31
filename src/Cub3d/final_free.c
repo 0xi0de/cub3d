@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 18:50:42 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/27 18:19:11 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/31 17:11:44 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,18 @@
 
 void	final_free(t_info *info)
 {
+	int	i;
+	i = 0;
+	while (i < 4)
+	{
+		if (info->map3d[i].img)
+			mlx_destroy_image(info->mlx_info.mlx_ptr, info->map3d[i].img);
+		i++;
+	}
 	mlx_loop_end(info->mlx_info.mlx_ptr);
 	mlx_destroy_window(info->mlx_info.mlx_ptr, info->mlx_info.win_ptr);
-	mlx_destroy_image(info->mlx_info.mlx_ptr, info->img);
-//	mlx_destroy_image(info->mlx_info.mlx_ptr, info->map3d.img_no);
-	// mlx_destroy_image(info->mlx_info.mlx_ptr, info->ceiling.texture.img);
-	// mlx_destroy_image(info->mlx_info.mlx_ptr, info->floor.texture.img);
+	if (info->img)
+		mlx_destroy_image(info->mlx_info.mlx_ptr, info->img);
 	mlx_destroy_display(info->mlx_info.mlx_ptr);
 	free(info->mlx_info.mlx_ptr);
 	free(info);

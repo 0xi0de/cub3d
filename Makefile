@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Iinclude -Ilib
+CFLAGS = -Iinclude -Ilib #-g -fsanitize=address
 LFLAGS = -lm -L./lib -lmlx -lX11 -lXext
 
 BUILD_DIR = build

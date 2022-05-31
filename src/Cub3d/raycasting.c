@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 12:18:40 by tallal--          #+#    #+#             */
-/*   Updated: 2022/05/26 18:46:50 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/05/31 15:17:09 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,6 @@ void	raycastings(t_info *info, double angle)
 	int		y;
 
 	angle_step = FOV / (double)SCREEN_W;
-	//printf("---%f\n", angle_step);
 	start_angle = angle - (FOV / 2);
 	i = 0;
 	clear_img(info);

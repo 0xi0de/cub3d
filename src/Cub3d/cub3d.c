@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:05:37 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/19 14:54:16 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/31 17:17:28 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ int	main(int argc, char **argv)
 	(void)argv;
 	info = parser(argv[1]);
 	if (!info)
-		return (1);
+	{
+		printf("Error loading map\n");
+		final_free(info);
+	}
 	print_map(info);
 	mlx_hook(info->mlx_info.win_ptr, 2, 1L << 0, dealkey, info);
 	mlx_hook(info->mlx_info.win_ptr, 3, 1L << 1, key_release, info);

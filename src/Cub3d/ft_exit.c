@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 17:38:48 by tallal--          #+#    #+#             */
-/*   Updated: 2022/05/16 19:05:57 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/31 17:26:49 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,9 @@ void	ft_exit(t_info *info, int value, int **tab_int, char **tab_char)
 {
 	if (info)
 		free(info);
-	deltab((char **)tab_int);
-	deltab(tab_char);
+
 	if (write(2, "Error\n", 6) < 0)
-		exit(0);
+		exit(1);
 	exit(value);
 }
 
