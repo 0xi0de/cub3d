@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 00:47:00 by tallal--          #+#    #+#             */
-/*   Updated: 2022/05/31 18:34:54 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/05/31 19:14:03 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -531,12 +531,30 @@ t_info	*parser(char *file)
 	}
 	free(line);
 	while (get_next_line(fd, &line) > 0)
+	{
 		map_txt = tabjoin(map_txt, line);
+		//free(line);
+	}
 	free(line);
+	if (!map_txt)
+	{
+		int	i;
+		i = 0;
+		while (i < 6)
+		{
+			if (sprites[i])
+				free(sprites[i]);
+			i++;
+		}
+		free(sprites);
+		printf("Error loading map\n");
+		exit(1);
+	}
 	info = create_info(map_txt, sprites);
 	if(!player_spawn(info, map_txt))
 	{
 		printf("Error loading player location\n");
+		map_txt = deltab(map_txt);
 		final_free(info);
 	}
 	if (parse_map(info, map_txt) < 0)

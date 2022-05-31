@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 18:50:42 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/31 17:11:44 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/05/31 19:10:58 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@ void	final_free(t_info *info)
 	mlx_destroy_display(info->mlx_info.mlx_ptr);
 	free(info->mlx_info.mlx_ptr);
 	free(info);
-	exit (0);
+	exit (1);
 }
