@@ -1,1 +1,1 @@
-build/objs/Cub3d/init_info.o build/objs/Cub3d/init_info.o: /dev/null
+build/objs/Cub3d/raycasting.o build/objs/Cub3d/raycasting.o: /dev/null
