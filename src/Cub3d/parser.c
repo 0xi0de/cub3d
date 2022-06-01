@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 00:47:00 by tallal--          #+#    #+#             */
-/*   Updated: 2022/06/01 15:51:50 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/06/01 17:03:28 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -374,16 +374,13 @@ char	*ft_strdup(char *str)
 		return (NULL);
 	size = i;
 	i = 0;
-	while (str[size] /* && !(str[i] == '\t' || str[i] == '\n' || str[i] == '\f'
-			|| str[i] == '\v' || str[i] == '\r' || str[i] == ' ')*/)
+	while (str[size])
 	{
 		dup[i] = str[size];
 		i++;
 		size++;
 	}
 	dup[i] = '\0';
-	printf("initial_str = |%s|\n", str);
-	printf("duplicate = |%s|\n", dup);
 	return (dup);
 }
 
