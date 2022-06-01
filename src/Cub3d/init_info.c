@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:21:40 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/06/01 19:03:13 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/06/01 19:48:18 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ int	ft_isspace(char c)
 	return (0);
 }
 
-void	value_error(int i, t_info *info, char **sprites)
+void	value_error(int i, t_info *info, char **sprites, char **map_txt)
 {
-	printf("Wrong value for C or F colors\n");
+	printf("Error\nWrong value for C or F colors\n");
 	i = 0;
 	while (i < 6)
 	{
@@ -53,6 +53,7 @@ void	value_error(int i, t_info *info, char **sprites)
 		i++;
 	}
 	free(sprites);
+	deltab(map_txt);
 	final_free(info);
 }
 
@@ -67,7 +68,7 @@ int	neg_check(char c, long int *i)
 	return (1);
 }
 
-int	ft_atoi(char *str, t_info *info, char **sprites, int *x)
+int	ft_atoi(char *str, t_info *info, char **sprites, char **map_txt)
 {
 	long	i;
 	int		neg;
@@ -75,6 +76,8 @@ int	ft_atoi(char *str, t_info *info, char **sprites, int *x)
 
 	i = 0;
 	res = 0;
+	if (!str)
+		value_error(i, info, sprites, map_txt);
 	while (str[i] && ft_isspace(str[i]))
 			i++;
 	neg = neg_check(str[i], &i);
@@ -90,11 +93,11 @@ int	ft_atoi(char *str, t_info *info, char **sprites, int *x)
 	info->index += i + 1;
 	if (res * neg < 0 || res * neg > 255 || str[0] == '\0'
 		|| info->coma_count > 2 || !is_digit(str[i]))
-		value_error(i, info, sprites);
+		value_error(i, info, sprites, map_txt);
 	return (res * neg);
 }
 
-void	init_ceiling(t_info *info, char **sprites)
+void	init_ceiling(t_info *info)
 {
 	info->block_h = info->map_h;
 	info->block_w = info->map_w;
@@ -104,47 +107,31 @@ void	init_ceiling(t_info *info, char **sprites)
 	info->ceiling.rect.h = SCREEN_H / 2;
 }
 
-void	init_floor_ceiling(t_info *info, char **sprites)
+void	init_floor_ceiling(t_info *info, char **sprites, char **map)
 {
 	t_color	color_floor;
 	t_color	color_ceil;
-	int		x;
 	char	*tmp;
 
-	x = 0;
 	tmp = sprites[5];
-	info->color_ceil.r = ft_atoi(sprites[5] + info->index, info, sprites, &x);
-	info->color_ceil.g = ft_atoi(sprites[5] + info->index, info, sprites, &x);
-	info->color_ceil.b = ft_atoi(sprites[5] + info->index, info, sprites, &x);
+	info->color_ceil.r = ft_atoi(sprites[5] + info->index, info, sprites, map);
+	info->color_ceil.g = ft_atoi(sprites[5] + info->index, info, sprites, map);
+	info->color_ceil.b = ft_atoi(sprites[5] + info->index, info, sprites, map);
 	info->index = 0;
 	info->coma_count = 0;
 	free(tmp);
 	sprites[5] = NULL;
 	tmp = sprites[4];
-	info->color_floor.r = ft_atoi(sprites[4] + info->index, info, sprites, &x);
-	info->color_floor.g = ft_atoi(sprites[4] + info->index, info, sprites, &x);
-	info->color_floor.b = ft_atoi(sprites[4] + info->index, info, sprites, &x);
+	info->color_floor.r = ft_atoi(sprites[4] + info->index, info, sprites, map);
+	info->color_floor.g = ft_atoi(sprites[4] + info->index, info, sprites, map);
+	info->color_floor.b = ft_atoi(sprites[4] + info->index, info, sprites, map);
 	free(tmp);
 	sprites[4] = NULL;
-	if (x)
-	{
-		printf("Wrong value for C or F colors\n");
-		x = 0;
-		while (x < 6)
-		{
-			if (sprites[x])
-				free(sprites[x]);
-			x++;
-		}
-		deltab(map_txt);
-		free(sprites);
-		final_free(info);
-	}
 	info->floor.rect.x = 0;
 	info->floor.rect.y = SCREEN_H / 2;
 	info->floor.rect.w = SCREEN_W;
 	info->floor.rect.h = SCREEN_H / 2;
-	init_ceiling(info, sprites);
+	init_ceiling(info);
 	fill_rect(&info->floor.texture, color_floor);
 	fill_rect(&info->ceiling.texture, color_ceil);
 }
@@ -153,11 +140,10 @@ void	img_check(t_info *info, char **sprites, int i)
 {
 	if (!info->map3d[i].img)
 	{
-		printf("Error loading textures\n");
+		printf("Error\nError loading textures\n");
 		i = 0;
 		while (i < 6)
 		{
-			printf("line = %s\n", sprites[i]);
 			if (sprites[i])
 				free(sprites[i]);
 			i++;
@@ -167,7 +153,7 @@ void	img_check(t_info *info, char **sprites, int i)
 	}
 }
 
-t_info	*init_info(int map_w, int map_h, char **sprites)
+t_info	*init_info(int map_w, int map_h, char **sprites, char **map_txt)
 {
 	int		i;
 	t_info	*info;
@@ -180,7 +166,7 @@ t_info	*init_info(int map_w, int map_h, char **sprites)
 	init_mlx(&info->mlx_info, SCREEN_W, SCREEN_H);
 	init_player(info);
 	info->index = 0;
-	init_floor_ceiling(info, sprites);
+	init_floor_ceiling(info, sprites, map_txt);
 	i = -1;
 	while (++i < 4)
 	{

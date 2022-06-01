@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 00:47:00 by tallal--          #+#    #+#             */
-/*   Updated: 2022/06/01 18:59:29 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/06/01 19:45:56 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -458,26 +458,23 @@ void	fill_textures(char *str, int *count, char **sprites)
 			}
 			else
 				print_texture_error(i);
-			i = 5;
+			break ;
 		}
 		i++;
 	}
-	while (--i >= 0)
+	if (c == 'X')
 	{
-		if (c == 'X' || !sprites[i])
+		printf("Error\nError while parsing .cub file\n");
+		i = 0;
+		while (i < 6)
 		{
-			printf("Error\nError while parsing .cub file\n");
-			i = 0;
-			while (i < 6)
-			{
-				if (sprites[i])
-					free(sprites[i]);
-				i++;
-			}
-			free(sprites);
-			free(str);
-			exit(1);
+			if (sprites[i])
+				free(sprites[i]);
+			i++;
 		}
+		free(sprites);
+		free(str);
+		exit(1);
 	}
 }
 
@@ -554,6 +551,7 @@ t_info	*parser(char *file)
 	count = 0;
 	if (fd == -1)
 	{
+		write(2, "Error\n", 6);
 		perror("");
 		exit(1);
 	}
@@ -596,19 +594,19 @@ t_info	*parser(char *file)
 			i++;
 		}
 		free(sprites);
-		printf("Error loading map\n");
+		printf("Error\nError loading map\n");
 		exit(1);
 	}
 	info = create_info(map_txt, sprites);
 	if(!player_spawn(info, map_txt))
 	{
-		printf("Error loading player location\n");
+		printf("Error\nError loading player location\n");
 		map_txt = deltab(map_txt);
 		final_free(info);
 	}
 	if (parse_map(info, map_txt) < 0)
 	{
-		printf("Error loading map\n");
+		printf("Error\nError loading map\n");
 		final_free(info);
 	}
 	return (info);
