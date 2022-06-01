@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:52 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/06/01 16:04:54 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/06/01 17:32:41 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ typedef struct s_info
 	t_element	map[];
 }	t_info;
 
-t_info	*init_info(int map_w, int map_h, char **sprites);
+t_info	*init_info(int map_w, int map_h, char **sprites, char **map_txt);
 char	*ft_strdup(char *str);
 void	final_free(t_info *info);
 void	clear_img(t_info *info);

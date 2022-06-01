@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:21:40 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/06/01 16:14:51 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/06/01 18:20:51 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_isspace(char c)
 	return(0);
 }
 
-int	ft_atoi(char *str, t_info *info, char **sprites)
+int	ft_atoi(char *str, t_info *info, char **sprites, int *x)
 {
 	long	i;
 	int		neg;
@@ -52,7 +52,6 @@ int	ft_atoi(char *str, t_info *info, char **sprites)
 	i = 0;
 	neg = 1;
 	res = 0;
-	printf("str = |%s|\n", str);
 	while (str[i] && ft_isspace(str[i]))
 			i++;
 	if (str[i] == '-' || str[i] == '+')
@@ -74,40 +73,48 @@ int	ft_atoi(char *str, t_info *info, char **sprites)
 	if (res * neg < 0 || res * neg > 255 || str[0] == '\0'
 		|| info->coma_count > 2 || !is_digit(str[i]))
 	{
-		printf("Wrong value for C or F colors\n");
-		i = 0;
-		while (i < 6)
-		{
-			if (sprites[i])
-				free(sprites[i]);
-			i++;
-		}
-		free(sprites);
-		final_free(info);
+		*x = 1;
+		return (-1);
 	}
 	return (res * neg);
 }
 
-void	init_floor_ceiling(t_info *info, char **sprites)
+void	init_floor_ceiling(t_info *info, char **sprites, char **map_txt)
 {
 	t_color	color_floor;
 	t_color	color_ceil;
+	int		x;
 	char	*tmp;
 
+	x = 0;
 	tmp = sprites[5];
-	info->color_ceil.r = ft_atoi(sprites[5] + info->index, info, sprites);
-	info->color_ceil.g = ft_atoi(sprites[5] + info->index, info, sprites);
-	info->color_ceil.b = ft_atoi(sprites[5] + info->index, info, sprites);
+	info->color_ceil.r = ft_atoi(sprites[5] + info->index, info, sprites, &x);
+	info->color_ceil.g = ft_atoi(sprites[5] + info->index, info, sprites, &x);
+	info->color_ceil.b = ft_atoi(sprites[5] + info->index, info, sprites, &x);
 	info->index = 0;
 	info->coma_count = 0;
 	free(tmp);
 	sprites[5] = NULL;
 	tmp = sprites[4];
-	info->color_floor.r = ft_atoi(sprites[4] + info->index, info, sprites);
-	info->color_floor.g = ft_atoi(sprites[4] + info->index, info, sprites);
-	info->color_floor.b = ft_atoi(sprites[4] + info->index, info, sprites);
+	info->color_floor.r = ft_atoi(sprites[4] + info->index, info, sprites, &x);
+	info->color_floor.g = ft_atoi(sprites[4] + info->index, info, sprites, &x);
+	info->color_floor.b = ft_atoi(sprites[4] + info->index, info, sprites, &x);
 	free(tmp);
 	sprites[4] = NULL;
+	if (x)
+	{
+		printf("Wrong value for C or F colors\n");
+		x = 0;
+		while (x < 6)
+		{
+			if (sprites[x])
+				free(sprites[x]);
+			x++;
+		}
+		deltab(map_txt);
+		free(sprites);
+		final_free(info);
+	}
 	info->floor.rect.x = 0;
 	info->floor.rect.y = SCREEN_H / 2;
 	info->floor.rect.w = SCREEN_W;
@@ -120,7 +127,7 @@ void	init_floor_ceiling(t_info *info, char **sprites)
 	fill_rect(&info->ceiling.texture, color_ceil);
 }
 
-t_info	*init_info(int map_w, int map_h, char **sprites)
+t_info	*init_info(int map_w, int map_h, char **sprites, char **map_txt)
 {
 	int		i;
 	t_info	*info;
@@ -135,7 +142,7 @@ t_info	*init_info(int map_w, int map_h, char **sprites)
 	info->block_h = map_h;
 	info->block_w = map_w;
 	info->index = 0;
-	init_floor_ceiling(info, sprites);
+	init_floor_ceiling(info, sprites, map_txt);
 	i = 0;
 	while (i < 4)
 	{
@@ -148,11 +155,11 @@ t_info	*init_info(int map_w, int map_h, char **sprites)
 			i = 0;
 			while (i < 6)
 			{
-				printf("line = %s\n", sprites[i]);
 				if (sprites[i])
 					free(sprites[i]);
 				i++;
 			}
+			deltab(map_txt);
 			free(sprites);
 			final_free(info);
 		}

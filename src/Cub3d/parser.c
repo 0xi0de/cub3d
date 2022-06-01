@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 00:47:00 by tallal--          #+#    #+#             */
-/*   Updated: 2022/06/01 17:03:28 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/06/01 18:59:29 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -355,7 +355,7 @@ t_info	*create_info(char **map_txt, char **sprites)
 	}
 	if (w == 0 || h == 0)
 		return (NULL);
-	return (init_info(w, h, sprites));
+	return (init_info(w, h, sprites, map_txt));
 }
 
 char	*ft_strdup(char *str)
@@ -365,6 +365,8 @@ char	*ft_strdup(char *str)
 	char	*dup;
 
 	i = 0;
+	if (!str)
+		return (NULL);
 	while (str[i] && (str[i] == '\t' || str[i] == '\n' || str[i] == '\f'
 			|| str[i] == '\v' || str[i] == '\r' || str[i] == ' '))
 			i++;
@@ -441,37 +443,41 @@ void	fill_textures(char *str, int *count, char **sprites)
 	i = 0;
 	j = 0;
 	c = check_char(str, &j);
-	if (c == 'X')
-	{
-		printf("Error while parsing .cub file\n");
-		i = 0;
-		while (i < 6)
-		{
-			if (sprites[i])
-				free(sprites[i]);
-			i++;
-		}
-		free(sprites);
-		exit(1);
-	}
-	i = 0;
 	while (i < 6)
 	{
 		if (c == list[i])
 		{
 			if (sprites[i] == NULL)
 			{
-				if (list[i] == 'F' || list[i] == 'C')
+				if ((list[i] == 'F' || list[i] == 'C')
+					&& ft_strlen(str) > j + 2)
 					sprites[i] = ft_strdup(str + j + 2);
-				else
+				else if (ft_strlen(str) > j + 3)
 					sprites[i] = ft_strdup(str + j + 3);
 				(*count)++;
 			}
 			else
 				print_texture_error(i);
-			i = 6;
+			i = 5;
 		}
 		i++;
+	}
+	while (--i >= 0)
+	{
+		if (c == 'X' || !sprites[i])
+		{
+			printf("Error\nError while parsing .cub file\n");
+			i = 0;
+			while (i < 6)
+			{
+				if (sprites[i])
+					free(sprites[i]);
+				i++;
+			}
+			free(sprites);
+			free(str);
+			exit(1);
+		}
 	}
 }
 
@@ -575,7 +581,10 @@ t_info	*parser(char *file)
 		map_txt = tabjoin(map_txt, line);
 		//free(line);
 	}
-	free(line);
+	if (line && line[0])
+		map_txt = tabjoin(map_txt, line);
+	else
+		free(line);
 	if (!map_txt)
 	{
 		int	i;
