@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:21:40 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/31 17:12:20 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/06/01 15:03:34 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,24 @@ void	init_walls(t_info *info)
 	fill_rect(&info->map2d, wall_color);
 }
 
-int	ft_atoi(char *str, t_info *info)
+int	is_digit(char c)
+{
+	if (!(c >= '0' && c <= '9' || c == ',' || c == '\t' || c == '\n'
+			|| c == '\f' || c == '\v' || c == '\r'
+			|| c == ' ' || c == '\0'))
+		return (0);
+	return (1);
+}
+
+int	ft_isspace(char c)
+{
+	if (c == '\t' || c == '\n' || c == '\f'
+			|| c == '\v' || c == '\r' || c == ' ')
+		return(1);
+	return(0);
+}
+
+int	ft_atoi(char *str, t_info *info, char **sprites)
 {
 	long	i;
 	int		neg;
@@ -53,8 +70,8 @@ int	ft_atoi(char *str, t_info *info)
 	i = 0;
 	neg = 1;
 	res = 0;
-	while (str[i] && (str[i] == '\t' || str[i] == '\n' || str[i] == '\f'
-			|| str[i] == '\v' || str[i] == '\r' || str[i] == ' '))
+	printf("str = |%s|\n", str);
+	while (str[i] && ft_isspace(str[i]))
 			i++;
 	if (str[i] == '-' || str[i] == '+')
 	{
@@ -67,12 +84,23 @@ int	ft_atoi(char *str, t_info *info)
 		res = res * 10 + str[i] - '0';
 		i++;
 	}
+	while (ft_isspace(str[i]))
+		i++;
 	if (str[i] == ',')
 		info->coma_count++;
 	info->index = i + 1;
-	if (res * neg < 0 || res * neg > 255 || str[0] == '\0' || info->coma_count > 2)
+	if (res * neg < 0 || res * neg > 255 || str[0] == '\0'
+		|| info->coma_count > 2 || !is_digit(str[i]))
 	{
 		printf("Wrong value for C or F colors\n");
+		i = 0;
+		while (i < 6)
+		{
+			if (sprites[i])
+				free(sprites[i]);
+			i++;
+		}
+		free(sprites);
 		final_free(info);
 	}
 	return (res * neg);
@@ -85,19 +113,19 @@ void	init_floor_ceiling(t_info *info, char **sprites)
 	char	*tmp;
 
 	tmp = sprites[5];
-	info->color_ceil.r = (unsigned char)ft_atoi(sprites[5] += info->index, info);
-	info->color_ceil.g = (unsigned char)ft_atoi(sprites[5] += info->index, info);
-	info->color_ceil.b = (unsigned char)ft_atoi(sprites[5] += info->index, info);
+	info->color_ceil.r = (unsigned char)ft_atoi(sprites[5] += info->index, info, sprites);
+	info->color_ceil.g = (unsigned char)ft_atoi(sprites[5] += info->index, info, sprites);
+	info->color_ceil.b = (unsigned char)ft_atoi(sprites[5] += info->index, info, sprites);
 	info->index = 0;
 	info->coma_count = 0;
 	free(tmp);
+	sprites[5] = NULL;
 	tmp = sprites[4];
-	info->color_floor.r = (unsigned char)ft_atoi(sprites[4] += info->index, info);
-	info->color_floor.g = (unsigned char)ft_atoi(sprites[4] += info->index, info);
-	info->color_floor.b = (unsigned char)ft_atoi(sprites[4] += info->index, info);
+	info->color_floor.r = (unsigned char)ft_atoi(sprites[4] += info->index, info, sprites);
+	info->color_floor.g = (unsigned char)ft_atoi(sprites[4] += info->index, info, sprites);
+	info->color_floor.b = (unsigned char)ft_atoi(sprites[4] += info->index, info, sprites);
 	free(tmp);
 	sprites[4] = NULL;
-	sprites[5] = NULL;
 	info->floor.rect.x = 0;
 	info->floor.rect.y = SCREEN_H / 2;
 	info->floor.rect.w = SCREEN_W;
