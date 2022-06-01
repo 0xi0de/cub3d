@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dealkey.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:13:20 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/05/31 17:11:58 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/06/01 17:18:58 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 int	button_press(t_info *info)
 {
-	
 	final_free(info);
 	return (0);
 }
