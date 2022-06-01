@@ -6,7 +6,7 @@
 /*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:21:40 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/06/01 17:35:10 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/06/01 18:35:16 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	init_player(t_info *info)
 	info->player.l_rotation = 0;
 	info->player.r_rotation = 0;
 }
-
 
 int	is_digit(char c)
 {

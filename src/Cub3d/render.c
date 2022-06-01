@@ -6,7 +6,7 @@
 /*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 01:10:54 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/06/01 18:16:48 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/06/01 18:35:01 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,63 +101,73 @@ void	get_pxl(uint8_t *pixel, int x, int y, t_texture texture)
 	pixel[3] = 0;
 }
 
+void	handle_north_south(t_line line, t_ratio ratio, \
+	t_texture texture, uint8_t *pixel_img)
+{
+	int	i;
+
+	i = 0;
+	line.raypoint.x = (int)line.raypoint.x % WALL_W;
+	ratio.final_y = 0;
+	ratio.final_x = line.raypoint.x * ratio.ratio_x;
+	if (ratio.dy < 0)
+	{
+		ratio.final_y = ratio.ratio_y * -ratio.dy;
+		ratio.dy = 0;
+	}
+	ratio.size = line.pos_x * 4 + ratio.dy * line.size_line;
+	while (i < line.lenght)
+	{
+		ratio.index = ratio.size;
+		if (ratio.index > 0 && ratio.index < SCREEN_H * SCREEN_W * 4)
+			get_pxl(&pixel_img[ratio.index], ratio.final_x, \
+			ratio.final_y, texture);
+		ratio.final_y += ratio.ratio_y;
+		ratio.size += line.size_line;
+		i++;
+	}
+}
+
+void	handle_east_west(t_line line, t_ratio ratio, \
+	t_texture texture, uint8_t *pixel_img)
+{
+	int	i;
+
+	i = 0;
+	line.raypoint.y = (int)line.raypoint.y % WALL_H;
+	ratio.final_y = 0;
+	ratio.final_x = line.raypoint.y * ratio.ratio_x;
+	if (ratio.dy < 0)
+	{
+		ratio.final_y = ratio.ratio_y * -ratio.dy;
+		ratio.dy = 0;
+	}
+	ratio.size = line.pos_x * 4 + ratio.dy * line.size_line;
+	while (i < line.lenght)
+	{
+		ratio.index = ratio.size;
+		if (ratio.index > 0 && ratio.index < SCREEN_H * SCREEN_W * 4)
+			get_pxl(&pixel_img[ratio.index], \
+				ratio.final_x, ratio.final_y, texture);
+		ratio.final_y += ratio.ratio_y;
+		ratio.size += line.size_line;
+		i++;
+	}
+}
+
 void	draw_texture_line(t_texture texture, uint8_t *pixel_img, t_line line)
 {
-	int		i;
-	int		dy;
-	float	ratio_x;
-	float	ratio_y;
-	float	aa;
-	float	cc;
-	int		bb;
-	int		index;
+	t_ratio	ratio;
 
-	i = -1;
-	dy = (SCREEN_H - line.lenght) / 2;
-	ratio_x = (float)texture.width / (float)WALL_H;
-	ratio_y = (float)texture.height / (float)line.lenght;
+	ratio.dy = (SCREEN_H - line.lenght) / 2;
+	ratio.ratio_x = (float)texture.width / (float)WALL_H;
+	ratio.ratio_y = (float)texture.height / (float)line.lenght;
 	if (line.lenght > SCREEN_H)
 		line.lenght = SCREEN_H;
 	if (line.orientation == 'N' || line.orientation == 'S')
-	{
-		line.raypoint.x = (int)line.raypoint.x % WALL_W;
-		aa = 0;
-		bb = line.raypoint.x * ratio_x;
-		if (dy < 0)
-		{
-			aa = ratio_y * -dy;
-			dy = 0;
-		}
-		cc = line.pos_x * 4 + dy * line.size_line;
-		while (++i < line.lenght)
-		{
-			index = cc;
-			if (index > 0 && index < SCREEN_H * SCREEN_W * 4)
-				get_pxl(&pixel_img[index], bb, aa, texture);
-			aa += ratio_y;
-			cc += line.size_line;
-		}
-	}
+		handle_north_south(line, ratio, texture, pixel_img);
 	else
-	{
-		line.raypoint.y = (int)line.raypoint.y % WALL_H;
-		aa = 0;
-		bb = line.raypoint.y * ratio_x;
-		if (dy < 0)
-		{
-			aa = ratio_y * -dy;
-			dy = 0;
-		}
-		cc = line.pos_x * 4 + dy * line.size_line;
-		while (++i < line.lenght)
-		{
-			index = cc;
-			if (index > 0 && index < SCREEN_H * SCREEN_W * 4)
-				get_pxl(&pixel_img[index], bb, aa, texture);
-			aa += ratio_y;
-			cc += line.size_line;
-		}
-	}
+		handle_east_west(line, ratio, texture, pixel_img);
 }
 
 void	render_wall(t_info *info, int x, int y, double angle)
