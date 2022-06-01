@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:52 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/06/01 12:58:46 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/06/01 16:04:54 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,6 @@ void	free_tab(char **tab);
 char	*delstr(char *str);
 void	free_str(char *str);
 void	put_player(t_info *info, int i, int j, char c);
-void	ft_exit(t_info *info, int value, int **tab_int, char **tab_char);
 void	render_map(t_info *info);
 void	render_wall(t_info *info, int x, int y, double angle);
 

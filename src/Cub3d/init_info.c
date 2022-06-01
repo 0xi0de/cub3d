@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:21:40 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/06/01 15:03:34 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/06/01 16:14:51 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,28 +25,10 @@ void	init_player(t_info *info)
 	info->player.r_rotation = 0;
 }
 
-void	init_walls(t_info *info)
-{
-	int		i;
-	t_color	wall_color;
-
-	i = 0;
-	wall_color.r = 0xC0;
-	wall_color.g = 0x7A;
-	wall_color.b = 0x4B;
-	wall_color.r = 0xFF;
-	wall_color.g = 0xFF;
-	wall_color.b = 0xFF;
-	fill_rect(&info->wall_texture2d, wall_color);
-	wall_color.r = 0x0;
-	wall_color.g = 0x0;
-	wall_color.b = 0x0;
-	fill_rect(&info->map2d, wall_color);
-}
 
 int	is_digit(char c)
 {
-	if (!(c >= '0' && c <= '9' || c == ',' || c == '\t' || c == '\n'
+	if (!((c >= '0' && c <= '9') || c == ',' || c == '\t' || c == '\n'
 			|| c == '\f' || c == '\v' || c == '\r'
 			|| c == ' ' || c == '\0'))
 		return (0);
@@ -88,7 +70,7 @@ int	ft_atoi(char *str, t_info *info, char **sprites)
 		i++;
 	if (str[i] == ',')
 		info->coma_count++;
-	info->index = i + 1;
+	info->index += i + 1;
 	if (res * neg < 0 || res * neg > 255 || str[0] == '\0'
 		|| info->coma_count > 2 || !is_digit(str[i]))
 	{
@@ -113,17 +95,17 @@ void	init_floor_ceiling(t_info *info, char **sprites)
 	char	*tmp;
 
 	tmp = sprites[5];
-	info->color_ceil.r = (unsigned char)ft_atoi(sprites[5] += info->index, info, sprites);
-	info->color_ceil.g = (unsigned char)ft_atoi(sprites[5] += info->index, info, sprites);
-	info->color_ceil.b = (unsigned char)ft_atoi(sprites[5] += info->index, info, sprites);
+	info->color_ceil.r = ft_atoi(sprites[5] + info->index, info, sprites);
+	info->color_ceil.g = ft_atoi(sprites[5] + info->index, info, sprites);
+	info->color_ceil.b = ft_atoi(sprites[5] + info->index, info, sprites);
 	info->index = 0;
 	info->coma_count = 0;
 	free(tmp);
 	sprites[5] = NULL;
 	tmp = sprites[4];
-	info->color_floor.r = (unsigned char)ft_atoi(sprites[4] += info->index, info, sprites);
-	info->color_floor.g = (unsigned char)ft_atoi(sprites[4] += info->index, info, sprites);
-	info->color_floor.b = (unsigned char)ft_atoi(sprites[4] += info->index, info, sprites);
+	info->color_floor.r = ft_atoi(sprites[4] + info->index, info, sprites);
+	info->color_floor.g = ft_atoi(sprites[4] + info->index, info, sprites);
+	info->color_floor.b = ft_atoi(sprites[4] + info->index, info, sprites);
 	free(tmp);
 	sprites[4] = NULL;
 	info->floor.rect.x = 0;
