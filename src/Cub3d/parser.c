@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 00:47:00 by tallal--          #+#    #+#             */
-/*   Updated: 2022/05/31 19:14:03 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/06/01 15:43:05 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -409,74 +409,40 @@ char	check_char(char *str, int *i)
 	return ('Q');
 }
 
-void	fill_textures(char *str, int *count, char **sprites)
+char	*ft_strcpy(char *dest, char *src)
 {
-	char	c;
-	int		i;
+	int	i;
 
 	i = 0;
-	c = check_char(str, &i);
-	if (c == 'N')
+	while (src[i])
 	{
-		if (sprites[0] == NULL)
-		{
-			sprites[0] = ft_strdup(str + i + 3);
-			(*count)++;
-		}
-		else
-			printf("Warning! Multiple arguments for NO, the first one will be selected\n");
+		dest[i] = src[i];
+		i++;
 	}
-	else if (c == 'S')
-	{
-		if (sprites[1] == NULL)
-		{
-			(*count)++;
-			sprites[1] = ft_strdup(str + i + 3);
-		}
-		else
-			printf("Warning! Multiple arguments for SO, the first one will be selected\n");
-	}
-	else if (c == 'E')
-	{
-		if (sprites[2] == NULL)
-		{
-			sprites[2] = ft_strdup(str + i + 3);
-			(*count)++;
-		}
-		else
-			printf("Warning! Multiple arguments for EA, the first one will be selected\n");
-	}
-	else if (c == 'W')
-	{
-		if (sprites[3] == NULL)
-		{
-			sprites[3] = ft_strdup(str + i + 3);
-			(*count)++;
-		}
-		else
-			printf("Warning! Multiple arguments for WE, the first one will be selected\n");
-	}
-	else if (c == 'F')
-	{
-		if (sprites[4] == NULL)
-		{
-			sprites[4] = ft_strdup(str + i + 2);
-			(*count)++;
-		}
-		else
-			printf("Warning! Multiple arguments for F, the first one will be selected\n");
-	}
-	else if (c == 'C')
-	{
-		if (sprites[5] == NULL)
-		{
-			sprites[5] = ft_strdup(str + i + 2);
-			(*count)++;
-		}
-		else
-			printf("Warning! Multiple arguments for C, the first one will be selected\n");
-	}
-	else if (c == 'X')
+	dest[i] = '\0';
+	return (dest);
+}
+
+void	print_texture_error(int i)
+{
+	char str[6][20] = {"NO", "SO", "EA", "WE", "F", "C"};
+
+	write(1, "Warning! Multiple arguments for ", 32);
+	write(1, str[i], ft_strlen(str[i]));
+	write(1, ", the first one will be selected\n", 33);
+}
+
+void	fill_textures(char *str, int *count, char **sprites)
+{
+	char	list[6] = {'N', 'S', 'E', 'W', 'F', 'C'};
+	int		i;
+	int		j;
+	char	c;
+
+	i = 0;
+	j = 0;
+	c = check_char(str, &j);
+	if (c == 'X')
 	{
 		printf("Error while parsing .cub file\n");
 		i = 0;
@@ -489,7 +455,69 @@ void	fill_textures(char *str, int *count, char **sprites)
 		free(sprites);
 		exit(1);
 	}
+	i = 0;
+	while (i < 6)
+	{
+		if (c == list[i])
+		{
+			if (sprites[i] == NULL)
+			{
+				if (list[i] == 'F' || list[i] == 'C')
+					sprites[i] = ft_strdup(str + j + 2);
+				else
+					sprites[i] = ft_strdup(str + j + 3);
+				(*count)++;
+			}
+			else
+				print_texture_error(i);
+			i = 6;
+		}
+		i++;
+	}
 }
+
+// void	fill_textures(char *str, int *count, char **sprites)
+// {
+// 	char	c;
+// 	int		i;
+
+// 	i = 0;
+// 	c = check_char(str, &i);
+// 	if (c == 'N')
+// 	{
+// 		if (sprites[0] == NULL)
+// 		{
+// 			sprites[0] = ft_strdup(str + i + 3);
+// 			(*count)++;
+// 		}
+// 		else
+// 			printf("Warning! Multiple arguments for NO, the first one will be selected\n");
+// 	}
+	
+// 	else if (c == 'F')
+// 	{
+// 		if (sprites[4] == NULL)
+// 		{
+// 			sprites[4] = ft_strdup(str + i + 2);
+// 			(*count)++;
+// 		}
+// 		else
+// 			printf("Warning! Multiple arguments for F, the first one will be selected\n");
+// 	}
+// 	else if (c == 'X')
+// 	{
+// 		printf("Error while parsing .cub file\n");
+// 		i = 0;
+// 		while (i < 6)
+// 		{
+// 			if (sprites[i])
+// 				free(sprites[i]);
+// 			i++;
+// 		}
+// 		free(sprites);
+// 		exit(1);
+// 	}
+// }
 
 char	**init_sprites(char **sprites)
 {
@@ -529,7 +557,20 @@ t_info	*parser(char *file)
 		fill_textures(line, &count, sprites);
 		free(line);
 	}
-	free(line);
+	if (line && line[0] != '1')
+	{
+		fill_textures(line, &count, sprites);
+		free(line);
+		while (get_next_line(fd, &line) > 0 && line[0] != '1')
+		{
+			fill_textures(line, &count, sprites);
+			free(line);
+		}
+	}
+	if (line && line[0] == '1')
+		map_txt = tabjoin(map_txt, line);
+	else
+		free(line);
 	while (get_next_line(fd, &line) > 0)
 	{
 		map_txt = tabjoin(map_txt, line);
