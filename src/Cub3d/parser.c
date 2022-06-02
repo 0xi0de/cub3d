@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 00:47:00 by tallal--          #+#    #+#             */
-/*   Updated: 2022/06/02 14:14:11 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/06/02 15:14:48 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -466,7 +466,7 @@ void	fill_textures(char *str, int *count, char **sprites)
 	}
 	if (c == 'X')
 	{
-		printf("Error\nError while parsing .cub file\n");
+		write(2, "Error\nError while parsing .cub file\n", 36);
 		i = 0;
 		while (i < 6)
 		{
@@ -480,49 +480,6 @@ void	fill_textures(char *str, int *count, char **sprites)
 	}
 }
 
-// void	fill_textures(char *str, int *count, char **sprites)
-// {
-// 	char	c;
-// 	int		i;
-
-// 	i = 0;
-// 	c = check_char(str, &i);
-// 	if (c == 'N')
-// 	{
-// 		if (sprites[0] == NULL)
-// 		{
-// 			sprites[0] = ft_strdup(str + i + 3);
-// 			(*count)++;
-// 		}
-// 		else
-// 			printf("Warning! Multiple arguments for NO, the first one will be selected\n");
-// 	}
-	
-// 	else if (c == 'F')
-// 	{
-// 		if (sprites[4] == NULL)
-// 		{
-// 			sprites[4] = ft_strdup(str + i + 2);
-// 			(*count)++;
-// 		}
-// 		else
-// 			printf("Warning! Multiple arguments for F, the first one will be selected\n");
-// 	}
-// 	else if (c == 'X')
-// 	{
-// 		printf("Error while parsing .cub file\n");
-// 		i = 0;
-// 		while (i < 6)
-// 		{
-// 			if (sprites[i])
-// 				free(sprites[i]);
-// 			i++;
-// 		}
-// 		free(sprites);
-// 		exit(1);
-// 	}
-// }
-
 char	**init_sprites(char **sprites)
 {
 	int	i;
@@ -534,6 +491,23 @@ char	**init_sprites(char **sprites)
 		i++;
 	}
 	return (sprites);
+}
+
+int check_arg_map(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str && str[i])
+	{
+		if (str[i] == ' ')
+			i++;
+		else if (str[i] == '1')
+			return (1);
+		else
+			return (0);
+	}
+	return (0);
 }
 
 t_info	*parser(char *file)
@@ -555,6 +529,8 @@ t_info	*parser(char *file)
 	{
 		write(2, "Error\n", 6);
 		perror("");
+		free(sprites);
+		//close(fd);
 		exit(1);
 	}
 	while (get_next_line(fd, &line) > 0 && count < 6)
@@ -562,17 +538,17 @@ t_info	*parser(char *file)
 		fill_textures(line, &count, sprites);
 		free(line);
 	}
-	if (line && line[0] != '1')
+	if (line && check_arg_map(line))
 	{
 		fill_textures(line, &count, sprites);
 		free(line);
-		while (get_next_line(fd, &line) > 0 && line[0] != '1')
+		while (get_next_line(fd, &line) > 0 && check_arg_map(line))
 		{
 			fill_textures(line, &count, sprites);
 			free(line);
 		}
 	}
-	if (line && line[0] == '1')
+	if (line && check_arg_map(line))
 		map_txt = tabjoin(map_txt, line);
 	else
 		free(line);
@@ -596,19 +572,19 @@ t_info	*parser(char *file)
 			i++;
 		}
 		free(sprites);
-		printf("Error\nError loading map\n");
+		write(2, "Error\nError loading map\n", 24);
 		exit(1);
 	}
 	info = create_info(map_txt, sprites);
 	if(!player_spawn(info, map_txt))
 	{
-		printf("Error\nError loading player location\n");
+		write(2, "Error\nError loading player location\n", 36);
 		map_txt = deltab(map_txt);
 		final_free(info);
 	}
 	if (parse_map(info, map_txt) < 0)
 	{
-		printf("Error\nError loading map\n");
+		write(2, "Error\nError loading map\n", 24);
 		final_free(info);
 	}
 	return (info);

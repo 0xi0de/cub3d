@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_info.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:21:40 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/06/02 11:36:43 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/06/02 15:10:59 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ft_isspace(char c)
 
 void	value_error(int i, t_info *info, char **sprites, char **map_txt)
 {
-	printf("Error\nWrong value for C or F colors\n");
+	write(2, "Error\nWrong value for C or F colors\n", 36);
 	i = 0;
 	while (i < 6)
 	{
@@ -140,7 +140,7 @@ void	img_check(t_info *info, char **sprites, int i, char **map)
 {
 	if (!info->map3d[i].img)
 	{
-		printf("Error\nError loading textures\n");
+		write(2, "Error\nError loading textures\n", 27);
 		i = 0;
 		while (i < 6)
 		{
