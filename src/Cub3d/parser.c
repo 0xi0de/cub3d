@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 00:47:00 by tallal--          #+#    #+#             */
-/*   Updated: 2022/06/02 13:04:53 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/06/02 14:14:11 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -407,6 +407,8 @@ char	check_char(char *str, int *i)
 		else
 			return ('X');
 	}
+	else if (str[*i] && !str[(*i) + 1])
+		return ('X');
 	return ('Q');
 }
 
