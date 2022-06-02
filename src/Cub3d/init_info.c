@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:21:40 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/06/01 19:48:18 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/06/02 11:36:43 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void	init_floor_ceiling(t_info *info, char **sprites, char **map)
 	fill_rect(&info->ceiling.texture, color_ceil);
 }
 
-void	img_check(t_info *info, char **sprites, int i)
+void	img_check(t_info *info, char **sprites, int i, char **map)
 {
 	if (!info->map3d[i].img)
 	{
@@ -148,6 +148,7 @@ void	img_check(t_info *info, char **sprites, int i)
 				free(sprites[i]);
 			i++;
 		}
+		deltab(map);
 		free(sprites);
 		final_free(info);
 	}
@@ -172,7 +173,7 @@ t_info	*init_info(int map_w, int map_h, char **sprites, char **map_txt)
 	{
 		init_texture(&info->mlx_info, &info->map3d[i], sprites[i]);
 		sprites[i] = delstr(sprites[i]);
-		img_check(info, sprites, i);
+		img_check(info, sprites, i, map_txt);
 	}
 	free(sprites);
 	info->img = mlx_new_image(info->mlx_info.mlx_ptr, SCREEN_W, SCREEN_W);

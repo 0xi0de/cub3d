@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 00:47:00 by tallal--          #+#    #+#             */
-/*   Updated: 2022/06/01 19:45:56 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/06/02 13:04:53 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -428,9 +428,9 @@ void	print_texture_error(int i)
 {
 	char str[6][20] = {"NO", "SO", "EA", "WE", "F", "C"};
 
-	write(1, "Warning! Multiple arguments for ", 32);
-	write(1, str[i], ft_strlen(str[i]));
-	write(1, ", the first one will be selected\n", 33);
+	write(2, "Warning! Multiple arguments for ", 32);
+	write(2, str[i], ft_strlen(str[i]));
+	write(2, ", the first one will be selected\n", 33);
 }
 
 void	fill_textures(char *str, int *count, char **sprites)
