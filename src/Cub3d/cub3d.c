@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:05:37 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/06/01 17:18:49 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/06/03 12:39:06 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,45 @@ int	render_next_frame(t_info *info)
 	return (0);
 }
 
+int	check_file(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	if (i > 4)
+	{
+		if (str[i - 1] == 'b' && str[i - 2] == 'u' && str[i - 3] == 'c'
+			&& str[i - 4] == '.')
+			return (1);
+	}
+	return (0);
+
+}
+
+void	write_error_msg(char *err1, char *err2)
+{
+	if (write(2, err1, ft_strlen(err1)) < 0)
+		exit(1);
+	if (write(2, err2, ft_strlen(err2)) < 0)
+		exit(1);
+}
+
 int	main(int argc, char **argv)
 {
 	t_info	*info;
 
-	(void)argc;
-	(void)argv;
+	if (argc != 2)
+	{
+		write_error_msg("Error\n", "Wrong number of arguments\n");
+		return (1);	
+	}
+	if (!check_file(argv[1]))
+	{
+		write_error_msg("Error\n", "Invalid file type\n");
+		return (1);
+	}
 	info = parser(argv[1]);
 	if (!info)
 	{

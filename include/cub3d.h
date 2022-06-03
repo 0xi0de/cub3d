@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:52 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/06/02 15:10:08 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/06/03 12:39:28 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ typedef struct s_info
 
 t_info	*init_info(int map_w, int map_h, char **sprites, char **map_txt);
 char	*ft_strdup(char *str);
+int		ft_strlen(char *str);
 void	final_free(t_info *info);
 void	clear_img(t_info *info);
 t_info	*parser(char *file);

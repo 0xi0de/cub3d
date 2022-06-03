@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 00:47:00 by tallal--          #+#    #+#             */
-/*   Updated: 2022/06/02 15:14:48 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/06/03 13:43:29 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -435,7 +435,7 @@ void	print_texture_error(int i)
 	write(2, ", the first one will be selected\n", 33);
 }
 
-void	fill_textures(char *str, int *count, char **sprites)
+void	fill_textures(char *str, int *count, char **sprites, int fd)
 {
 	char	list[6] = {'N', 'S', 'E', 'W', 'F', 'C'};
 	int		i;
@@ -476,6 +476,7 @@ void	fill_textures(char *str, int *count, char **sprites)
 		}
 		free(sprites);
 		free(str);
+		close(fd);
 		exit(1);
 	}
 }
@@ -535,16 +536,16 @@ t_info	*parser(char *file)
 	}
 	while (get_next_line(fd, &line) > 0 && count < 6)
 	{
-		fill_textures(line, &count, sprites);
+		fill_textures(line, &count, sprites, fd);
 		free(line);
 	}
 	if (line && check_arg_map(line))
 	{
-		fill_textures(line, &count, sprites);
+		fill_textures(line, &count, sprites, fd);
 		free(line);
 		while (get_next_line(fd, &line) > 0 && check_arg_map(line))
 		{
-			fill_textures(line, &count, sprites);
+			fill_textures(line, &count, sprites, fd);
 			free(line);
 		}
 	}
