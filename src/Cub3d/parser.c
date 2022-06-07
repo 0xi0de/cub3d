@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 00:47:00 by tallal--          #+#    #+#             */
-/*   Updated: 2022/06/03 13:43:29 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:26:24 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,6 +278,27 @@ int		check_map(int **map_int, int line_len)
 	return (0);
 }
 
+void	fill_map_condition(t_info *info, int **map_int, int line_len, \
+	int i, int j)
+{
+	if (map_int[i][j] == 1)
+	{
+		info->map[i * line_len + j].is_wall = 1;
+		info->map[i * line_len + j].is_void = 1;
+	}
+	else if (map_int[i][j] == 0)
+	{
+		info->map[i * line_len + j].is_void = 0;
+		info->map[i * line_len + j].is_wall = 0;
+	}
+	else
+		info->map[i * line_len + j].is_wall = 1;
+	info->map[i * line_len + j].rect.w = WALL_W;
+	info->map[i * line_len + j].rect.h = WALL_H;
+	info->map[i * line_len + j].rect.x = j * WALL_W;
+	info->map[i * line_len + j].rect.y = i * WALL_H;
+}
+
 void	fill_map(t_info *info, int **map_int, int line_len, int nb_line)
 {
 	int	i;
@@ -289,22 +310,7 @@ void	fill_map(t_info *info, int **map_int, int line_len, int nb_line)
 		j = 0;
 		while (j < line_len)
 		{
-			if (map_int[i][j] == 1)
-			{
-				info->map[i * line_len + j].is_wall = 1;
-				info->map[i * line_len + j].is_void = 1;
-			}
-			else if (map_int[i][j] == 0)
-			{
-				info->map[i * line_len + j].is_void = 0;
-				info->map[i * line_len + j].is_wall = 0;
-			}
-			else
-				info->map[i * line_len + j].is_wall = 1;
-			info->map[i * line_len + j].rect.w = WALL_W;
-			info->map[i * line_len + j].rect.h = WALL_H;
-			info->map[i * line_len + j].rect.x = j * WALL_W;
-			info->map[i * line_len + j].rect.y = i * WALL_H;
+			fill_map_condition(info, map_int, line_len, i, j);
 			j++;
 		}
 		i++;
