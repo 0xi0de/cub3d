@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Jun  2 14:58:54 2022
+# Make data base, printed on Tue Jun  7 13:50:27 2022
 
 # Variables
 
@@ -41,10 +41,11 @@ CURDIR := /mnt/nfs/homes/tallal--/Project/hors42/cub3d
 # makefile
 SHELL = /bin/sh
 # environment
+GDM_LANG = en
+# environment
 VTE_VERSION = 6003
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
- 
 # makefile (from 'Makefile', line 16)
 POSTCOMPILE = sleep 0 ;mv -f $(DEPS_DIR)/$*.Td $(DEPS_DIR)/$*.d && touch $@
 # environment
@@ -52,11 +53,11 @@ _ = /usr/bin/code
 # makefile (from 'Makefile', line 15)
 CFLAGS = -Wall -Wextra -Werror -Iinclude -Ilib  -MT $@ -MMD -MP -MF $(DEPS_DIR)/$*.Td
 # environment
-JOURNAL_STREAM = 9:1053989
+JOURNAL_STREAM = 9:55514
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
-# makefile (from 'build/deps/Minilibx/init.d', line 1)
-MAKEFILE_LIST :=  Makefile src.mk build/deps/Cub3d/render.d build/deps/Cub3d/next_wall.d build/deps/Cub3d/dealkey.d build/deps/Cub3d/ft_calloc.d build/deps/Cub3d/final_free.d build/deps/Cub3d/init_info.d build/deps/Cub3d/position.d build/deps/Cub3d/cub3d.d build/deps/Cub3d/parser.d build/deps/Cub3d/print_map.d build/deps/Cub3d/free_tab.d build/deps/Cub3d/ft_exit.d build/deps/Cub3d/raycasting.d build/deps/Minilibx/fill_rect.d build/deps/Minilibx/init.d
+# makefile (from 'src.mk', line 1)
+MAKEFILE_LIST :=  Makefile src.mk
 # automatic
 @F = $(notdir $@)
 # environment
@@ -76,15 +77,15 @@ OBJS_CUBE = $(filter $(OBJS_DIR)/Cub3d/%, $(OBJS))
 # makefile (from 'Makefile', line 22)
 OBJS = $(patsubst src/%.c, $(OBJS_DIR)/%.o, $(SRC))
 # environment
-MANAGERPID = 122065
+MANAGERPID = 3009
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/38931/vscode-ipc-940e1999-9cd3-4b6e-92de-082b84276f50.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/38931/vscode-ipc-4d700ce1-7512-4285-ab69-4f995485f6cb.sock
 # environment
 VSCODE_CWD = /mnt/nfs/homes/tallal--/Project/hors42/cub3d
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session5
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session0
 # environment
-KRB5CCNAME = FILE:/tmp/krb5cc_38931_O2KBI7
+KRB5CCNAME = FILE:/tmp/krb5cc_38931_O65cl5
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
@@ -94,7 +95,7 @@ GPG_AGENT_INFO = /run/user/38931/gnupg/S.gpg-agent:0:1
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-SESSION_MANAGER = local/e1r2p8.42.fr:@/tmp/.ICE-unix/122524,unix/e1r2p8.42.fr:/tmp/.ICE-unix/122524
+SESSION_MANAGER = local/e1r2p11.42.fr:@/tmp/.ICE-unix/3522,unix/e1r2p11.42.fr:/tmp/.ICE-unix/3522
 # environment
 XDG_RUNTIME_DIR = /run/user/38931
 # environment
@@ -104,7 +105,7 @@ VSCODE_LOG_STACK = false
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = 603a27cd1383450fb8be3b8e96926f1a
+INVOCATION_ID = 84bc999eac8d4bddb3eff0409ab69d39
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -128,7 +129,7 @@ PWD = /mnt/nfs/homes/tallal--/Project/hors42/cub3d
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 122487
+SSH_AGENT_PID = 3486
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -190,11 +191,13 @@ DEPS_DIR = $(BUILD_DIR)/deps
 # default
 MAKE_COMMAND := make
 # environment
-OLDPWD = /mnt/nfs/homes/tallal--
+OLDPWD = /mnt/nfs/homes/tallal--/Project/hors42
 # default
 .VARIABLES := 
 # automatic
 *F = $(notdir $*)
+# environment
+LANGUAGE = en
 # environment
 XDG_SEAT_PATH = /org/freedesktop/DisplayManager/Seat0
 # environment
@@ -230,11 +233,11 @@ LC_ALL = C
 # environment
 GJS_DEBUG_TOPICS = JS ERROR;JS LOG
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/ab82f73c_fc7e_464f_9d91_d3403b371811
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/0c2a87ea_020e_468f_b52e_b5200c4a1ea9
 # automatic
 ^F = $(notdir $^)
 # environment
-GNOME_TERMINAL_SERVICE = :1.82
+GNOME_TERMINAL_SERVICE = :1.81
 # default
 SUFFIXES := 
 # environment
@@ -256,9 +259,9 @@ OBJS_MLX = $(filter $(OBJS_DIR)/Minilibx/%, $(OBJS))
 # environment
 DOCKER_HOST = unix:///run/user/38931/docker.sock
 # environment
-VSCODE_PID = 123437
+VSCODE_PID = 4692
 # variable set hash-table stats:
-# Load=123/1024=12%, Rehash=0, Collisions=14/241=6%
+# Load=125/1024=12%, Rehash=0, Collisions=14/228=6%
 
 # Pattern-specific Variable Values
 
@@ -266,21 +269,19 @@ VSCODE_PID = 123437
 
 # Directories
 
-# . (device 58, inode 162960990): 21 files, no impossibilities.
-# build/deps/Minilibx (device 58, inode 163646736): 4 files, no impossibilities.
-# src/Minilibx (device 58, inode 162963477): No files, no impossibilities so far.
-# build/deps/Cub3d (device 58, inode 163355782): 15 files, no impossibilities.
-# src/Cub3d (device 58, inode 162963476): No files, no impossibilities so far.
-# src (device 58, inode 162963475): No files, no impossibilities so far.
-# build/deps (device 58, inode 163054950): 4 files, no impossibilities.
+# . (device 56, inode 162960990): 20 files, no impossibilities.
+# src/Cub3d (device 56, inode 162963476): 6 files, no impossibilities so far.
+# src (device 56, inode 162963475): No files, no impossibilities so far.
+# build/deps: could not be stat'd.
 
-# 44 files, no impossibilities in 7 directories.
+# 26 files, no impossibilities in 4 directories.
 
 # Implicit Rules
 
 build/objs/%.o: src/%.c Makefile
 #  recipe to execute (from 'Makefile', line 30):
 	@$(PRECOMPILE)
+ 
 	make -s -C ./lib/
 	$(CC) $(CFLAGS) -c -o $@ $<
 	@$(POSTCOMPILE)
@@ -289,145 +290,66 @@ build/objs/%.o: src/%.c Makefile
 
 # Files
 
-build/objs/Cub3d/dealkey.o: src/Cub3d/dealkey.c Makefile src/Cub3d/dealkey.c include/cub3d.h include/minilibx.h lib/mlx.h include/minilibx.h
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'Cub3d/dealkey'
-#  Last modified 2022-06-02 14:58:34.870841738
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 30):
-	@$(PRECOMPILE)
-	make -s -C ./lib/
-	$(CC) $(CFLAGS) -c -o $@ $<
-	@$(POSTCOMPILE)
-
-lib/mlx.h:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-17 16:58:53.670862914
-#  File has been updated.
-#  Successfully updated.
+# Not a target:
+build/objs/Cub3d/dealkey.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-build/deps/Cub3d/next_wall.d:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-02 14:58:36.174840867
-#  File has been updated.
-#  Successfully updated.
-
-build/objs/Cub3d/render.o: src/Cub3d/render.c Makefile src/Cub3d/render.c include/cub3d.h include/minilibx.h lib/mlx.h
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'Cub3d/render'
-#  Last modified 2022-06-02 14:58:35.994840987
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 30):
-	@$(PRECOMPILE)
-	make -s -C ./lib/
-	$(CC) $(CFLAGS) -c -o $@ $<
-	@$(POSTCOMPILE)
+build/objs/Cub3d/render.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 all: cub3d
 #  Phony target (prerequisite of .PHONY).
 #  Command line target.
- 
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-build/deps/Minilibx/init.d:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-02 14:58:36.354840747
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-build/deps/Cub3d/ft_exit.d:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-02 14:58:35.146841554
-#  File has been updated.
-#  Successfully updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/15=0%
 
 .PHONY: all clean fclean re test
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
-build/objs/Cub3d/position.o: src/Cub3d/position.c Makefile src/Cub3d/position.c include/cub3d.h include/minilibx.h lib/mlx.h
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'Cub3d/position'
-#  Last modified 2022-06-02 14:58:35.634841228
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 30):
-	@$(PRECOMPILE)
-	make -s -C ./lib/
-	$(CC) $(CFLAGS) -c -o $@ $<
-	@$(POSTCOMPILE)
-
-build/objs/Minilibx/init.o: src/Minilibx/init.c Makefile src/Minilibx/init.c include/minilibx.h lib/mlx.h
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'Minilibx/init'
-#  Last modified 2022-06-02 14:58:36.378840731
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 30):
-	@$(PRECOMPILE)
-	make -s -C ./lib/
-	$(CC) $(CFLAGS) -c -o $@ $<
-	@$(POSTCOMPILE)
+# Not a target:
+build/objs/Cub3d/position.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-src/Cub3d/dealkey.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-01 17:18:58.56577293
-#  File has been updated.
-#  Successfully updated.
-
-include/minilibx.h:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-31 18:29:09.121298167
-#  File has been updated.
-#  Successfully updated.
+build/objs/Minilibx/init.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 cub3d: build/objs/Cub3d/cub3d.o build/objs/Cub3d/dealkey.o build/objs/Cub3d/free_tab.o build/objs/Cub3d/ft_calloc.o build/objs/Cub3d/ft_exit.o build/objs/Cub3d/init_info.o build/objs/Cub3d/parser.o build/objs/Cub3d/position.o build/objs/Cub3d/print_map.o build/objs/Cub3d/raycasting.o build/objs/Cub3d/render.o build/objs/Cub3d/final_free.o build/objs/Cub3d/next_wall.o build/objs/Minilibx/fill_rect.o build/objs/Minilibx/init.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-06-02 14:58:36.450840683
+#  File does not exist.
 #  File has been updated.
-#  Successfully updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/15=0%
 #  recipe to execute (from 'Makefile', line 38):
 	$(CC) -o $@ $^ $(CFLAGS) $(LFLAGS)
 
-build/objs/Minilibx/fill_rect.o: src/Minilibx/fill_rect.c Makefile src/Minilibx/fill_rect.c include/minilibx.h lib/mlx.h
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'Minilibx/fill_rect'
-#  Last modified 2022-06-02 14:58:36.294840787
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 30):
-	@$(PRECOMPILE)
-	make -s -C ./lib/
-	$(CC) $(CFLAGS) -c -o $@ $<
-	@$(POSTCOMPILE)
+# Not a target:
+build/objs/Minilibx/fill_rect.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
-build/objs/Cub3d/free_tab.o: src/Cub3d/free_tab.c Makefile src/Cub3d/free_tab.c include/cub3d.h include/minilibx.h lib/mlx.h
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'Cub3d/free_tab'
-#  Last modified 2022-06-02 14:58:34.962841677
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 30):
-	@$(PRECOMPILE)
-	make -s -C ./lib/
-	$(CC) $(CFLAGS) -c -o $@ $<
-	@$(POSTCOMPILE)
-
-include/cub3d.h:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-02 12:53:25.833880994
-#  File has been updated.
-#  Successfully updated.
+# Not a target:
+build/objs/Cub3d/free_tab.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 Makefile:
@@ -436,17 +358,11 @@ Makefile:
 #  File has been updated.
 #  Successfully updated.
 
-build/objs/Cub3d/final_free.o: src/Cub3d/final_free.c Makefile src/Cub3d/final_free.c include/cub3d.h include/minilibx.h lib/mlx.h
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'Cub3d/final_free'
-#  Last modified 2022-06-02 14:58:36.114840907
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 30):
-	@$(PRECOMPILE)
-	make -s -C ./lib/
-	$(CC) $(CFLAGS) -c -o $@ $<
-	@$(POSTCOMPILE)
+# Not a target:
+build/objs/Cub3d/final_free.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 test:
 #  Phony target (prerequisite of .PHONY).
@@ -455,58 +371,10 @@ test:
 #  File has not been updated.
 
 # Not a target:
-src/Cub3d/position.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-01 18:16:03.764116159
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-src/Minilibx/init.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-31 18:29:09.157298148
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-build/deps/Cub3d/render.d:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-02 14:58:35.966841006
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-src/Minilibx/fill_rect.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-31 11:23:29.042553139
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-src/Cub3d/free_tab.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-01 17:19:06.589766229
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-build/deps/Cub3d/position.d:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-02 14:58:35.58684126
-#  File has been updated.
-#  Successfully updated.
-
-build/objs/Cub3d/ft_calloc.o: src/Cub3d/ft_calloc.c Makefile src/Cub3d/ft_calloc.c include/cub3d.h include/minilibx.h lib/mlx.h
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'Cub3d/ft_calloc'
-#  Last modified 2022-06-02 14:58:35.050841618
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 30):
-	@$(PRECOMPILE)
-	make -s -C ./lib/
-	$(CC) $(CFLAGS) -c -o $@ $<
-	@$(POSTCOMPILE)
+build/objs/Cub3d/ft_calloc.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 src.mk:
@@ -515,17 +383,11 @@ src.mk:
 #  File has been updated.
 #  Successfully updated.
 
-build/objs/Cub3d/raycasting.o: src/Cub3d/raycasting.c Makefile src/Cub3d/raycasting.c include/cub3d.h include/minilibx.h lib/mlx.h
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'Cub3d/raycasting'
-#  Last modified 2022-06-02 14:58:35.874841068
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 30):
-	@$(PRECOMPILE)
-	make -s -C ./lib/
-	$(CC) $(CFLAGS) -c -o $@ $<
-	@$(POSTCOMPILE)
+# Not a target:
+build/objs/Cub3d/raycasting.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 fclean: clean
 #  Phony target (prerequisite of .PHONY).
@@ -536,63 +398,40 @@ fclean: clean
 	rm -rf cub3d
 
 # Not a target:
-src/Cub3d/final_free.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-01 17:18:59.709771972
-#  File has been updated.
-#  Successfully updated.
+build/objs/Cub3d/ft_exit.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
-# Not a target:
-src/Cub3d/ft_calloc.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-01 17:19:09.741763608
-#  File has been updated.
-#  Successfully updated.
-
-build/objs/Cub3d/ft_exit.o: src/Cub3d/ft_exit.c Makefile src/Cub3d/ft_exit.c include/cub3d.h include/minilibx.h lib/mlx.h
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'Cub3d/ft_exit'
-#  Last modified 2022-06-02 14:58:35.18284153
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 30):
-	@$(PRECOMPILE)
-	make -s -C ./lib/
-	$(CC) $(CFLAGS) -c -o $@ $<
-	@$(POSTCOMPILE)
-
-# Not a target:
-build/deps/Minilibx/fill_rect.d:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-02 14:58:36.278840798
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-build/deps/Cub3d/free_tab.d:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-02 14:58:34.946841688
-#  File has been updated.
-#  Successfully updated.
-
-build/objs/Cub3d/cub3d.o: src/Cub3d/cub3d.c Makefile src/Cub3d/cub3d.c include/cub3d.h include/minilibx.h lib/mlx.h include/minilibx.h
+build/objs/Cub3d/cub3d.o: src/Cub3d/cub3d.c Makefile
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'Cub3d/cub3d'
-#  Last modified 2022-06-02 14:58:34.742841824
+#  File does not exist.
 #  File has been updated.
-#  Successfully updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := build/objs/Cub3d/cub3d.o
+# automatic
+# % := 
+# automatic
+# * := Cub3d/cub3d
+# automatic
+# + := src/Cub3d/cub3d.c Makefile
+# automatic
+# | := 
+# automatic
+# < := src/Cub3d/cub3d.c
+# automatic
+# ^ := src/Cub3d/cub3d.c Makefile
+# automatic
+# ? := src/Cub3d/cub3d.c Makefile
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=9/32=28%
 #  recipe to execute (from 'Makefile', line 30):
 	@$(PRECOMPILE)
 	make -s -C ./lib/
 	$(CC) $(CFLAGS) -c -o $@ $<
 	@$(POSTCOMPILE)
-
-# Not a target:
-build/deps/Cub3d/final_free.d:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-02 14:58:36.086840926
-#  File has been updated.
-#  Successfully updated.
 
 # Not a target:
 .DEFAULT:
@@ -600,49 +439,23 @@ build/deps/Cub3d/final_free.d:
 #  Modification time never checked.
 #  File has not been updated.
 
-build/objs/Cub3d/print_map.o: src/Cub3d/print_map.c Makefile src/Cub3d/print_map.c include/cub3d.h include/minilibx.h lib/mlx.h
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'Cub3d/print_map'
-#  Last modified 2022-06-02 14:58:35.746841153
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 30):
-	@$(PRECOMPILE)
-	make -s -C ./lib/
-	$(CC) $(CFLAGS) -c -o $@ $<
-	@$(POSTCOMPILE)
-
-build/objs/Cub3d/init_info.o: src/Cub3d/init_info.c Makefile src/Cub3d/init_info.c include/cub3d.h include/minilibx.h lib/mlx.h
-#  Implicit rule search has been done.
- 
-#  Implicit/static pattern stem: 'Cub3d/init_info'
-#  Last modified 2022-06-02 14:58:35.342841423
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 30):
-	@$(PRECOMPILE)
-	make -s -C ./lib/
-	$(CC) $(CFLAGS) -c -o $@ $<
-	@$(POSTCOMPILE)
-
-build/objs/Cub3d/parser.o: src/Cub3d/parser.c Makefile src/Cub3d/parser.c include/cub3d.h include/minilibx.h lib/mlx.h
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'Cub3d/parser'
-#  Last modified 2022-06-02 14:58:35.474841335
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 30):
-	@$(PRECOMPILE)
-	make -s -C ./lib/
-	$(CC) $(CFLAGS) -c -o $@ $<
-	@$(POSTCOMPILE)
+# Not a target:
+build/objs/Cub3d/print_map.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-src/Cub3d/raycasting.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-01 13:07:15.748877312
-#  File has been updated.
-#  Successfully updated.
+build/objs/Cub3d/init_info.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+build/objs/Cub3d/parser.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 re:
 #  Phony target (prerequisite of .PHONY).
@@ -652,13 +465,6 @@ re:
 #  recipe to execute (from 'Makefile', line 48):
 	$(MAKE) fclean
 	$(MAKE) all
-
-# Not a target:
-src/Cub3d/ft_exit.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-01 17:19:16.421758072
-#  File has been updated.
-#  Successfully updated.
 
 clean:
 #  Phony target (prerequisite of .PHONY).
@@ -670,122 +476,32 @@ clean:
 	rm -rf build
 
 # Not a target:
-build/deps/Cub3d/ft_calloc.d:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-02 14:58:35.026841634
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-build/deps/Cub3d/raycasting.d:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-02 14:58:35.846841086
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
 src/Cub3d/cub3d.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-01 17:18:49.209780796
-#  File has been updated.
-#  Successfully updated.
-
-build/objs/Cub3d/next_wall.o: src/Cub3d/next_wall.c Makefile src/Cub3d/next_wall.c include/cub3d.h include/minilibx.h lib/mlx.h
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'Cub3d/next_wall'
-#  Last modified 2022-06-02 14:58:36.194840854
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 30):
-	@$(PRECOMPILE)
-	make -s -C ./lib/
-	$(CC) $(CFLAGS) -c -o $@ $<
-	@$(POSTCOMPILE)
-
-# Not a target:
-src/Cub3d/print_map.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-01 18:16:05.624115336
+#  Last modified 2022-06-07 12:22:33.956882239
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
-src/Cub3d/init_info.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-02 14:11:41.620156728
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-src/Cub3d/parser.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-02 14:58:29.410845394
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-src/Cub3d/render.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-02 12:53:24.721881532
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-build/deps/Cub3d/cub3d.d:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-02 14:58:34.710841845
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-build/deps/Cub3d/print_map.d:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-02 14:58:35.710841177
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-build/deps/Cub3d/init_info.d:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-02 14:58:35.294841455
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-build/deps/Cub3d/parser.d:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-02 14:58:35.450841351
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-build/deps/Cub3d/dealkey.d:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-02 14:58:34.846841755
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-src/Cub3d/next_wall.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-01 18:15:57.436118959
-#  File has been updated.
-#  Successfully updated.
+build/objs/Cub3d/next_wall.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # files hash-table stats:
-# Load=59/1024=6%, Rehash=0, Collisions=12/290=4%
+# Load=27/1024=3%, Rehash=0, Collisions=0/68=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 118 / storage = 1942 B / avg = 16 B
-# current buf: size = 8162 B / used = 1942 B / count = 118 / avg = 16 B
+# strcache buffers: 1 (0) / strings = 56 / storage = 787 B / avg = 14 B
+# current buf: size = 8162 B / used = 787 B / count = 56 / avg = 14 B
 
-# strcache performance: lookups = 385 / hit rate = 69%
+# strcache performance: lookups = 84 / hit rate = 33%
 # hash-table stats:
-# Load=118/8192=1%, Rehash=0, Collisions=9/385=2%
-# Finished Make data base on Thu Jun  2 14:58:54 2022
+# Load=56/8192=1%, Rehash=0, Collisions=3/84=4%
+# Finished Make data base on Tue Jun  7 13:50:27 2022
 
  

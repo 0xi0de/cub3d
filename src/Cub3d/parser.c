@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 00:47:00 by tallal--          #+#    #+#             */
-/*   Updated: 2022/06/07 14:03:25 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/06/07 15:36:07 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	**fill_map_int(char **map_txt, int line_len, int nb_line)
 	return (map_int);
 }
 
-int		valid_zero(int **map_int, int i, int j, int line_len)
+int	valid_zero(int **map_int, int i, int j, int line_len)
 {
 	int	nb_line;
 
@@ -122,7 +122,7 @@ int		valid_zero(int **map_int, int i, int j, int line_len)
 	return (1);
 }
 
-int		check_map(int **map_int, int line_len)
+int	check_map(int **map_int, int line_len)
 {
 	int	i;
 	int	j;
@@ -145,46 +145,47 @@ int		check_map(int **map_int, int line_len)
 }
 
 void	fill_map_condition(t_info *info, int **map_int, int line_len, \
-	int i, int j)
+	int i)
 {
-	if (map_int[i][j] == 1)
+	int	j;
+
+	j = 0;
+	while (j < line_len)
 	{
-		info->map[i * line_len + j].is_wall = 1;
-		info->map[i * line_len + j].is_void = 1;
+		if (map_int[i][j] == 1)
+		{
+			info->map[i * line_len + j].is_wall = 1;
+			info->map[i * line_len + j].is_void = 1;
+		}
+		else if (map_int[i][j] == 0)
+		{
+			info->map[i * line_len + j].is_void = 0;
+			info->map[i * line_len + j].is_wall = 0;
+		}
+		else
+			info->map[i * line_len + j].is_wall = 1;
+		info->map[i * line_len + j].rect.w = WALL_W;
+		info->map[i * line_len + j].rect.h = WALL_H;
+		info->map[i * line_len + j].rect.x = j * WALL_W;
+		info->map[i * line_len + j].rect.y = i * WALL_H;
+		j++;
 	}
-	else if (map_int[i][j] == 0)
-	{
-		info->map[i * line_len + j].is_void = 0;
-		info->map[i * line_len + j].is_wall = 0;
-	}
-	else
-		info->map[i * line_len + j].is_wall = 1;
-	info->map[i * line_len + j].rect.w = WALL_W;
-	info->map[i * line_len + j].rect.h = WALL_H;
-	info->map[i * line_len + j].rect.x = j * WALL_W;
-	info->map[i * line_len + j].rect.y = i * WALL_H;
 }
 
 void	fill_map(t_info *info, int **map_int, int line_len, int nb_line)
 {
 	int	i;
-	int	j;
 
 	i = 0;
 	while (i < nb_line)
 	{
-		j = 0;
-		while (j < line_len)
-		{
-			fill_map_condition(info, map_int, line_len, i, j);
-			j++;
-		}
+		fill_map_condition(info, map_int, line_len, i);
 		i++;
 	}
 	deltab((char **)map_int);
 }
 
-int		parse_map(t_info *info, char **map_txt)
+int	parse_map(t_info *info, char **map_txt)
 {
 	int	**map_int;
 	int	line_len;
@@ -258,57 +259,80 @@ char	check_char(char *str, int *i)
 
 void	print_texture_error(int i)
 {
-	char str[6][20] = {"NO", "SO", "EA", "WE", "F", "C"};
-
 	write(2, "Warning! Multiple arguments for ", 32);
-	write(2, str[i], ft_strlen(str[i]));
+	if (i == 0)
+		write(2, "NO", 2);
+	else if (i == 1)
+		write(2, "SO", 2);
+	else if (i == 2)
+		write(2, "EA", 2);
+	else if (i == 3)
+		write(2, "WE", 2);
+	else if (i == 4)
+		write(2, "F", 1);
+	else
+		write(2, "C", 1);
 	write(2, ", the first one will be selected\n", 33);
 }
 
-void	fill_textures(char *str, int *count, char **sprites, int fd)
+void	handle_x(char **sprites, int fd, char *str)
 {
-	char	list[6] = {'N', 'S', 'E', 'W', 'F', 'C'};
-	int		i;
-	int		j;
-	char	c;
+	int	i;
 
+	write(2, "Error\nError while parsing .cub file\n", 36);
 	i = 0;
-	j = 0;
-	c = check_char(str, &j);
 	while (i < 6)
+	{
+		if (sprites[i])
+			free(sprites[i]);
+		i++;
+	}
+	free(sprites);
+	free(str);
+	close(fd);
+	exit(1);
+}
+
+int	fill_texture_condition(char c, char **sprites, char *str, \
+	int j)
+{
+	int		i;
+	char	*list;
+	int		count;	
+	int		val;
+
+	i = -1;
+	list = "NSEWFC";
+	count = 0;
+	while (++i < 6)
 	{
 		if (c == list[i])
 		{
-			if (sprites[i] == NULL)
-			{
-				if ((list[i] == 'F' || list[i] == 'C')
-					&& ft_strlen(str) > j + 2)
-					sprites[i] = ft_strdup(str + j + 2);
-				else if (ft_strlen(str) > j + 3)
-					sprites[i] = ft_strdup(str + j + 3);
-				(*count)++;
-			}
+			val = 3;
+			if (c == 'F' || c == 'C')
+				val--;
+			if (sprites[i] == NULL && ft_strlen(str) > j + val)
+				(count)++;
+			if (sprites[i] == NULL && ft_strlen(str) > j + val)
+				sprites[i] = ft_strdup(str + j + val);
 			else
 				print_texture_error(i);
 			break ;
 		}
-		i++;
 	}
+	return (count);
+}
+
+void	fill_textures(char *str, int *count, char **sprites, int fd)
+{
+	int		j;
+	char	c;
+
+	j = 0;
+	c = check_char(str, &j);
+	*count += fill_texture_condition(c, sprites, str, j);
 	if (c == 'X')
-	{
-		write(2, "Error\nError while parsing .cub file\n", 36);
-		i = 0;
-		while (i < 6)
-		{
-			if (sprites[i])
-				free(sprites[i]);
-			i++;
-		}
-		free(sprites);
-		free(str);
-		close(fd);
-		exit(1);
-	}
+		handle_x(sprites, fd, str);
 }
 
 char	**init_sprites(char **sprites)
@@ -324,7 +348,7 @@ char	**init_sprites(char **sprites)
 	return (sprites);
 }
 
-int check_arg_map(char *str)
+int	check_arg_map(char *str)
 {
 	int	i;
 
