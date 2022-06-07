@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:52 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/06/07 12:56:27 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/06/07 14:06:37 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ typedef struct s_coord
 {
 	double	x;
 	double	y;
-	int	xi;
-	int	yi;
+	int		xi;
+	int		yi;
 }	t_coord;
 
 typedef struct s_ratio
@@ -121,6 +121,12 @@ typedef struct s_parser
 t_info	*init_info(int map_w, int map_h, char **sprites, char **map_txt);
 char	*ft_strdup(char *str);
 int		ft_strlen(char *str);
+int		ft_strchr(char *str, char c);
+char	*ft_strjoin(char *s1, char *s2);
+int		tablen(char **tab);
+char	**tabjoin(char **tab, char *str);
+int		get_next_line(int fd, char **line);
+char	*ft_strcpy(char *dest, char *src);
 void	final_free(t_info *info);
 void	clear_img(t_info *info);
 t_info	*parser(char *file);

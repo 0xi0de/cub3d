@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 00:47:00 by tallal--          #+#    #+#             */
-/*   Updated: 2022/06/07 13:11:43 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/06/07 14:03:25 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,58 +15,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <fcntl.h>
-
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (!str)
-		return (0);
-	while (str[i])
-		i++;
-	return (i);
-}
-
-char	*ft_strjoin(char *s1, char *s2)
-{
-	int		i;
-	int		j;
-	char	*str;
-
-	i = 0;
-	j = 0;
-	str = ft_calloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (!str)
-		return (NULL);
-	while (s1 && s1[i])
-	{
-		str[i] = s1[i];
-		i++;
-	}
-	while (s2 && s2[j])
-	{
-		str[i] = s2[j];
-		i++;
-		j++;
-	}
-	str[i] = '\0';
-	return (str);
-}
-
-int	ft_strchr(char *str, char c)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == c)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
 
 void	put_player(t_info *info, int i, int j, char c)
 {
@@ -111,104 +59,6 @@ int	player_spawn(t_info *info, char **map_txt)
 	if (!check_double || check_double > 1)
 		return (0);
 	return (1);
-}
-
-int	get_next_cut(int fd, char **line, char *buff)
-{
-	int		ret;
-	int		index;
-	char	*tmp;
-
-	ret = 1;
-	index = ft_strchr(buff, '\n');
-	while (index == -1)
-	{
-		tmp = *line;
-		*line = ft_strjoin(*line, buff);
-		if (tmp)
-			free(tmp);
-		if (*line == NULL)
-			exit(EXIT_FAILURE);
-		ret = read(fd, buff, 4096);
-		if (ret < 0)
-			exit(EXIT_FAILURE);
-		if (ret < 4096)
-			break ;
-		index = ft_strchr(buff, '\n');
-	}
-	return (ret);
-}
-
-void	get_next_cut_2(char *buff, int index)
-{
-	int	i;
-
-	i = 0;
-	while (buff[index])
-	{
-		buff[i] = buff[index];
-		index++;
-		i++;
-	}
-	buff[i] = '\0';
-}
-
-int	get_next_line(int fd, char **line)
-{
-	int			ret;
-	int			index;
-	char		*tmp;
-	static char	buff[4097];
-
-	ret = 1;
-	if (!line)
-		return (-1);
-	*line = NULL;
-	ret = get_next_cut(fd, line, buff);
-	index = ft_strchr(buff, '\n');
-	if (index != -1)
-		buff[index] = '\0';
-	tmp = *line;
-	*line = ft_strjoin(*line, buff);
-	if (tmp)
-		free(tmp);
-	if (*line == NULL)
-		exit(EXIT_FAILURE);
-	index++;
-	get_next_cut_2(buff, index);
-	return (ret);
-}
-
-int	tablen(char **tab)
-{
-	int	i;
-
-	if (!tab)
-		return (0);
-	i = 0;
-	while (tab[i])
-		i++;
-	return (i);
-}
-
-char	**tabjoin(char **tab, char *str)
-{
-	char	**newtab;
-	int		i;
-
-	newtab = ft_calloc(sizeof(char *) * (tablen(tab) + 2));
-	if (!newtab)
-		fatal_error();
-	i = 0;
-	while (tab && tab[i])
-	{
-		newtab[i] = tab[i];
-		i++;
-	}
-	newtab[i] = str;
-	newtab[i + 1] = NULL;
-	free(tab);
-	return (newtab);
 }
 
 int	map_char_to_int(char c)
@@ -380,34 +230,6 @@ t_info	*create_info(char **map_txt, char **sprites)
 	return (init_info(w, h, sprites, map_txt));
 }
 
-char	*ft_strdup(char *str)
-{
-	int		i;
-	int		size;
-	char	*dup;
-
-	i = 0;
-	if (!str)
-		return (NULL);
-	while (str[i] && (str[i] == '\t' || str[i] == '\n' || str[i] == '\f'
-			|| str[i] == '\v' || str[i] == '\r' || str[i] == ' '))
-			i++;
-	size = ft_strlen(str);
-	dup = malloc(sizeof(char) * (size + 1 - i));
-	if (!dup)
-		return (NULL);
-	size = i;
-	i = 0;
-	while (str[size])
-	{
-		dup[i] = str[size];
-		i++;
-		size++;
-	}
-	dup[i] = '\0';
-	return (dup);
-}
-
 char	check_char(char *str, int *i)
 {
 	while (str[*i] && str[*i] == ' ')
@@ -432,20 +254,6 @@ char	check_char(char *str, int *i)
 	else if (str[*i] && !str[(*i) + 1])
 		return ('X');
 	return ('Q');
-}
-
-char	*ft_strcpy(char *dest, char *src)
-{
-	int	i;
-
-	i = 0;
-	while (src[i])
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
 }
 
 void	print_texture_error(int i)
