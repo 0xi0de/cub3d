@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:05:37 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/06/03 12:39:06 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/06/07 14:32:22 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int	check_file(char *str)
 			return (1);
 	}
 	return (0);
-
 }
 
 void	write_error_msg(char *err1, char *err2)
@@ -81,7 +80,7 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 	{
 		write_error_msg("Error\n", "Wrong number of arguments\n");
-		return (1);	
+		return (1);
 	}
 	if (!check_file(argv[1]))
 	{
