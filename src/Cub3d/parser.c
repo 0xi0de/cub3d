@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 00:47:00 by tallal--          #+#    #+#             */
-/*   Updated: 2022/06/03 13:43:29 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:25:33 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -522,7 +522,8 @@ t_info	*parser(char *file)
 
 	map_txt = NULL;
 	sprites = malloc(sizeof(char *) * 6);
-	// proteCC
+	if (!sprites)
+		exit(1);
 	sprites = init_sprites(sprites);
 	fd = open(file, O_RDONLY);
 	count = 0;
@@ -531,7 +532,6 @@ t_info	*parser(char *file)
 		write(2, "Error\n", 6);
 		perror("");
 		free(sprites);
-		//close(fd);
 		exit(1);
 	}
 	while (get_next_line(fd, &line) > 0 && count < 6)
@@ -554,10 +554,8 @@ t_info	*parser(char *file)
 	else
 		free(line);
 	while (get_next_line(fd, &line) > 0)
-	{
 		map_txt = tabjoin(map_txt, line);
-		//free(line);
-	}
+	close(fd);
 	if (line && line[0])
 		map_txt = tabjoin(map_txt, line);
 	else
