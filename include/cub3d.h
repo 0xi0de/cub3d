@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:52 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/06/03 12:39:28 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:56:27 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ typedef struct s_info
 	int			index;
 	int			coma_count;
 	char		*path;
-	char		**sprites;
 	t_info_mlx	mlx_info;
 	t_player	player;
 	t_texture	wall_texture2d;
@@ -109,6 +108,15 @@ typedef struct s_info
 	t_color		color_floor;
 	t_element	map[];
 }	t_info;
+
+typedef struct s_parser
+{
+	char		**sprites;
+	char		**map_txt;
+	char		*line;
+	int			fd;
+	int			count;
+}	t_parser;
 
 t_info	*init_info(int map_w, int map_h, char **sprites, char **map_txt);
 char	*ft_strdup(char *str);

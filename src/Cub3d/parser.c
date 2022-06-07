@@ -6,7 +6,7 @@
 /*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 00:47:00 by tallal--          #+#    #+#             */
-/*   Updated: 2022/06/07 12:27:06 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/06/07 13:11:43 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,18 +113,13 @@ int	player_spawn(t_info *info, char **map_txt)
 	return (1);
 }
 
-int	get_next_line(int fd, char **line)
+int	get_next_cut(int fd, char **line, char *buff)
 {
-	int			ret;
-	int			index;
-	char		*tmp;
-	static char	buff[4097];
-	int			i;
+	int		ret;
+	int		index;
+	char	*tmp;
 
 	ret = 1;
-	if (!line)
-		return (-1);
-	*line = NULL;
 	index = ft_strchr(buff, '\n');
 	while (index == -1)
 	{
@@ -141,6 +136,35 @@ int	get_next_line(int fd, char **line)
 			break ;
 		index = ft_strchr(buff, '\n');
 	}
+	return (ret);
+}
+
+void	get_next_cut_2(char *buff, int index)
+{
+	int	i;
+
+	i = 0;
+	while (buff[index])
+	{
+		buff[i] = buff[index];
+		index++;
+		i++;
+	}
+	buff[i] = '\0';
+}
+
+int	get_next_line(int fd, char **line)
+{
+	int			ret;
+	int			index;
+	char		*tmp;
+	static char	buff[4097];
+
+	ret = 1;
+	if (!line)
+		return (-1);
+	*line = NULL;
+	ret = get_next_cut(fd, line, buff);
 	index = ft_strchr(buff, '\n');
 	if (index != -1)
 		buff[index] = '\0';
@@ -150,15 +174,8 @@ int	get_next_line(int fd, char **line)
 		free(tmp);
 	if (*line == NULL)
 		exit(EXIT_FAILURE);
-	i = 0;
 	index++;
-	while (buff[index])
-	{
-		buff[i] = buff[index];
-		index++;
-		i++;
-	}
-	buff[i] = '\0';
+	get_next_cut_2(buff, index);
 	return (ret);
 }
 
@@ -221,14 +238,13 @@ int	**fill_map_int(char **map_txt, int line_len, int nb_line)
 		map_int[i] = ft_calloc(sizeof(int) * (line_len));
 		if (!map_int[i])
 			fatal_error();
-		j = 0;
-		while (j < line_len)
+		j = -1;
+		while (++j < line_len)
 		{
 			if (j < ft_strlen(map_txt[i]))
 				map_int[i][j] = map_char_to_int(map_txt[i][j]);
 			else
 				map_int[i][j] = 2;
-			j++;
 		}
 		i++;
 	}
@@ -517,80 +533,97 @@ int check_arg_map(char *str)
 	return (0);
 }
 
-t_info	*parser(char *file)
+void	parser_cut_2(t_parser *parser)
 {
-	int		fd;
-	int		count;
-	char	*line;
-	char	**map_txt;
-	char	**sprites;
-	t_info	*info;
-
-	map_txt = NULL;
-	sprites = malloc(sizeof(char *) * 6);
-	if (!sprites)
-		exit(1);
-	sprites = init_sprites(sprites);
-	fd = open(file, O_RDONLY);
-	count = 0;
-	if (fd == -1)
+	if (parser->line && check_arg_map(parser->line))
 	{
-		write(2, "Error\n", 6);
-		perror("");
-		free(sprites);
-		exit(1);
-	}
-	while (get_next_line(fd, &line) > 0 && count < 6)
-	{
-		fill_textures(line, &count, sprites, fd);
-		free(line);
-	}
-	if (line && check_arg_map(line))
-	{
-		fill_textures(line, &count, sprites, fd);
-		free(line);
-		while (get_next_line(fd, &line) > 0 && check_arg_map(line))
+		fill_textures(parser->line, &parser->count, \
+			parser->sprites, parser->fd);
+		free(parser->line);
+		while (get_next_line(parser->fd, &parser->line) > 0 \
+			&& check_arg_map(parser->line))
 		{
-			fill_textures(line, &count, sprites, fd);
-			free(line);
+			fill_textures(parser->line, &parser->count, \
+				parser->sprites, parser->fd);
+			free(parser->line);
 		}
 	}
-	if (line && check_arg_map(line))
-		map_txt = tabjoin(map_txt, line);
+	if (parser->line && check_arg_map(parser->line))
+		parser->map_txt = tabjoin(parser->map_txt, parser->line);
 	else
-		free(line);
-	while (get_next_line(fd, &line) > 0)
-		map_txt = tabjoin(map_txt, line);
-	close(fd);
-	if (line && line[0])
-		map_txt = tabjoin(map_txt, line);
+		free(parser->line);
+	while (get_next_line(parser->fd, &parser->line) > 0)
+		parser->map_txt = tabjoin(parser->map_txt, parser->line);
+	close(parser->fd);
+	if (parser->line && parser->line[0])
+		parser->map_txt = tabjoin(parser->map_txt, parser->line);
 	else
-		free(line);
-	if (!map_txt)
+		free(parser->line);
+}
+
+void	parser_cut(t_parser *parser)
+{
+	int	i;
+
+	while (get_next_line(parser->fd, &parser->line) > 0 && parser->count < 6)
 	{
-		int	i;
+		fill_textures(parser->line, &parser->count, \
+			parser->sprites, parser->fd);
+		free(parser->line);
+	}
+	parser_cut_2(parser);
+	if (!parser->map_txt)
+	{
 		i = 0;
 		while (i < 6)
 		{
-			if (sprites[i])
-				free(sprites[i]);
+			if (parser->sprites[i])
+				free(parser->sprites[i]);
 			i++;
 		}
-		free(sprites);
+		free(parser->sprites);
 		write(2, "Error\nError loading map\n", 24);
 		exit(1);
 	}
-	info = create_info(map_txt, sprites);
-	if(!player_spawn(info, map_txt))
+}
+
+t_info	*parser_cut_3(t_parser *parser)
+{
+	t_info		*info;
+
+	info = create_info(parser->map_txt, parser->sprites);
+	if (!player_spawn(info, parser->map_txt))
 	{
 		write(2, "Error\nError loading player location\n", 36);
-		map_txt = deltab(map_txt);
+		parser->map_txt = deltab(parser->map_txt);
 		final_free(info);
 	}
-	if (parse_map(info, map_txt) < 0)
+	if (parse_map(info, parser->map_txt) < 0)
 	{
 		write(2, "Error\nError loading map\n", 24);
 		final_free(info);
 	}
 	return (info);
+}
+
+t_info	*parser(char *file)
+{
+	t_parser	parser;
+
+	parser.map_txt = NULL;
+	parser.sprites = malloc(sizeof(char *) * 6);
+	if (!parser.sprites)
+		exit(1);
+	parser.sprites = init_sprites(parser.sprites);
+	parser.fd = open(file, O_RDONLY);
+	parser.count = 0;
+	if (parser.fd == -1)
+	{
+		write(2, "Error\n", 6);
+		perror("");
+		free(parser.sprites);
+		exit(1);
+	}
+	parser_cut(&parser);
+	return (parser_cut_3(&parser));
 }

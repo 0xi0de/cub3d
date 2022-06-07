@@ -1,1 +1,1 @@
-build/objs/Cub3d/render.o build/objs/Cub3d/render.o: /dev/null
+build/objs/Cub3d/parser.o build/objs/Cub3d/parser.o: /dev/null
