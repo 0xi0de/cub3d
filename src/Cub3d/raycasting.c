@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 12:18:40 by tallal--          #+#    #+#             */
-/*   Updated: 2022/06/01 13:07:15 by tallal--         ###   ########.fr       */
+/*   Updated: 2022/06/07 15:25:23 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,6 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-
-double	find_tx(t_raycast ray, int x)
-{
-	if (ray.start_point.x == ray.end_point.x)
-		return (-1);
-	return ((double)(x - ray.start_point.x)
-		/ (ray.end_point.x - ray.start_point.x));
-}
-
-double	find_ty(t_raycast ray, int y)
-{
-	if (ray.start_point.y == ray.end_point.y)
-		return (-1);
-	return ((double)(y - ray.start_point.y)
-		/ (ray.end_point.y - ray.start_point.y));
-}
 
 int	raycasting(t_info *info, double angle, int *x, int *y)
 {
@@ -40,8 +24,9 @@ int	raycasting(t_info *info, double angle, int *x, int *y)
 	*x = info->raycast.start_point.x;
 	*y = info->raycast.start_point.y;
 	pos = get_position(info, *x, *y);
-	if (pos == -1 || pos >= info->map_h * info->map_w)
+	if (pos < 0 || pos >= info->map_h * info->map_w)
 		return (0);
+	//printf("pos = %d\n", pos);
 	if (info->map[pos].is_void)
 		return (0);
 	info->raycast.end_point.x = info->raycast.start_point.x
@@ -123,72 +108,3 @@ void	raycastings(t_info *info, double angle)
 	mlx_put_image_to_window(info->mlx_info.mlx_ptr, info->mlx_info.win_ptr,
 		info->img, 0, 0);
 }
-
-// int	next_wall(t_info *info, int i, int *x_col, int *y_col)
-// {
-// 	double	t;
-// 	int		x;
-// 	int		y;
-
-// 	t = find_tx(info->raycast, info->map[i].rect.x + WALL_W);
-// 	if (t >= 0 && t <= 1)
-// 	{
-// 		y = info->raycast.start_point.y + t * (info->raycast.end_point.y - 
-// 			info->raycast.start_point.y);
-// 		if (y >= info->map[i].rect.y && y < info->map[i].rect.y + WALL_H)
-// 		{
-// 			if (info->raycast.start_point.x < info->raycast.end_point.x)
-// 			{
-// 				*x_col = info->map[i].rect.x + WALL_W;
-// 				*y_col = y;
-// 				return (i + 1);
-// 			}
-// 		}
-// 	}
-// 	t = find_ty(info->raycast, info->map[i].rect.y + WALL_H);
-// 	if (t >= 0 && t <= 1)
-// 	{
-// 		x = info->raycast.start_point.x + t * (info->raycast.end_point.x - 
-// 			info->raycast.start_point.x);
-// 		if (x >= info->map[i].rect.x && x < info->map[i].rect.x + WALL_W)
-// 		{
-// 			if (info->raycast.start_point.y < info->raycast.end_point.y)
-// 			{
-// 				*x_col = x;
-// 				*y_col = info->map[i].rect.y + WALL_H;
-// 				return (i + info->block_w);
-// 			}
-// 		}
-// 	}
-// 	t = find_tx(info->raycast, info->map[i].rect.x);
-// 	if (t >= 0 && t <= 1)
-// 	{
-// 		y = info->raycast.start_point.y + t * (info->raycast.end_point.y - 
-// 			info->raycast.start_point.y);
-// 		if (y >= info->map[i].rect.y && y <= info->map[i].rect.y + WALL_H)
-// 		{
-// 			if (info->raycast.start_point.x > info->raycast.end_point.x)
-// 			{
-// 				*x_col = info->map[i].rect.x;
-// 				*y_col = y;
-// 				return (i - 1);
-// 			}
-// 		}
-// 	}
-// 	t = find_ty(info->raycast, info->map[i].rect.y);
-// 	if (t >= 0 && t <= 1)
-// 	{
-// 		x = info->raycast.start_point.x + t * (info->raycast.end_point.x - 
-// 			info->raycast.start_point.x);
-// 		if (x >= info->map[i].rect.x && x <= info->map[i].rect.x + WALL_W)
-// 		{
-// 			if (info->raycast.start_point.y > info->raycast.end_point.y)
-// 			{
-// 				*x_col = x;
-// 				*y_col = info->map[i].rect.y;
-// 				return (i - info->block_w);
-// 			}
-// 		}
-// 	}
-// 	return (-1);
-// }

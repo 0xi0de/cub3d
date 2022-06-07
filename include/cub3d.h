@@ -6,7 +6,7 @@
 /*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:52 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/06/07 14:06:37 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/06/07 15:33:13 by lbetmall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include "minilibx.h"
 # include <unistd.h>
 # define MALLOC_FAIL -1
-# define SCREEN_W 1200
-# define SCREEN_H 1200
+# define SCREEN_W 900
+# define SCREEN_H 900
 # define WALL_W 100
 # define WALL_H 100
 # define PLAYER_W 20
@@ -27,7 +27,7 @@
 # define RL_KEY 65361
 # define RR_KEY 65363
 # define PI 3.14159265
-# define FOV PI / 4
+# define FOV 0.78539816
 # define RAY_DISTANCE 256000
 
 typedef struct s_coord
@@ -127,6 +127,15 @@ int		tablen(char **tab);
 char	**tabjoin(char **tab, char *str);
 int		get_next_line(int fd, char **line);
 char	*ft_strcpy(char *dest, char *src);
+int		ft_atoi(char *str, t_info *info, char **sprites, char **map_txt);
+int		ft_isspace(char c);
+int		is_digit(char c);
+double	find_tx(t_raycast ray, int x);
+double	find_ty(t_raycast ray, int y);
+void	handle_north_south(t_line line, t_ratio ratio, \
+	t_texture texture, uint8_t *pixel_img);
+void	handle_east_west(t_line line, t_ratio ratio, \
+	t_texture texture, uint8_t *pixel_img);
 void	final_free(t_info *info);
 void	clear_img(t_info *info);
 t_info	*parser(char *file);
