@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 12:18:40 by tallal--          #+#    #+#             */
-/*   Updated: 2022/06/07 15:25:23 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/06/07 15:38:50 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	raycasting(t_info *info, double angle, int *x, int *y)
 	pos = get_position(info, *x, *y);
 	if (pos < 0 || pos >= info->map_h * info->map_w)
 		return (0);
-	//printf("pos = %d\n", pos);
 	if (info->map[pos].is_void)
 		return (0);
 	info->raycast.end_point.x = info->raycast.start_point.x

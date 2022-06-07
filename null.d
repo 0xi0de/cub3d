@@ -1,1 +1,1 @@
-build/objs/Cub3d/position.o build/objs/Cub3d/position.o: /dev/null
+build/objs/Cub3d/next_wall.o build/objs/Cub3d/next_wall.o: /dev/null

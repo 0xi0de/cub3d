@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 22:06:52 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/06/07 15:33:13 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/06/07 15:52:34 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,5 +158,21 @@ void	free_str(char *str);
 void	put_player(t_info *info, int i, int j, char c);
 void	render_map(t_info *info);
 void	render_wall(t_info *info, int x, int y, double angle);
+void	put_player(t_info *info, int i, int j, char c);
+int		map_char_to_int(char c);
+int		player_spawn(t_info *info, char **map_txt);
+int		**fill_map_int(char **map_txt, int line_len, int nb_line);
+int		valid_zero(int **map_int, int i, int j, int line_len);
+int		check_map(int **map_int, int line_len);
+void	fill_map_condition(t_info *info, int **map_int, int line_len, int i);
+void	fill_map(t_info *info, int **map_int, int line_len, int nb_line);
+int		parse_map(t_info *info, char **map_txt);
+void	print_texture_error(int i);
+t_info	*create_info(char **map_txt, char **sprites);
+char	check_char(char *str, int *i);
+void	handle_x(char **sprites, int fd, char *str);
+int		fill_texture_condition(char c, char **sprites, char *str, int j);
+void	fill_textures(char *str, int *count, char **sprites, int fd);
+int		check_arg_map(char *str);
 
 #endif

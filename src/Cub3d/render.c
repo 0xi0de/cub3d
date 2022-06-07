@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbetmall <lbetmall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tallal-- <tallal--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 01:10:54 by lbetmall          #+#    #+#             */
-/*   Updated: 2022/06/07 14:47:11 by lbetmall         ###   ########.fr       */
+/*   Updated: 2022/06/07 15:51:37 by tallal--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,20 @@ void	render_wall(t_info *info, int x, int y, double angle)
 		draw_texture_line(info->map3d[2], info->pixel_img, info->line);
 	else if (info->line.orientation == 'W')
 		draw_texture_line(info->map3d[3], info->pixel_img, info->line);
+}
+
+void	put_player(t_info *info, int i, int j, char c)
+{
+	info->player.spawn_x = j;
+	info->player.spawn_y = i;
+	info->player.pos.x = j * WALL_W + WALL_W / 2;
+	info->player.pos.y = i * WALL_H + WALL_H / 2;
+	if (c == 'S')
+		info->player.rotation = PI / 2;
+	else if (c == 'N')
+		info->player.rotation = -PI / 2;
+	else if (c == 'E')
+		info->player.rotation = 0;
+	else
+		info->player.rotation = PI;
 }
